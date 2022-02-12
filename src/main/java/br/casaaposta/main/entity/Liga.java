@@ -8,6 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Table(name = "Liga")
 public class Liga implements Serializable {
@@ -18,14 +21,18 @@ public class Liga implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="Id")
+	@Getter @Setter
 	private int Id;
 
 	@Column(name ="NomeLiga")
+	@Getter @Setter
 	private String nomeLiga;
 	
 	@Column(name = "IdOdd")
+	@Getter @Setter
 	private int idOdd;
 	
 	@Column(name = "idResultado")
+	@Getter @Setter
 	private int IdResultado;
 }

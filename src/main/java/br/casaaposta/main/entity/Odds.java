@@ -2,6 +2,9 @@ package br.casaaposta.main.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import lombok.Getter;
+import lombok.Setter;
+
 
 
 @Entity
@@ -13,27 +16,35 @@ public class Odds implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="Id")
+	@Getter @Setter
 	private Integer Identificador;
 	
 	@Column(name = "idLiga")
+	@Getter @Setter
 	private Integer idLiga;
 	
-	@Column(name = "Resultado") 
+	@Column(name = "Resultado")
+	@Getter @Setter
 	private String resultado;
 	 
 	@Column(name = "Partida")
+	@Getter @Setter
 	private String partida;
 	 
-	@Column(name = "Minuto") 
+	@Column(name = "Minuto")
+	@Getter @Setter
 	private String minuto;
 	
-	@Column(name = "Percentual") 
+	@Column(name = "Percentual")
+	@Getter @Setter
 	private String percentual;
 	 
-	@Column(name = "Hora") 
+	@Column(name = "Hora")
+	@Getter @Setter
 	private String hora;
 
 	@Column(name = "isContable")
+	@Getter @Setter
 	private float isContable;
 	
 
