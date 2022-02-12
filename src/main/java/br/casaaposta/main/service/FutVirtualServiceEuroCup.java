@@ -70,6 +70,7 @@ public class FutVirtualServiceEuroCup {
 		
 		try {
 		
+						
 			Resultado resultado = new Resultado();
 			resultado = (Resultado) this.webClientResultadoFT.get();
 			resultadoRepository.save(resultado);
@@ -81,7 +82,6 @@ public class FutVirtualServiceEuroCup {
 			log.setStackTrace(e.getMessage());
 			log.setError("Erro ao obter resultados na Api do FutVirtual");
 		    logRepository.save(log);
-			System.out.println("Erro ao coletar informações no site");
 			return null;
 		}
 				
