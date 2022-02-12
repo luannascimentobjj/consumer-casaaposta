@@ -1,8 +1,17 @@
 package br.casaaposta.main.service;
+import java.time.LocalTime;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import br.casaaposta.main.entity.Log;
+import br.casaaposta.main.entity.Resultado;
 import br.casaaposta.main.model.ResultadoModel;
+import br.casaaposta.main.repository.LigaRepository;
+import br.casaaposta.main.repository.LogRepository;
+import br.casaaposta.main.repository.OddsRepository;
+import br.casaaposta.main.repository.ResultadoRepository;
 import br.casaaposta.main.util.UrlUtils;
 
 @Service
@@ -20,6 +29,19 @@ public class FutVirtualServiceEuroCup {
 	private final WebClient webClientAmbasMarcam;
 	
 	UrlUtils urls;
+	@Autowired 
+	private LigaRepository ligaRepository;
+	
+	@Autowired 
+	private OddsRepository oddsRepository;
+	
+	@Autowired 
+	ResultadoRepository resultadoRepository;
+		
+	@Autowired 
+	LogRepository logRepository;
+	
+	
 	
 	 public FutVirtualServiceEuroCup(WebClient.Builder webClientBuilder) {
 		 webClientBuilder.defaultHeaders(httpHeaders -> {
@@ -44,13 +66,21 @@ public class FutVirtualServiceEuroCup {
 	}
 	
 	
-	public ResultadoModel obterResultadoFT () {
+	public Resultado obterResultadoFT () {
 		
 		try {
 		
-			return (ResultadoModel) this.webClientResultadoFT.get();
+			Resultado resultado = new Resultado();
+			resultado = (Resultado) this.webClientResultadoFT.get();
+			resultadoRepository.save(resultado);
+			return resultado;
 			
 		} catch (Exception e) {
+			Log log = new Log();
+			log.setDataInclusao(LocalTime.now());
+			log.setStackTrace(e.getMessage());
+			log.setError("Erro ao obter resultados na Api do FutVirtual");
+		    logRepository.save(log);
 			System.out.println("Erro ao coletar informações no site");
 			return null;
 		}
