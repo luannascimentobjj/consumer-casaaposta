@@ -12,8 +12,8 @@ public class FutVirtualService {
 	UrlUtils urls;
 	
 	 public FutVirtualService(WebClient.Builder webClientBuilder) {
-		this.webClientUnder15 = webClientBuilder.baseUrl(UrlUtils.urlUnder15).build();
-		this.webClientResultadoFT =  webClientBuilder.baseUrl(UrlUtils.urlResultadoFT).build();
+		this.webClientUnder15 = webClientBuilder.baseUrl(UrlUtils.baseUrl).build();
+		this.webClientResultadoFT =  webClientBuilder.baseUrl(UrlUtils.baseUrl).build();
 	}
 	
 	
