@@ -18,10 +18,7 @@ public class Odds implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="Id")
 	private Integer Identificador;
-	
-	@Column(name = "idLiga")
-	private Integer idLiga;
-	
+
 	@Column(name = "Resultado")
 	private String resultado;
 	 
@@ -39,6 +36,10 @@ public class Odds implements Serializable{
 
 	@Column(name = "isContable")
 	private float isContable;
+	
+	@OneToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "codLiga", referencedColumnName = "codLiga")
+	private Liga codLiga;
 	
 
 }

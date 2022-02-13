@@ -16,10 +16,8 @@ public class ApiCasaApostaApplication {
 
 	public static void main(String[] args) {
 		
-		
 		SpringApplication.run(ApiCasaApostaApplication.class, args);
 		
-
 }
 	
 	@Bean  

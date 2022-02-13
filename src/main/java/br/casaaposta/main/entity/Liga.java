@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,14 +23,20 @@ public class Liga implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="Id")
-	private int Id;
+	private Integer Id;
 
+	@Column(name = "codLiga")
+	private Integer codLiga;
+	
 	@Column(name ="NomeLiga")
 	private String nomeLiga;
 	
-	@Column(name = "IdOdd")
-	private int idOdd;
-	
 	@Column(name = "idResultado")
 	private int IdResultado;
+	
+	@OneToOne(mappedBy = "codLiga")
+	private Odds odds;
+	
+	@OneToOne(mappedBy = "codLiga")
+	private Resultado resultado;
 }
