@@ -2,6 +2,7 @@ package br.casaaposta.main.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.ClientResponse;
@@ -12,6 +13,10 @@ import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
 import org.springframework.web.reactive.function.client.WebClient.UriSpec;
 
 import br.casaaposta.main.model.ResultadoModel;
+import br.casaaposta.main.repository.LigaRepository;
+import br.casaaposta.main.repository.LogRepository;
+import br.casaaposta.main.repository.OddsRepository;
+import br.casaaposta.main.repository.ResultadoRepository;
 import br.casaaposta.main.util.UrlUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -33,6 +38,18 @@ public class FutVirtualServiceEuroCup {
 	
 	private final WebClient webClient;
 	UrlUtils urls;
+	
+	@Autowired 
+	private LigaRepository ligaRepository;
+
+	@Autowired 
+	private OddsRepository oddsRepository;
+
+	@Autowired 
+	ResultadoRepository resultadoRepository;
+
+	@Autowired 
+	LogRepository logRepository;
 	
 	 public FutVirtualServiceEuroCup(WebClient.Builder webClientBuilder) {
 		 webClientBuilder.defaultHeaders(httpHeaders -> {
