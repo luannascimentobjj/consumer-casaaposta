@@ -1,23 +1,12 @@
 package br.casaaposta.main.service;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClient.RequestBodySpec;
-import org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec;
-import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
-import org.springframework.web.reactive.function.client.WebClient.UriSpec;
 
 import br.casaaposta.main.model.ResultadoModel;
 import br.casaaposta.main.util.UrlUtils;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 @Service
-public class FutVirtualServiceEuroCup {
+public class FutVirtualServiceSuperLeague {
 
 	private final WebClient webClientUnder15;
 	private final WebClient webClientUnder05;
@@ -29,12 +18,10 @@ public class FutVirtualServiceEuroCup {
 	private final WebClient webClientEmpate;
 	private final WebClient webClientVisitante;
 	private final WebClient webClientAmbasMarcam;
-	private final String idCompetition = UrlUtils.idEuroCup;
+	private final String idCompetition = UrlUtils.idSuperLeagueCup;
 	
-	private final WebClient webClient;
-	UrlUtils urls;
 	
-	 public FutVirtualServiceEuroCup(WebClient.Builder webClientBuilder) {
+	 public FutVirtualServiceSuperLeague(WebClient.Builder webClientBuilder) {
 		 webClientBuilder.defaultHeaders(httpHeaders -> {
 			    httpHeaders.set("Cookie", UrlUtils.Auth);
 			    httpHeaders.set("User-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36");
@@ -43,7 +30,6 @@ public class FutVirtualServiceEuroCup {
 			    httpHeaders.set("Accept","application/json, text/plain, */*");
 			    httpHeaders.setConnection("keep-alive");
 			});
-		this.webClient = webClientBuilder.build();
 		this.webClientUnder15 = webClientBuilder.baseUrl(UrlUtils.baseUrl + idCompetition + UrlUtils.baseUnder15FinalUrl).build();
 		this.webClientUnder05 = webClientBuilder.baseUrl(UrlUtils.baseUrl + idCompetition + UrlUtils.baseUnder05FinalUrl).build();
 		this.webClientOver25 = webClientBuilder.baseUrl(UrlUtils.baseUrl + idCompetition + UrlUtils.baseOver25FinalUrl).build();
@@ -74,21 +60,11 @@ public class FutVirtualServiceEuroCup {
 	public Object obterResultadoHT () {
 		
 		try {
-			Mono<Object> response = this.webClientResultadoHT.get().retrieve()
-				    .bodyToMono(Object.class);
-			
-			Object objects = response.block();
-				  
-			return objects;
-			//return list;
-//			STRING X  = "";
-//			RETURN (OBJECT) THIS.WEBCLIENTRESULTADOHT.GET();
+		
+			return (Object) this.webClientResultadoHT.get();
 			
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
 			System.out.println("Erro ao coletar informações no site");
-			e.getMessage();
 			return null;
 		}
 				
