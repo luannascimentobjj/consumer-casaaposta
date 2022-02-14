@@ -113,9 +113,7 @@ public class FutVirtualServiceEuroCup {
 					resultadoRepository.save(result);									
 				}
 			}
-		});
-		System.out.println("Deu bom");
-				  
+		});				  
 			return;
 			//return list;
 //			STRING X  = "";
