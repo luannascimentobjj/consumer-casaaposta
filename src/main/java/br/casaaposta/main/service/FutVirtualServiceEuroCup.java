@@ -13,7 +13,7 @@ import org.springframework.web.reactive.function.client.WebClient.RequestHeaders
 import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
 import org.springframework.web.reactive.function.client.WebClient.UriSpec;
 
-import br.casaaposta.main.business.FutServiceBusiness;
+import br.casaaposta.main.bind.FutServiceBinder;
 import br.casaaposta.main.model.ResultadoModel;
 import br.casaaposta.main.repository.LigaRepository;
 import br.casaaposta.main.repository.LogRepository;
@@ -90,14 +90,14 @@ public class FutVirtualServiceEuroCup {
 		
 		try {
 			
-			FutServiceBusiness futBusiness = new FutServiceBusiness();
+			FutServiceBinder futBusiness = new FutServiceBinder();
 			
 			Mono<Object> response = this.webClientResultadoHT.get().retrieve()
 				    .bodyToMono(Object.class);
 			
 			LinkedHashMap<Object, Object>  objects = (LinkedHashMap<Object, Object>) response.block();
 			
-			futBusiness.bindResultado(objects);
+			futBusiness.bindResultado(objects, "HT");
 				  
 			return objects;
 			//return list;

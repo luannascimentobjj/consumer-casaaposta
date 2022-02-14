@@ -18,15 +18,7 @@ import br.casaaposta.main.service.FutVirtualServiceEuroCup;
 public class ApiCasaApostaApplication {
 
 	public static void main(String[] args) {
-		System.out.println("opa, passando aqui.");
 		SpringApplication.run(ApiCasaApostaApplication.class, args);
-		
-		WebClient.Builder webClient = WebClient.builder();
-		FutVirtualServiceEuroCup fut = new FutVirtualServiceEuroCup(webClient);
-		Object o = fut.obterResultadoFT();
-		Object o2 = fut.obterResultadoHT();
-		Object o3 = fut.obterResultadoEmpate();
-		
 	}
 
 	@Bean  

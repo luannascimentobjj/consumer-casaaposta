@@ -33,11 +33,29 @@ public class Resultado {
 	@Column(name="Data")
 	private String data;
 	
+	@Column(name="Hora")
+	private int hora;
+	
+	@Column(name = "Minuto")
+	private int minuto;
+	
+	@Column(name="Percentual")
+	private double percentual;
+	
 	@Column(name="Jogo")
 	private String jogo;
 	
+	@Column(name="TollTip")
+	private String tollTip;
+	
 	@Column(name="ResultadoTipo")
 	private String resultadoTipo;
+	
+	@Column(name="isContable")
+	private float isContable;
+	
+	@Column(name="sumScore")
+	private int sumScore;
 	
 	@OneToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "codLiga", referencedColumnName = "codLiga")
