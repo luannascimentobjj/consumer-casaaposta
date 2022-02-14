@@ -35,21 +35,16 @@ public class FutVirtualServiceEuroCup {
 	private final WebClient webClientVisitante;
 	private final WebClient webClientAmbasMarcam;
 	private final String idCompetition = UrlUtils.idEuroCup;
-	
-	private final WebClient webClient;
 	UrlUtils urls;
-	
 	@Autowired 
 	private LigaRepository ligaRepository;
-
 	@Autowired 
 	private OddsRepository oddsRepository;
-
 	@Autowired 
 	ResultadoRepository resultadoRepository;
-
 	@Autowired 
 	LogRepository logRepository;
+	
 	
 	 public FutVirtualServiceEuroCup(WebClient.Builder webClientBuilder) {
 		 webClientBuilder.defaultHeaders(httpHeaders -> {
@@ -60,7 +55,7 @@ public class FutVirtualServiceEuroCup {
 			    httpHeaders.set("Accept","application/json, text/plain, */*");
 			    httpHeaders.setConnection("keep-alive");
 			});
-		this.webClient = webClientBuilder.build();
+		
 		this.webClientUnder15 = webClientBuilder.baseUrl(UrlUtils.baseUrl + idCompetition + UrlUtils.baseUnder15FinalUrl).build();
 		this.webClientUnder05 = webClientBuilder.baseUrl(UrlUtils.baseUrl + idCompetition + UrlUtils.baseUnder05FinalUrl).build();
 		this.webClientOver25 = webClientBuilder.baseUrl(UrlUtils.baseUrl + idCompetition + UrlUtils.baseOver25FinalUrl).build();
@@ -73,7 +68,7 @@ public class FutVirtualServiceEuroCup {
 		this.webClientAmbasMarcam = webClientBuilder.baseUrl(UrlUtils.baseUrl + idCompetition + UrlUtils.baseAmbasMarcamFinalUrl).build();
 		
 	}
-	
+
 	
 	public Object obterResultadoFT () {
 		
