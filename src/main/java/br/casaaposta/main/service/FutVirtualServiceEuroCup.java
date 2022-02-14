@@ -2,6 +2,7 @@ package br.casaaposta.main.service;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,8 @@ import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
 import org.springframework.web.reactive.function.client.WebClient.UriSpec;
 
 import br.casaaposta.main.bind.FutServiceBinder;
+import br.casaaposta.main.entity.Liga;
+import br.casaaposta.main.entity.Resultado;
 import br.casaaposta.main.model.ResultadoModel;
 import br.casaaposta.main.repository.LigaRepository;
 import br.casaaposta.main.repository.LogRepository;
@@ -38,6 +41,8 @@ public class FutVirtualServiceEuroCup {
 	private final WebClient webClientAmbasMarcam;
 	private final String idCompetition = UrlUtils.idEuroCup;
 	UrlUtils urls;
+	
+	private Liga liga;
 	@Autowired 
 	private LigaRepository ligaRepository;
 	@Autowired 
@@ -86,9 +91,10 @@ public class FutVirtualServiceEuroCup {
 				
 	};
 	
-	public Object obterResultadoHT () {
+	public void obterResultadoHT () {
 		
 		try {
+
 			
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			
@@ -97,9 +103,20 @@ public class FutVirtualServiceEuroCup {
 			
 			LinkedHashMap<Object, Object>  objects = (LinkedHashMap<Object, Object>) response.block();
 			
-			futBusiness.bindResultado(objects, "HT");
+	
+		List<Resultado> r = futBusiness.bindResultado(objects, "HT");
+		r.forEach(result -> {
+			result.setCodLiga(this.liga);
+			if(result.getTollTip() != null) {
+				Resultado r1 = resultadoRepository.findByTollTipAndMinuto(result.getTollTip(), result.getMinuto());
+				if(r1 == null) {
+					resultadoRepository.save(result);									
+				}
+			}
+		});
+		System.out.println("Deu bom");
 				  
-			return objects;
+			return;
 			//return list;
 //			STRING X  = "";
 //			RETURN (OBJECT) THIS.WEBCLIENTRESULTADOHT.GET();
@@ -109,7 +126,7 @@ public class FutVirtualServiceEuroCup {
 			e.printStackTrace();
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
-			return null;
+			return;
 		}
 				
 	};
@@ -216,6 +233,20 @@ public class FutVirtualServiceEuroCup {
 				return null;
 			}
 					
+		}
+
+
+		public void setLiga() {
+			Optional<Liga> liga = ligaRepository.findByCodLiga(idCompetition);
+			if(!liga.isPresent()) {
+				Liga l1 = new Liga();
+				l1.setNomeLiga("Euro Copa");
+				l1.setCodLiga(idCompetition);
+				this.liga = ligaRepository.save(l1);
+			} else {
+				this.liga = liga.get();
+			}
+			
 		};
 					
 }

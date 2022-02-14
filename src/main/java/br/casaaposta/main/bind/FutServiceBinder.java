@@ -2,20 +2,26 @@ package br.casaaposta.main.bind;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
+
 import org.springframework.stereotype.Component;
+
+import br.casaaposta.main.entity.Liga;
 import br.casaaposta.main.entity.Resultado;
 import lombok.Data;
 
 @Data
 @Component
 public class FutServiceBinder {
+	
+	private int hora;
+	private double percent;
 
-	public Resultado bindResultado(LinkedHashMap<Object, Object> resultaForBinding, String tipoResultado) {
+	public List<Resultado> bindResultado(LinkedHashMap<Object, Object> resultaForBinding, String tipoResultado) {
 
-		Resultado resultadoRetorno = new Resultado();
-		resultadoRetorno.setResultadoTipo(tipoResultado);
-		
+		List<Resultado> list = new ArrayList();
 		resultaForBinding.entrySet().forEach(entry -> {
+		
 				
 			
 			entry.getKey();
@@ -24,32 +30,37 @@ public class FutServiceBinder {
 				ArrayList<LinkedHashMap<Object, Object>> linesArrayOfHash = (ArrayList<LinkedHashMap<Object, Object>>) entry.getValue();
 				linesArrayOfHash.forEach(line -> {
 					line.entrySet().forEach(subline -> {
-						
+						Resultado resultadoRetorno = new Resultado();
 						if(subline.getKey().equals("Hora")) {
-							resultadoRetorno.setHora((int) subline.getValue());
+							this.hora = (int) subline.getValue();
 						}
 						
 						if(subline.getKey().equals("Percents")) {
-							resultadoRetorno.setPercentual((double) subline.getValue());
+							this.percent = (double) subline.getValue();
 						}
 						
 						if (subline.getKey().equals("Cells")) {
 							ArrayList<LinkedHashMap<Object, Object>> cellsArrayOfHash = (ArrayList<LinkedHashMap<Object, Object>>) subline.getValue();
 							cellsArrayOfHash.forEach(results -> {
+								Resultado r = new Resultado();
 								results.entrySet().forEach(result ->{
 									if(result.getKey().equals("Minute")) {
-										resultadoRetorno.setMinuto((int) result.getValue());
+										r.setMinuto((int) result.getValue());
 									}else if(result.getKey().equals("Tooltip")) {
-										resultadoRetorno.setTollTip((String) result.getValue());
+										r.setTollTip((String) result.getValue());
 									}else if(result.getKey().equals("Result")) {
-										resultadoRetorno.setResultado((String) result.getValue());
+										r.setResultado((String) result.getValue());
 									}else if(result.getKey().equals("Countable")) {
-										resultadoRetorno.setIsContable((float) result.getValue());
+										r.setContable((boolean) result.getValue());
 									}else if(result.getKey().equals("SumScore")) {
-										resultadoRetorno.setSumScore((int) result.getValue());
+										r.setSumScore((int) result.getValue());
 									}
 									
 								});
+								r.setHora(this.hora);
+								r.setPercentual(this.percent);
+								r.setResultadoTipo(tipoResultado);
+								list.add(r);
 							});
 						}
 					});
@@ -60,7 +71,7 @@ public class FutServiceBinder {
 
 		});
 
-		return resultadoRetorno;
+		return list;
 
 	}
 

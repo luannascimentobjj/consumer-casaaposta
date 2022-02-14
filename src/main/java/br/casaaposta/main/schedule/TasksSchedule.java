@@ -13,11 +13,12 @@ public class TasksSchedule {
 	@Autowired
 	private FutVirtualServiceEuroCup euroCupService;
 	
-	//@Scheduled(fixedDelay = 120000)
+	@Scheduled(fixedDelay = 600000)
 	@Async
 	public void ObterResultadoFTEuroCopa() {
 	
 		System.out.println("USANDO SCHEDULE");
+		euroCupService.setLiga();
 		euroCupService.obterResultadoHT();
 
 	}

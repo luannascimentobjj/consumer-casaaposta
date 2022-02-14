@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -52,12 +53,12 @@ public class Resultado {
 	private String resultadoTipo;
 	
 	@Column(name="isContable")
-	private float isContable;
+	private boolean isContable;
 	
 	@Column(name="sumScore")
 	private int sumScore;
 	
-	@OneToOne(optional = false, fetch = FetchType.LAZY)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "codLiga", referencedColumnName = "codLiga")
 	private Liga codLiga;
 

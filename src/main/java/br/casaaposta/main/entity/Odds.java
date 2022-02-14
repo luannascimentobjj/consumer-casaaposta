@@ -16,30 +16,41 @@ public class Odds implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="Id")
-	private Integer Identificador;
+	@Column(name="Id")	
+	private Integer Id;
 
-	@Column(name = "Resultado")
+	@Column(name="Resultado")
 	private String resultado;
-	 
-	@Column(name = "Partida")
-	private String partida;
-	 
+	
+	@Column(name="Data")
+	private String data;
+	
+	@Column(name="Hora")
+	private int hora;
+	
 	@Column(name = "Minuto")
-	private String minuto;
+	private int minuto;
 	
-	@Column(name = "Percentual")
-	private String percentual;
-	 
-	@Column(name = "Hora")
-	private String hora;
-
-	@Column(name = "isContable")
-	private float isContable;
+	@Column(name="Percentual")
+	private double percentual;
 	
-	@OneToOne(optional = false, fetch = FetchType.LAZY)
+	@Column(name="Jogo")
+	private String jogo;
+	
+	@Column(name="TollTip")
+	private String tollTip;
+	
+	@Column(name="ResultadoTipo")
+	private String resultadoTipo;
+	
+	@Column(name="isContable")
+	private boolean isContable;
+	
+	@Column(name="sumScore")
+	private int sumScore;
+	
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "codLiga", referencedColumnName = "codLiga")
 	private Liga codLiga;
-	
 
 }

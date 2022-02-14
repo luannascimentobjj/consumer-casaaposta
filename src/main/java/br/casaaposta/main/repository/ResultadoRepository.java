@@ -6,6 +6,7 @@ import br.casaaposta.main.entity.Resultado;
 public interface ResultadoRepository extends CrudRepository<Resultado, Long>{
 	
 
+	Resultado findByTollTipAndMinuto(String toolTip, int minuto);
 		
 	}
 
