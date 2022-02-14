@@ -1,5 +1,6 @@
 package br.casaaposta.main.service;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.reactive.function.client.WebClient.RequestHeaders
 import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
 import org.springframework.web.reactive.function.client.WebClient.UriSpec;
 
+import br.casaaposta.main.business.FutServiceBusiness;
 import br.casaaposta.main.model.ResultadoModel;
 import br.casaaposta.main.repository.LigaRepository;
 import br.casaaposta.main.repository.LogRepository;
@@ -44,6 +46,7 @@ public class FutVirtualServiceEuroCup {
 	ResultadoRepository resultadoRepository;
 	@Autowired 
 	LogRepository logRepository;
+
 	
 	
 	 public FutVirtualServiceEuroCup(WebClient.Builder webClientBuilder) {
@@ -86,10 +89,15 @@ public class FutVirtualServiceEuroCup {
 	public Object obterResultadoHT () {
 		
 		try {
+			
+			FutServiceBusiness futBusiness = new FutServiceBusiness();
+			
 			Mono<Object> response = this.webClientResultadoHT.get().retrieve()
 				    .bodyToMono(Object.class);
 			
-			Object objects = response.block();
+			LinkedHashMap<Object, Object>  objects = (LinkedHashMap<Object, Object>) response.block();
+			
+			futBusiness.bindResultado(objects);
 				  
 			return objects;
 			//return list;
