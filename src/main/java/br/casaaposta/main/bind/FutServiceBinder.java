@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import br.casaaposta.main.entity.Liga;
+import br.casaaposta.main.entity.Odds;
 import br.casaaposta.main.entity.Resultado;
 import lombok.Data;
 
@@ -74,5 +75,64 @@ public class FutServiceBinder {
 		return list;
 
 	}
+	
+	public List<Odds> bindOdds(LinkedHashMap<Object, Object> resultaForBinding, String tipoResultado) {
+
+		List<Odds> list = new ArrayList();
+		resultaForBinding.entrySet().forEach(entry -> {
+		
+				
+			
+			entry.getKey();
+			entry.getValue();
+			if (entry.getKey().equals("Lines")) {
+				ArrayList<LinkedHashMap<Object, Object>> linesArrayOfHash = (ArrayList<LinkedHashMap<Object, Object>>) entry.getValue();
+				linesArrayOfHash.forEach(line -> {
+					line.entrySet().forEach(subline -> {
+						Odds resultadoRetorno = new Odds();
+						if(subline.getKey().equals("Hora")) {
+							this.hora = (int) subline.getValue();
+						}
+						
+						if(subline.getKey().equals("Percents")) {
+							this.percent = (double) subline.getValue();
+						}
+						
+						if (subline.getKey().equals("Cells")) {
+							ArrayList<LinkedHashMap<Object, Object>> cellsArrayOfHash = (ArrayList<LinkedHashMap<Object, Object>>) subline.getValue();
+							cellsArrayOfHash.forEach(results -> {
+								Odds r = new Odds();
+								results.entrySet().forEach(result ->{
+									if(result.getKey().equals("Minute")) {
+										r.setMinuto((int) result.getValue());
+									}else if(result.getKey().equals("Tooltip")) {
+										r.setTollTip((String) result.getValue());
+									}else if(result.getKey().equals("Result")) {
+										r.setResultado((String) result.getValue());
+									}else if(result.getKey().equals("Countable")) {
+										r.setContable((boolean) result.getValue());
+									}else if(result.getKey().equals("SumScore")) {
+										r.setSumScore((int) result.getValue());
+									}
+									
+								});
+								r.setHora(this.hora);
+								r.setPercentual(this.percent);
+								r.setResultadoTipo(tipoResultado);
+								list.add(r);
+							});
+						}
+					});
+
+				});
+
+			}
+
+		});
+
+		return list;
+
+	}
+
 
 }
