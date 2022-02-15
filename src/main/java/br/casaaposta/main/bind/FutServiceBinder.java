@@ -21,9 +21,6 @@ public class FutServiceBinder {
 
 		List<Resultado> list = new ArrayList();
 		resultaForBinding.entrySet().forEach(entry -> {
-		
-				
-			
 			entry.getKey();
 			entry.getValue();
 			if (entry.getKey().equals("Lines")) {
@@ -34,11 +31,9 @@ public class FutServiceBinder {
 						if(subline.getKey().equals("Hora")) {
 							this.hora = (int) subline.getValue();
 						}
-						
 						if(subline.getKey().equals("Percents")) {
 							this.percent = (double) subline.getValue();
 						}
-						
 						if (subline.getKey().equals("Cells")) {
 							ArrayList<LinkedHashMap<Object, Object>> cellsArrayOfHash = (ArrayList<LinkedHashMap<Object, Object>>) subline.getValue();
 							cellsArrayOfHash.forEach(results -> {

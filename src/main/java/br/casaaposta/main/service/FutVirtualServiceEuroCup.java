@@ -98,27 +98,23 @@ public class FutVirtualServiceEuroCup {
 			
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			
-			Mono<Object> response = this.webClientResultadoHT.get().retrieve()
-				    .bodyToMono(Object.class);
+			Mono<Object> response = this.webClientResultadoHT.get().retrieve().bodyToMono(Object.class);
 			
 			LinkedHashMap<Object, Object>  objects = (LinkedHashMap<Object, Object>) response.block();
 			
 	
-		List<Resultado> r = futBusiness.bindResultado(objects, "HT");
-		r.forEach(result -> {
-			result.setCodLiga(this.liga);
-			if(result.getTollTip() != null) {
-				Resultado r1 = resultadoRepository.findByTollTipAndMinuto(result.getTollTip(), result.getMinuto());
-				if(r1 == null) {
-					resultadoRepository.save(result);									
+			List<Resultado> r = futBusiness.bindResultado(objects, "HT");
+			r.forEach(result -> {
+				result.setCodLiga(this.liga);
+				if(result.getTollTip() != null) {
+					Resultado r1 = resultadoRepository.findByTollTipAndMinuto(result.getTollTip(), result.getMinuto());
+					if(r1 == null) {
+						resultadoRepository.save(result);									
+					}
 				}
-			}
-		});				  
+			});				  
 			return;
-			//return list;
-//			STRING X  = "";
-//			RETURN (OBJECT) THIS.WEBCLIENTRESULTADOHT.GET();
-			
+
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
