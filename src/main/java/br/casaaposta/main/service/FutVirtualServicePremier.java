@@ -1,9 +1,31 @@
 package br.casaaposta.main.service;
-import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.ClientResponse;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClient.RequestBodySpec;
+import org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec;
+import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
+import org.springframework.web.reactive.function.client.WebClient.UriSpec;
+
+import br.casaaposta.main.bind.FutServiceBinder;
+import br.casaaposta.main.entity.Liga;
+import br.casaaposta.main.entity.Odds;
+import br.casaaposta.main.entity.Resultado;
 import br.casaaposta.main.model.ResultadoModel;
+import br.casaaposta.main.repository.LigaRepository;
+import br.casaaposta.main.repository.LogRepository;
+import br.casaaposta.main.repository.OddsRepository;
+import br.casaaposta.main.repository.ResultadoRepository;
 import br.casaaposta.main.util.UrlUtils;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 public class FutVirtualServicePremier {
@@ -19,8 +41,19 @@ public class FutVirtualServicePremier {
 	private final WebClient webClientVisitante;
 	private final WebClient webClientAmbasMarcam;
 	private final String idCompetition = UrlUtils.idPremierCup;
-	
 	UrlUtils urls;
+	
+	private Liga liga;
+	@Autowired 
+	private LigaRepository ligaRepository;
+	@Autowired 
+	private OddsRepository oddsRepository;
+	@Autowired 
+	ResultadoRepository resultadoRepository;
+	@Autowired 
+	LogRepository logRepository;
+
+	
 	
 	 public FutVirtualServicePremier(WebClient.Builder webClientBuilder) {
 		 webClientBuilder.defaultHeaders(httpHeaders -> {
@@ -31,6 +64,7 @@ public class FutVirtualServicePremier {
 			    httpHeaders.set("Accept","application/json, text/plain, */*");
 			    httpHeaders.setConnection("keep-alive");
 			});
+		
 		this.webClientUnder15 = webClientBuilder.baseUrl(UrlUtils.baseUrl + idCompetition + UrlUtils.baseUnder15FinalUrl).build();
 		this.webClientUnder05 = webClientBuilder.baseUrl(UrlUtils.baseUrl + idCompetition + UrlUtils.baseUnder05FinalUrl).build();
 		this.webClientOver25 = webClientBuilder.baseUrl(UrlUtils.baseUrl + idCompetition + UrlUtils.baseOver25FinalUrl).build();
@@ -43,136 +77,319 @@ public class FutVirtualServicePremier {
 		this.webClientAmbasMarcam = webClientBuilder.baseUrl(UrlUtils.baseUrl + idCompetition + UrlUtils.baseAmbasMarcamFinalUrl).build();
 		
 	}
+
 	
-	
-	public Object obterResultadoFT () {
-		
+	public void obterResultadoFT () {
+		String resultadoTipo = "FT";
 		try {
+			FutServiceBinder futBusiness = new FutServiceBinder();
 		
-			return (Object) this.webClientResultadoFT.get();
+			Mono<Object> response = this.webClientResultadoFT.get().retrieve()
+				    .bodyToMono(Object.class);
+			
+			LinkedHashMap<Object, Object>  objects = (LinkedHashMap<Object, Object>) response.block();
+			
+	
+		List<Resultado> r = futBusiness.bindResultado(objects, resultadoTipo);
+		r.forEach(result -> {
+			result.setCodLiga(this.liga);
+			if(result.getTollTip() != null) {
+				Resultado r1 = resultadoRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
+				if(r1 == null) {
+					resultadoRepository.save(result);									
+				}
+			}
+		});				  
 			
 		} catch (Exception e) {
 			System.out.println("Erro ao coletar informações no site");
-			return null;
+			e.getMessage();
+			return;
 		}
 				
 	};
 	
-	public Object obterResultadoHT () {
-		
+	public void obterResultadoHT () {
+		String resultadoTipo = "HT";
 		try {
-		
-			return (Object) this.webClientResultadoHT.get();
+
+			FutServiceBinder futBusiness = new FutServiceBinder();
+			
+			Mono<Object> response = this.webClientResultadoHT.get().retrieve()
+				    .bodyToMono(Object.class);
+			
+			LinkedHashMap<Object, Object>  objects = (LinkedHashMap<Object, Object>) response.block();
+			
+	
+		List<Resultado> r = futBusiness.bindResultado(objects, resultadoTipo);
+		r.forEach(result -> {
+			result.setCodLiga(this.liga);
+			if(result.getTollTip() != null) {
+				Resultado r1 = resultadoRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
+				if(r1 == null) {
+					resultadoRepository.save(result);									
+				}
+			}
+		});				  
 			
 		} catch (Exception e) {
 			System.out.println("Erro ao coletar informações no site");
-			return null;
+			e.getMessage();
+			return;
 		}
 				
 	};
 	
-	public Object obterResultadoUnder05 () {
+	public void obterResultadoUnder05 () {
 		
+		String resultadoTipo = "Under05";
 		try {
-		
-			return (Object) this.webClientUnder05.get();
+			FutServiceBinder futBusiness = new FutServiceBinder();
+			
+			Mono<Object> response = this.webClientUnder05.get().retrieve()
+				    .bodyToMono(Object.class);
+			
+			LinkedHashMap<Object, Object>  objects = (LinkedHashMap<Object, Object>) response.block();
+			
+	
+		List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
+		r.forEach(result -> {
+			result.setCodLiga(this.liga);
+			if(result.getTollTip() != null) {
+				Odds r1 = oddsRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
+				if(r1 == null) {
+					oddsRepository.save(result);									
+				}
+			}
+		});				  
 			
 		} catch (Exception e) {
 			System.out.println("Erro ao coletar informações no site");
-			return null;
+			return;
 		}
 				
 	};
 		
 	
-	public Object obterResultadoUnder15 () {
+	public void obterResultadoUnder15 () {
 		
+		String resultadoTipo = "Under15";
 		try {
-		
-			return (Object) this.webClientUnder15.get();
+			FutServiceBinder futBusiness = new FutServiceBinder();
+			
+			Mono<Object> response = this.webClientUnder15.get().retrieve()
+				    .bodyToMono(Object.class);
+			
+			LinkedHashMap<Object, Object>  objects = (LinkedHashMap<Object, Object>) response.block();
+			
+	
+		List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
+		r.forEach(result -> {
+			result.setCodLiga(this.liga);
+			if(result.getTollTip() != null) {
+				Odds r1 = oddsRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
+				if(r1 == null) {
+					oddsRepository.save(result);									
+				}
+			}
+		});				  
 			
 		} catch (Exception e) {
 			System.out.println("Erro ao coletar informações no site");
-			return null;
+			return;
 		}
 				
 	};
 	
-	public Object obterResultadoOver25 () {
+	public void obterResultadoOver25 () {
 			
-			try {
+		String resultadoTipo = "Over25";
+		try {
+			FutServiceBinder futBusiness = new FutServiceBinder();
 			
-				return (Object) this.webClientOver25.get();
-				
-			} catch (Exception e) {
-				System.out.println("Erro ao coletar informações no site");
-				return null;
+			Mono<Object> response = this.webClientOver25.get().retrieve()
+				    .bodyToMono(Object.class);
+			
+			LinkedHashMap<Object, Object>  objects = (LinkedHashMap<Object, Object>) response.block();
+			
+	
+		List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
+		r.forEach(result -> {
+			result.setCodLiga(this.liga);
+			if(result.getTollTip() != null) {
+				Odds r1 = oddsRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
+				if(r1 == null) {
+					oddsRepository.save(result);									
+				}
 			}
-					
-		};
-		public Object obterResultadoOver35 () {
+		});				  
 			
+		} catch (Exception e) {
+			System.out.println("Erro ao coletar informações no site");
+			return;
+		}
+				
+	};
+		public void obterResultadoOver35 () {
+			String resultadoTipo = "Over35";
 			try {
-			
-				return (Object) this.webClientOver35.get();
+				FutServiceBinder futBusiness = new FutServiceBinder();
+				
+				Mono<Object> response = this.webClientOver35.get().retrieve()
+					    .bodyToMono(Object.class);
+				
+				LinkedHashMap<Object, Object>  objects = (LinkedHashMap<Object, Object>) response.block();
+				
+		
+			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
+			r.forEach(result -> {
+				result.setCodLiga(this.liga);
+				if(result.getTollTip() != null) {
+					Odds r1 = oddsRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
+					if(r1 == null) {
+						oddsRepository.save(result);									
+					}
+				}
+			});				  
 				
 			} catch (Exception e) {
 				System.out.println("Erro ao coletar informações no site");
-				return null;
+				return;
 			}
 					
 		};
 		
-		public Object obterResultadoCasa () {
+		public void obterResultadoCasa () {
 			
+			String resultadoTipo = "Casa";
 			try {
-			
-				return (Object) this.webClientCasa.get();
+				FutServiceBinder futBusiness = new FutServiceBinder();
+				
+				Mono<Object> response = this.webClientCasa.get().retrieve()
+					    .bodyToMono(Object.class);
+				
+				LinkedHashMap<Object, Object>  objects = (LinkedHashMap<Object, Object>) response.block();
+				
+		
+			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
+			r.forEach(result -> {
+				result.setCodLiga(this.liga);
+				if(result.getTollTip() != null) {
+					Odds r1 = oddsRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
+					if(r1 == null) {
+						oddsRepository.save(result);									
+					}
+				}
+			});				  
 				
 			} catch (Exception e) {
 				System.out.println("Erro ao coletar informações no site");
-				return null;
+				return;
 			}
 					
 		};
 		
-		public Object obterResultadoEmpate () {
+		public void obterResultadoEmpate () {
 			
+			String resultadoTipo = "Empate";
 			try {
-			
-				return (Object) this.webClientEmpate.get();
+				FutServiceBinder futBusiness = new FutServiceBinder();
+				
+				Mono<Object> response = this.webClientEmpate.get().retrieve()
+					    .bodyToMono(Object.class);
+				
+				LinkedHashMap<Object, Object>  objects = (LinkedHashMap<Object, Object>) response.block();
+				
+		
+			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
+			r.forEach(result -> {
+				result.setCodLiga(this.liga);
+				if(result.getTollTip() != null) {
+					Odds r1 = oddsRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
+					if(r1 == null) {
+						oddsRepository.save(result);									
+					}
+				}
+			});				  
 				
 			} catch (Exception e) {
 				System.out.println("Erro ao coletar informações no site");
-				return null;
+				return;
 			}
 					
 		};
 		
-		public Object obterResultadoVisitante () {
+		public void obterResultadoVisitante () {
 			
+			String resultadoTipo = "Visitante";
 			try {
-			
-				return (Object) this.webClientVisitante.get();
+				FutServiceBinder futBusiness = new FutServiceBinder();
+				
+				Mono<Object> response = this.webClientVisitante.get().retrieve()
+					    .bodyToMono(Object.class);
+				
+				LinkedHashMap<Object, Object>  objects = (LinkedHashMap<Object, Object>) response.block();
+				
+		
+			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
+			r.forEach(result -> {
+				result.setCodLiga(this.liga);
+				if(result.getTollTip() != null) {
+					Odds r1 = oddsRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
+					if(r1 == null) {
+						oddsRepository.save(result);									
+					}
+				}
+			});				  
 				
 			} catch (Exception e) {
 				System.out.println("Erro ao coletar informações no site");
-				return null;
+				return;
 			}
 					
 		};
 		
-		public Object obterResultadoAmbasMarcam () {
+		public void obterResultadoAmbasMarcam () {
 			
+			String resultadoTipo = "AmbasMarcam";
 			try {
-			
-				return (Object) this.webClientAmbasMarcam.get();
+				FutServiceBinder futBusiness = new FutServiceBinder();
+				
+				Mono<Object> response = this.webClientAmbasMarcam.get().retrieve()
+					    .bodyToMono(Object.class);
+				
+				LinkedHashMap<Object, Object>  objects = (LinkedHashMap<Object, Object>) response.block();
+				
+		
+			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
+			r.forEach(result -> {
+				result.setCodLiga(this.liga);
+				if(result.getTollTip() != null) {
+					Odds r1 = oddsRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
+					if(r1 == null) {
+						oddsRepository.save(result);									
+					}
+				}
+			});				  
 				
 			} catch (Exception e) {
 				System.out.println("Erro ao coletar informações no site");
-				return null;
+				return;
 			}
 					
+		};
+
+		public void setLiga() {
+			Optional<Liga> liga = ligaRepository.findByCodLiga(idCompetition);
+			if(!liga.isPresent()) {
+				Liga l1 = new Liga();
+				l1.setNomeLiga("Copa Premier");
+				l1.setCodLiga(idCompetition);
+				this.liga = ligaRepository.save(l1);
+			} else {
+				this.liga = liga.get();
+			}
+			
 		};
 					
 }
