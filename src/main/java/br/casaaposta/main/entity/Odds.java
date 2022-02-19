@@ -1,5 +1,7 @@
 package br.casaaposta.main.entity;
 import java.io.Serializable;
+import java.time.LocalTime;
+
 import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,7 +25,7 @@ public class Odds implements Serializable{
 	private String resultado;
 	
 	@Column(name="Data")
-	private String data;
+	private LocalTime data;
 	
 	@Column(name="Hora")
 	private int hora;
