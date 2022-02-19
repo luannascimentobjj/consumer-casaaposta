@@ -77,5 +77,15 @@ public class TasksSchedule {
 		superCupService.obterResultadoAmbasMarcam();
 	}
 	
+	@Scheduled(fixedDelay = 300000)
+	@Async
+	public void ObterCookieReset() {
+	
+		System.out.println("Reset Cookie");
+		euroCupService.setLiga();
+		euroCupService.obterResetCookie();
+
+	}
+	
 	
 }
