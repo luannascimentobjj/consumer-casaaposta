@@ -44,7 +44,15 @@ public class FutServiceBinder {
 									if(result.getKey().equals("Minute")) {
 										r.setMinuto((int) result.getValue());
 									}else if(result.getKey().equals("Tooltip")) {
-										r.setTollTip((String) result.getValue());
+										if(result.getValue() != null) {
+											String[] sub = ((String) result.getValue()).split(" vs ");
+											String[] sub2 =  (sub[0]).split(" ");
+											r.setTimeVisitante(sub[1]);
+											r.setTimeCasa(sub2[3]);
+											r.setData(sub2[0]);
+											r.setTollTip((String) result.getValue());
+										}
+									
 									}else if(result.getKey().equals("Result")) {
 										r.setResultado((String) result.getValue());
 									}else if(result.getKey().equals("Countable")) {
