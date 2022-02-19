@@ -1,4 +1,5 @@
 package br.casaaposta.main.service;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -16,6 +17,7 @@ import org.springframework.web.reactive.function.client.WebClient.UriSpec;
 
 import br.casaaposta.main.bind.FutServiceBinder;
 import br.casaaposta.main.entity.Liga;
+import br.casaaposta.main.entity.Log;
 import br.casaaposta.main.entity.Odds;
 import br.casaaposta.main.entity.Resultado;
 import br.casaaposta.main.model.ResultadoModel;
@@ -52,6 +54,7 @@ public class FutVirtualServiceEuroCup {
 	ResultadoRepository resultadoRepository;
 	@Autowired 
 	LogRepository logRepository;
+	private Log logger_;
 
 	
 	
@@ -102,6 +105,11 @@ public class FutVirtualServiceEuroCup {
 		});				  
 			
 		} catch (Exception e) {
+			
+			this.logger_.setStackTrace(e.getMessage());
+			this.logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoFT");
+			this.logger_.setDataInclusao(LocalTime.now());
+			logRepository.save(this.logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
 			return;
@@ -133,6 +141,10 @@ public class FutVirtualServiceEuroCup {
 		});				  
 			
 		} catch (Exception e) {
+			this.logger_.setStackTrace(e.getMessage());
+			this.logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoHT");
+			this.logger_.setDataInclusao(LocalTime.now());
+			logRepository.save(this.logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
 			return;
@@ -164,7 +176,13 @@ public class FutVirtualServiceEuroCup {
 		});				  
 			
 		} catch (Exception e) {
+			
+			this.logger_.setStackTrace(e.getMessage());
+			this.logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoUnder05");
+			this.logger_.setDataInclusao(LocalTime.now());
+			logRepository.save(this.logger_);
 			System.out.println("Erro ao coletar informações no site");
+			e.getMessage();
 			return;
 		}
 				
@@ -195,7 +213,12 @@ public class FutVirtualServiceEuroCup {
 		});				  
 			
 		} catch (Exception e) {
+			this.logger_.setStackTrace(e.getMessage());
+			this.logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoUnder15");
+			this.logger_.setDataInclusao(LocalTime.now());
+			logRepository.save(this.logger_);
 			System.out.println("Erro ao coletar informações no site");
+			e.getMessage();
 			return;
 		}
 				
@@ -225,7 +248,12 @@ public class FutVirtualServiceEuroCup {
 		});				  
 			
 		} catch (Exception e) {
+			this.logger_.setStackTrace(e.getMessage());
+			this.logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoOver25");
+			this.logger_.setDataInclusao(LocalTime.now());
+			logRepository.save(this.logger_);
 			System.out.println("Erro ao coletar informações no site");
+			e.getMessage();
 			return;
 		}
 				
@@ -253,7 +281,12 @@ public class FutVirtualServiceEuroCup {
 			});				  
 				
 			} catch (Exception e) {
+				this.logger_.setStackTrace(e.getMessage());
+				this.logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoOver35");
+				this.logger_.setDataInclusao(LocalTime.now());
+				logRepository.save(this.logger_);
 				System.out.println("Erro ao coletar informações no site");
+				e.getMessage();
 				return;
 			}
 					
@@ -283,7 +316,12 @@ public class FutVirtualServiceEuroCup {
 			});				  
 				
 			} catch (Exception e) {
+				this.logger_.setStackTrace(e.getMessage());
+				this.logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoCasa");
+				this.logger_.setDataInclusao(LocalTime.now());
+				logRepository.save(this.logger_);
 				System.out.println("Erro ao coletar informações no site");
+				e.getMessage();
 				return;
 			}
 					
@@ -313,7 +351,12 @@ public class FutVirtualServiceEuroCup {
 			});				  
 				
 			} catch (Exception e) {
+				this.logger_.setStackTrace(e.getMessage());
+				this.logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoEmpate");
+				this.logger_.setDataInclusao(LocalTime.now());
+				logRepository.save(this.logger_);
 				System.out.println("Erro ao coletar informações no site");
+				e.getMessage();
 				return;
 			}
 					
@@ -343,7 +386,12 @@ public class FutVirtualServiceEuroCup {
 			});				  
 				
 			} catch (Exception e) {
+				this.logger_.setStackTrace(e.getMessage());
+				this.logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoVisitante");
+				this.logger_.setDataInclusao(LocalTime.now());
+				logRepository.save(this.logger_);
 				System.out.println("Erro ao coletar informações no site");
+				e.getMessage();
 				return;
 			}
 					
@@ -373,7 +421,12 @@ public class FutVirtualServiceEuroCup {
 			});				  
 				
 			} catch (Exception e) {
+				this.logger_.setStackTrace(e.getMessage());
+				this.logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoAmbasMarcam");
+				this.logger_.setDataInclusao(LocalTime.now());
+				logRepository.save(this.logger_);
 				System.out.println("Erro ao coletar informações no site");
+				e.getMessage();
 				return;
 			}
 					

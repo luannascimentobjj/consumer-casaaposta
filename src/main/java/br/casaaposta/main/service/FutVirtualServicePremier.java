@@ -1,4 +1,5 @@
 package br.casaaposta.main.service;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -16,6 +17,7 @@ import org.springframework.web.reactive.function.client.WebClient.UriSpec;
 
 import br.casaaposta.main.bind.FutServiceBinder;
 import br.casaaposta.main.entity.Liga;
+import br.casaaposta.main.entity.Log;
 import br.casaaposta.main.entity.Odds;
 import br.casaaposta.main.entity.Resultado;
 import br.casaaposta.main.model.ResultadoModel;
@@ -52,7 +54,7 @@ public class FutVirtualServicePremier {
 	ResultadoRepository resultadoRepository;
 	@Autowired 
 	LogRepository logRepository;
-
+	private Log logger_;
 	
 	
 	 public FutVirtualServicePremier(WebClient.Builder webClientBuilder) {
@@ -102,6 +104,10 @@ public class FutVirtualServicePremier {
 		});				  
 			
 		} catch (Exception e) {
+			this.logger_.setStackTrace(e.getMessage());
+			this.logger_.setError("Erro ao coletar informações no site, FutVirtualServicePremier.obterResultadoAmbasMarcam");
+			this.logger_.setDataInclusao(LocalTime.now());
+			logRepository.save(this.logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
 			return;
@@ -133,6 +139,10 @@ public class FutVirtualServicePremier {
 		});				  
 			
 		} catch (Exception e) {
+			this.logger_.setStackTrace(e.getMessage());
+			this.logger_.setError("Erro ao coletar informações no site, FutVirtualServicePremier.obterResultadoHT");
+			this.logger_.setDataInclusao(LocalTime.now());
+			logRepository.save(this.logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
 			return;
@@ -164,7 +174,12 @@ public class FutVirtualServicePremier {
 		});				  
 			
 		} catch (Exception e) {
+			this.logger_.setStackTrace(e.getMessage());
+			this.logger_.setError("Erro ao coletar informações no site, FutVirtualServicePremier.obterResultadoUnder05");
+			this.logger_.setDataInclusao(LocalTime.now());
+			logRepository.save(this.logger_);
 			System.out.println("Erro ao coletar informações no site");
+			e.getMessage();
 			return;
 		}
 				
@@ -195,7 +210,12 @@ public class FutVirtualServicePremier {
 		});				  
 			
 		} catch (Exception e) {
+			this.logger_.setStackTrace(e.getMessage());
+			this.logger_.setError("Erro ao coletar informações no site, FutVirtualServicePremier.obterResultadoUnder15");
+			this.logger_.setDataInclusao(LocalTime.now());
+			logRepository.save(this.logger_);
 			System.out.println("Erro ao coletar informações no site");
+			e.getMessage();
 			return;
 		}
 				
@@ -225,7 +245,12 @@ public class FutVirtualServicePremier {
 		});				  
 			
 		} catch (Exception e) {
+			this.logger_.setStackTrace(e.getMessage());
+			this.logger_.setError("Erro ao coletar informações no site, FutVirtualServicePremier.obterResultadoOver25");
+			this.logger_.setDataInclusao(LocalTime.now());
+			logRepository.save(this.logger_);
 			System.out.println("Erro ao coletar informações no site");
+			e.getMessage();
 			return;
 		}
 				
@@ -253,7 +278,12 @@ public class FutVirtualServicePremier {
 			});				  
 				
 			} catch (Exception e) {
+				this.logger_.setStackTrace(e.getMessage());
+				this.logger_.setError("Erro ao coletar informações no site, FutVirtualServicePremier.obterResultadoOver35");
+				this.logger_.setDataInclusao(LocalTime.now());
+				logRepository.save(this.logger_);
 				System.out.println("Erro ao coletar informações no site");
+				e.getMessage();
 				return;
 			}
 					
@@ -283,6 +313,10 @@ public class FutVirtualServicePremier {
 			});				  
 				
 			} catch (Exception e) {
+				this.logger_.setStackTrace(e.getMessage());
+				this.logger_.setError("Erro ao coletar informações no site, FutVirtualServicePremier.obterResultadoCasa");
+				this.logger_.setDataInclusao(LocalTime.now());
+				logRepository.save(this.logger_);
 				System.out.println("Erro ao coletar informações no site");
 				return;
 			}
@@ -313,6 +347,10 @@ public class FutVirtualServicePremier {
 			});				  
 				
 			} catch (Exception e) {
+				this.logger_.setStackTrace(e.getMessage());
+				this.logger_.setError("Erro ao coletar informações no site, FutVirtualServicePremier.obterResultadoEmpate");
+				this.logger_.setDataInclusao(LocalTime.now());
+				logRepository.save(this.logger_);
 				System.out.println("Erro ao coletar informações no site");
 				return;
 			}
@@ -343,6 +381,10 @@ public class FutVirtualServicePremier {
 			});				  
 				
 			} catch (Exception e) {
+				this.logger_.setStackTrace(e.getMessage());
+				this.logger_.setError("Erro ao coletar informações no site, FutVirtualServicePremier.obterResultadoVisitante");
+				this.logger_.setDataInclusao(LocalTime.now());
+				logRepository.save(this.logger_);
 				System.out.println("Erro ao coletar informações no site");
 				return;
 			}
@@ -373,6 +415,10 @@ public class FutVirtualServicePremier {
 			});				  
 				
 			} catch (Exception e) {
+				this.logger_.setStackTrace(e.getMessage());
+				this.logger_.setError("Erro ao coletar informações no site, FutVirtualServicePremier.obterResultadoAmbasMarcam");
+				this.logger_.setDataInclusao(LocalTime.now());
+				logRepository.save(this.logger_);
 				System.out.println("Erro ao coletar informações no site");
 				return;
 			}
