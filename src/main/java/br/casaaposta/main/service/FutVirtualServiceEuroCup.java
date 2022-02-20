@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -55,7 +56,8 @@ public class FutVirtualServiceEuroCup {
 	ResultadoRepository resultadoRepository;
 	@Autowired
 	LogRepository logRepository;
-	private Log logger_;
+	
+	private Log logger_ = new Log();
 
 	public FutVirtualServiceEuroCup(WebClient.Builder webClientBuilder) {
 		webClientBuilder.defaultHeaders(httpHeaders -> {
@@ -109,15 +111,16 @@ public class FutVirtualServiceEuroCup {
 
 	};
 
+	@Async
 	public void obterResultadoFT() {
 		String resultadoTipo = "FT";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
 
-			Mono<Object> response = this.webClientResultadoFT.get().retrieve().bodyToMono(Object.class);
+			Flux<Object> response = this.webClientResultadoFT.get().retrieve().bodyToFlux(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
-
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
+			System.out.println("Retornou do Serviço resultado FT");
 			List<Resultado> r = futBusiness.bindResultado(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
@@ -126,23 +129,25 @@ public class FutVirtualServiceEuroCup {
 							result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
 					if (r1 == null) {
 						resultadoRepository.save(result);
+						System.out.println("Salvou Resultado no Banco, resultado FT");
 					}
 				}
 			});
-
+			this.webClientResultadoFT.wait(1800000);
 		} catch (Exception e) {
 
-			this.logger_.setStackTrace(e.getMessage());
-			this.logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoFT");
-			this.logger_.setDataInclusao(LocalTime.now());
-			logRepository.save(this.logger_);
-			System.out.println("Erro ao coletar informações no site");
+			logger_.setStackTrace(e.getMessage());
+			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoFT");
+			logger_.setDataInclusao(LocalTime.now());
+			logRepository.save(logger_);
+			System.out.println("Erro ao coletar informações no site " + e.getMessage());
 			e.getMessage();
 			return;
 		}
 
 	};
 
+	@Async
 	public void obterResultadoHT() {
 		String resultadoTipo = "HT";
 		try {
@@ -166,10 +171,10 @@ public class FutVirtualServiceEuroCup {
 			});
 
 		} catch (Exception e) {
-			this.logger_.setStackTrace(e.getMessage());
-			this.logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoHT");
-			this.logger_.setDataInclusao(LocalTime.now());
-			logRepository.save(this.logger_);
+			logger_.setStackTrace(e.getMessage());
+			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoHT");
+			logger_.setDataInclusao(LocalTime.now());
+			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
 			return;
@@ -177,6 +182,7 @@ public class FutVirtualServiceEuroCup {
 
 	};
 
+	@Async
 	public void obterResultadoUnder05() {
 
 		String resultadoTipo = "Under05";
@@ -201,11 +207,11 @@ public class FutVirtualServiceEuroCup {
 
 		} catch (Exception e) {
 
-			this.logger_.setStackTrace(e.getMessage());
-			this.logger_
+			logger_.setStackTrace(e.getMessage());
+			logger_
 					.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoUnder05");
-			this.logger_.setDataInclusao(LocalTime.now());
-			logRepository.save(this.logger_);
+			logger_.setDataInclusao(LocalTime.now());
+			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
 			return;
@@ -213,6 +219,7 @@ public class FutVirtualServiceEuroCup {
 
 	};
 
+	@Async
 	public void obterResultadoUnder15() {
 
 		String resultadoTipo = "Under15";
@@ -236,18 +243,18 @@ public class FutVirtualServiceEuroCup {
 			});
 
 		} catch (Exception e) {
-			this.logger_.setStackTrace(e.getMessage());
-			this.logger_
+			logger_.setStackTrace(e.getMessage());
+			logger_
 					.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoUnder15");
-			this.logger_.setDataInclusao(LocalTime.now());
-			logRepository.save(this.logger_);
+			logger_.setDataInclusao(LocalTime.now());
+			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
 			return;
 		}
 
 	};
-
+	@Async
 	public void obterResultadoOver25() {
 
 		String resultadoTipo = "Over25";
@@ -271,17 +278,17 @@ public class FutVirtualServiceEuroCup {
 			});
 
 		} catch (Exception e) {
-			this.logger_.setStackTrace(e.getMessage());
-			this.logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoOver25");
-			this.logger_.setDataInclusao(LocalTime.now());
-			logRepository.save(this.logger_);
+			logger_.setStackTrace(e.getMessage());
+			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoOver25");
+			logger_.setDataInclusao(LocalTime.now());
+			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
 			return;
 		}
 
 	};
-
+	@Async
 	public void obterResultadoOver35() {
 		String resultadoTipo = "Over35";
 		try {
@@ -304,17 +311,17 @@ public class FutVirtualServiceEuroCup {
 			});
 
 		} catch (Exception e) {
-			this.logger_.setStackTrace(e.getMessage());
-			this.logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoOver35");
-			this.logger_.setDataInclusao(LocalTime.now());
-			logRepository.save(this.logger_);
+			logger_.setStackTrace(e.getMessage());
+			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoOver35");
+			logger_.setDataInclusao(LocalTime.now());
+			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
 			return;
 		}
 
 	};
-
+	@Async
 	public void obterResultadoCasa() {
 
 		String resultadoTipo = "Casa";
@@ -338,17 +345,17 @@ public class FutVirtualServiceEuroCup {
 			});
 
 		} catch (Exception e) {
-			this.logger_.setStackTrace(e.getMessage());
-			this.logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoCasa");
-			this.logger_.setDataInclusao(LocalTime.now());
-			logRepository.save(this.logger_);
+			logger_.setStackTrace(e.getMessage());
+			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoCasa");
+			logger_.setDataInclusao(LocalTime.now());
+			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
 			return;
 		}
 
 	};
-
+	@Async
 	public void obterResultadoEmpate() {
 
 		String resultadoTipo = "Empate";
@@ -372,17 +379,17 @@ public class FutVirtualServiceEuroCup {
 			});
 
 		} catch (Exception e) {
-			this.logger_.setStackTrace(e.getMessage());
-			this.logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoEmpate");
-			this.logger_.setDataInclusao(LocalTime.now());
-			logRepository.save(this.logger_);
+			logger_.setStackTrace(e.getMessage());
+			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoEmpate");
+			logger_.setDataInclusao(LocalTime.now());
+			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
 			return;
 		}
 
 	};
-
+	@Async
 	public void obterResultadoVisitante() {
 
 		String resultadoTipo = "Visitante";
@@ -406,18 +413,18 @@ public class FutVirtualServiceEuroCup {
 			});
 
 		} catch (Exception e) {
-			this.logger_.setStackTrace(e.getMessage());
-			this.logger_
+			logger_.setStackTrace(e.getMessage());
+			logger_
 					.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoVisitante");
-			this.logger_.setDataInclusao(LocalTime.now());
-			logRepository.save(this.logger_);
+			logger_.setDataInclusao(LocalTime.now());
+			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
 			return;
 		}
 
 	};
-
+	@Async
 	public void obterResultadoAmbasMarcam() {
 
 		String resultadoTipo = "AmbasMarcam";
@@ -441,11 +448,11 @@ public class FutVirtualServiceEuroCup {
 			});
 
 		} catch (Exception e) {
-			this.logger_.setStackTrace(e.getMessage());
-			this.logger_.setError(
+			logger_.setStackTrace(e.getMessage());
+			logger_.setError(
 					"Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoAmbasMarcam");
-			this.logger_.setDataInclusao(LocalTime.now());
-			logRepository.save(this.logger_);
+			logger_.setDataInclusao(LocalTime.now());
+			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
 			return;

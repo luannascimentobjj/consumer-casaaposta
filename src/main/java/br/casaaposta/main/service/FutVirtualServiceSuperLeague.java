@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -54,7 +55,7 @@ public class FutVirtualServiceSuperLeague {
 	ResultadoRepository resultadoRepository;
 	@Autowired 
 	LogRepository logRepository;
-	private Log logger_;
+	private Log logger_ = new Log();
 
 	
 	
@@ -81,7 +82,7 @@ public class FutVirtualServiceSuperLeague {
 		
 	}
 
-	
+	 @Async
 	public void obterResultadoFT () {
 		String resultadoTipo = "FT";
 		try {
@@ -105,17 +106,17 @@ public class FutVirtualServiceSuperLeague {
 		});				  
 			
 		} catch (Exception e) {
-			this.logger_.setStackTrace(e.getMessage());
-			this.logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoFT");
-			this.logger_.setDataInclusao(LocalTime.now());
-			logRepository.save(this.logger_);
+			logger_.setStackTrace(e.getMessage());
+			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoFT");
+			logger_.setDataInclusao(LocalTime.now());
+			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
 			return;
 		}
 				
 	};
-	
+	@Async
 	public void obterResultadoHT () {
 		String resultadoTipo = "HT";
 		try {
@@ -140,17 +141,17 @@ public class FutVirtualServiceSuperLeague {
 		});				  
 			
 		} catch (Exception e) {
-			this.logger_.setStackTrace(e.getMessage());
-			this.logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoHT");
-			this.logger_.setDataInclusao(LocalTime.now());
-			logRepository.save(this.logger_);
+			logger_.setStackTrace(e.getMessage());
+			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoHT");
+			logger_.setDataInclusao(LocalTime.now());
+			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
 			return;
 		}
 				
 	};
-	
+	@Async
 	public void obterResultadoUnder05 () {
 		
 		String resultadoTipo = "Under05";
@@ -175,17 +176,17 @@ public class FutVirtualServiceSuperLeague {
 		});				  
 			
 		} catch (Exception e) {
-			this.logger_.setStackTrace(e.getMessage());
-			this.logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoUnder05");
-			this.logger_.setDataInclusao(LocalTime.now());
-			logRepository.save(this.logger_);
+			logger_.setStackTrace(e.getMessage());
+			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoUnder05");
+			logger_.setDataInclusao(LocalTime.now());
+			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			return;
 		}
 				
 	};
 		
-	
+	@Async
 	public void obterResultadoUnder15 () {
 		
 		String resultadoTipo = "Under15";
@@ -210,16 +211,16 @@ public class FutVirtualServiceSuperLeague {
 		});				  
 			
 		} catch (Exception e) {
-			this.logger_.setStackTrace(e.getMessage());
-			this.logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoUnder15");
-			this.logger_.setDataInclusao(LocalTime.now());
-			logRepository.save(this.logger_);
+			logger_.setStackTrace(e.getMessage());
+			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoUnder15");
+			logger_.setDataInclusao(LocalTime.now());
+			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			return;
 		}
 				
 	};
-	
+	@Async
 	public void obterResultadoOver25 () {
 			
 		String resultadoTipo = "Over25";
@@ -244,15 +245,16 @@ public class FutVirtualServiceSuperLeague {
 		});				  
 			
 		} catch (Exception e) {
-			this.logger_.setStackTrace(e.getMessage());
-			this.logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoOver25");
-			this.logger_.setDataInclusao(LocalTime.now());
-			logRepository.save(this.logger_);
+			logger_.setStackTrace(e.getMessage());
+			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoOver25");
+			logger_.setDataInclusao(LocalTime.now());
+			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			return;
 		}
 				
 	};
+		@Async
 		public void obterResultadoOver35 () {
 			String resultadoTipo = "Over35";
 			try {
@@ -276,16 +278,16 @@ public class FutVirtualServiceSuperLeague {
 			});				  
 				
 			} catch (Exception e) {
-				this.logger_.setStackTrace(e.getMessage());
-				this.logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoOver35");
-				this.logger_.setDataInclusao(LocalTime.now());
-				logRepository.save(this.logger_);
+				logger_.setStackTrace(e.getMessage());
+				logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoOver35");
+				logger_.setDataInclusao(LocalTime.now());
+				logRepository.save(logger_);
 				System.out.println("Erro ao coletar informações no site");
 				return;
 			}
 					
 		};
-		
+		@Async
 		public void obterResultadoCasa () {
 			
 			String resultadoTipo = "Casa";
@@ -310,16 +312,16 @@ public class FutVirtualServiceSuperLeague {
 			});				  
 				
 			} catch (Exception e) {
-				this.logger_.setStackTrace(e.getMessage());
-				this.logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoCasa");
-				this.logger_.setDataInclusao(LocalTime.now());
-				logRepository.save(this.logger_);
+				logger_.setStackTrace(e.getMessage());
+				logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoCasa");
+				logger_.setDataInclusao(LocalTime.now());
+				logRepository.save(logger_);
 				System.out.println("Erro ao coletar informações no site");
 				return;
 			}
 					
 		};
-		
+		@Async
 		public void obterResultadoEmpate () {
 			
 			String resultadoTipo = "Empate";
@@ -344,16 +346,16 @@ public class FutVirtualServiceSuperLeague {
 			});				  
 				
 			} catch (Exception e) {
-				this.logger_.setStackTrace(e.getMessage());
-				this.logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoEmpate");
-				this.logger_.setDataInclusao(LocalTime.now());
-				logRepository.save(this.logger_);
+				logger_.setStackTrace(e.getMessage());
+				logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoEmpate");
+				logger_.setDataInclusao(LocalTime.now());
+				logRepository.save(logger_);
 				System.out.println("Erro ao coletar informações no site");
 				return;
 			}
 					
 		};
-		
+		@Async
 		public void obterResultadoVisitante () {
 			
 			String resultadoTipo = "Visitante";
@@ -378,16 +380,16 @@ public class FutVirtualServiceSuperLeague {
 			});				  
 				
 			} catch (Exception e) {
-				this.logger_.setStackTrace(e.getMessage());
-				this.logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoVisitante");
-				this.logger_.setDataInclusao(LocalTime.now());
-				logRepository.save(this.logger_);
+				logger_.setStackTrace(e.getMessage());
+				logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoVisitante");
+				logger_.setDataInclusao(LocalTime.now());
+				logRepository.save(logger_);
 				System.out.println("Erro ao coletar informações no site");
 				return;
 			}
 					
 		};
-		
+		@Async
 		public void obterResultadoAmbasMarcam () {
 			
 			String resultadoTipo = "AmbasMarcam";
@@ -412,10 +414,10 @@ public class FutVirtualServiceSuperLeague {
 			});				  
 				
 			} catch (Exception e) {
-				this.logger_.setStackTrace(e.getMessage());
-				this.logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoAmbasMarcam");
-				this.logger_.setDataInclusao(LocalTime.now());
-				logRepository.save(this.logger_);
+				logger_.setStackTrace(e.getMessage());
+				logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoAmbasMarcam");
+				logger_.setDataInclusao(LocalTime.now());
+				logRepository.save(logger_);
 				System.out.println("Erro ao coletar informações no site");
 				return;
 			}

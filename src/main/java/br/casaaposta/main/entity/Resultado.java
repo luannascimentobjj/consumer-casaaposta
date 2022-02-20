@@ -60,6 +60,9 @@ public class Resultado {
 	@Column(name="Data")
 	private String data;
 	
+	@Column(name="ano")
+	private String ano;
+	
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "codLiga", referencedColumnName = "codLiga")
 	private Liga codLiga;

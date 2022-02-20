@@ -22,7 +22,7 @@ public class TasksSchedule {
 	@Autowired
 	private FutVirtualServiceSuperLeague superCupService;
 	
-	@Scheduled(fixedDelay = 600000)
+	@Scheduled(fixedDelay = 86400000)
 	@Async
 	public void ObterResultadoFTEuroCopa() {
 	
@@ -33,6 +33,7 @@ public class TasksSchedule {
 		superCupService.setLiga();
 		
 		euroCupService.obterResultadoFT();
+		/**
 		euroCupService.obterResultadoHT();
 		euroCupService.obterResultadoOver25();
 		euroCupService.obterResultadoOver35();
@@ -75,9 +76,12 @@ public class TasksSchedule {
 		superCupService.obterResultadoEmpate();
 		superCupService.obterResultadoVisitante();
 		superCupService.obterResultadoAmbasMarcam();
+		
+		**/
 	}
 	
-	@Scheduled(fixedDelay = 300000)
+	
+	@Scheduled(fixedDelay = 120000)
 	@Async
 	public void ObterCookieReset() {
 	

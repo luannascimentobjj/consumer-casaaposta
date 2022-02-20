@@ -23,10 +23,7 @@ public class Odds implements Serializable{
 
 	@Column(name="Resultado")
 	private String resultado;
-	
-	@Column(name="Data")
-	private LocalTime data;
-	
+
 	@Column(name="Hora")
 	private int hora;
 	
@@ -50,6 +47,19 @@ public class Odds implements Serializable{
 	
 	@Column(name="sumScore")
 	private int sumScore;
+	
+	@Column(name="timeCasa")
+	private String timeCasa;
+	
+	@Column(name="timeVisitante")
+	private String timeVisitante;
+	
+	@Column(name="Data")
+	private String data;
+	
+	@Column(name="ano")
+	private String ano;
+	
 	
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "codLiga", referencedColumnName = "codLiga")
