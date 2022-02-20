@@ -1,5 +1,6 @@
 package br.casaaposta.main.repository;
 
+
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;

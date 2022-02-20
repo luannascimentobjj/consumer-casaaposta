@@ -1,5 +1,4 @@
 package br.casaaposta.main.bind;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -78,7 +77,9 @@ public class FutServiceBinder {
 								r.setHora(this.hora);
 								r.setPercentual(this.percent);
 								r.setResultadoTipo(tipoResultado);
-								list.add(r);
+								if (r.getTollTip() != null) {
+									list.add(r);	
+								}
 							});
 						}
 					});
@@ -144,7 +145,6 @@ public class FutServiceBinder {
 								r.setHora(this.hora);
 								r.setPercentual(this.percent);
 								r.setResultadoTipo(tipoResultado);
-
 								list.add(r);
 							});
 						}

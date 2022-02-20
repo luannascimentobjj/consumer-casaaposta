@@ -87,7 +87,6 @@ public class FutVirtualServiceWorldCup {
 		String resultadoTipo = "FT";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
-
 			Mono<Object> response = this.webClientResultadoFT.get().retrieve().bodyToMono(Object.class);
 
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
@@ -122,7 +121,6 @@ public class FutVirtualServiceWorldCup {
 		try {
 
 			FutServiceBinder futBusiness = new FutServiceBinder();
-
 			Mono<Object> response = this.webClientResultadoHT.get().retrieve().bodyToMono(Object.class);
 
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
@@ -157,7 +155,6 @@ public class FutVirtualServiceWorldCup {
 		String resultadoTipo = "Under05";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
-
 			Mono<Object> response = this.webClientUnder05.get().retrieve().bodyToMono(Object.class);
 
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
@@ -191,7 +188,6 @@ public class FutVirtualServiceWorldCup {
 		String resultadoTipo = "Under15";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
-
 			Mono<Object> response = this.webClientUnder15.get().retrieve().bodyToMono(Object.class);
 
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
@@ -225,7 +221,6 @@ public class FutVirtualServiceWorldCup {
 		String resultadoTipo = "Over25";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
-
 			Mono<Object> response = this.webClientOver25.get().retrieve().bodyToMono(Object.class);
 
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
@@ -258,7 +253,6 @@ public class FutVirtualServiceWorldCup {
 		String resultadoTipo = "Over35";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
-
 			Mono<Object> response = this.webClientOver35.get().retrieve().bodyToMono(Object.class);
 
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
@@ -292,7 +286,6 @@ public class FutVirtualServiceWorldCup {
 		String resultadoTipo = "Casa";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
-
 			Mono<Object> response = this.webClientCasa.get().retrieve().bodyToMono(Object.class);
 
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
@@ -326,7 +319,7 @@ public class FutVirtualServiceWorldCup {
 		String resultadoTipo = "Empate";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
-
+			
 			Mono<Object> response = this.webClientEmpate.get().retrieve().bodyToMono(Object.class);
 
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
@@ -394,7 +387,6 @@ public class FutVirtualServiceWorldCup {
 		String resultadoTipo = "AmbasMarcam";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
-
 			Mono<Object> response = this.webClientAmbasMarcam.get().retrieve().bodyToMono(Object.class);
 
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();

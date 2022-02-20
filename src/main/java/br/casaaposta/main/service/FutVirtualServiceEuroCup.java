@@ -56,7 +56,7 @@ public class FutVirtualServiceEuroCup {
 	ResultadoRepository resultadoRepository;
 	@Autowired
 	LogRepository logRepository;
-	
+
 	private Log logger_ = new Log();
 
 	public FutVirtualServiceEuroCup(WebClient.Builder webClientBuilder) {
@@ -116,7 +116,6 @@ public class FutVirtualServiceEuroCup {
 		String resultadoTipo = "FT";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
-
 			Flux<Object> response = this.webClientResultadoFT.get().retrieve().bodyToFlux(Object.class);
 
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
@@ -124,16 +123,18 @@ public class FutVirtualServiceEuroCup {
 			List<Resultado> r = futBusiness.bindResultado(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-				if (result.getTollTip() != null) {
-					Resultado r1 = resultadoRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(
-							result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
-					if (r1 == null) {
-						resultadoRepository.save(result);
-						System.out.println("Salvou Resultado no Banco, resultado FT");
-					}
-				}
+				// if (result.getTollTip() != null) {
+				// Resultado r1 =
+				// resultadoRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(
+				// result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
+				// if (r1 == null) {
+				resultadoRepository.save(result);
+				System.out.println("Salvou Resultado no Banco, resultado FT");
+				// }
+				// }
 			});
 			this.webClientResultadoFT.wait(10800000);
+			System.out.println("Tempo total da Execução -" + System.currentTimeMillis());
 		} catch (Exception e) {
 
 			logger_.setStackTrace(e.getMessage());
@@ -153,7 +154,7 @@ public class FutVirtualServiceEuroCup {
 		try {
 
 			FutServiceBinder futBusiness = new FutServiceBinder();
-
+			
 			Mono<Object> response = this.webClientResultadoHT.get().retrieve().bodyToMono(Object.class);
 
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
@@ -188,7 +189,7 @@ public class FutVirtualServiceEuroCup {
 		String resultadoTipo = "Under05";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
-
+			 
 			Mono<Object> response = this.webClientUnder05.get().retrieve().bodyToMono(Object.class);
 
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
@@ -208,8 +209,7 @@ public class FutVirtualServiceEuroCup {
 		} catch (Exception e) {
 
 			logger_.setStackTrace(e.getMessage());
-			logger_
-					.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoUnder05");
+			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoUnder05");
 			logger_.setDataInclusao(LocalTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
@@ -225,7 +225,7 @@ public class FutVirtualServiceEuroCup {
 		String resultadoTipo = "Under15";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
-
+			 
 			Mono<Object> response = this.webClientUnder15.get().retrieve().bodyToMono(Object.class);
 
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
@@ -244,8 +244,7 @@ public class FutVirtualServiceEuroCup {
 
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
-			logger_
-					.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoUnder15");
+			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoUnder15");
 			logger_.setDataInclusao(LocalTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
@@ -254,13 +253,14 @@ public class FutVirtualServiceEuroCup {
 		}
 
 	};
+
 	@Async
 	public void obterResultadoOver25() {
 
 		String resultadoTipo = "Over25";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
-
+			 
 			Mono<Object> response = this.webClientOver25.get().retrieve().bodyToMono(Object.class);
 
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
@@ -288,6 +288,7 @@ public class FutVirtualServiceEuroCup {
 		}
 
 	};
+
 	@Async
 	public void obterResultadoOver35() {
 		String resultadoTipo = "Over35";
@@ -297,7 +298,7 @@ public class FutVirtualServiceEuroCup {
 			Mono<Object> response = this.webClientOver35.get().retrieve().bodyToMono(Object.class);
 
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
-
+			 
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
@@ -321,6 +322,7 @@ public class FutVirtualServiceEuroCup {
 		}
 
 	};
+
 	@Async
 	public void obterResultadoCasa() {
 
@@ -329,7 +331,7 @@ public class FutVirtualServiceEuroCup {
 			FutServiceBinder futBusiness = new FutServiceBinder();
 
 			Mono<Object> response = this.webClientCasa.get().retrieve().bodyToMono(Object.class);
-
+			 
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
@@ -355,13 +357,14 @@ public class FutVirtualServiceEuroCup {
 		}
 
 	};
+
 	@Async
 	public void obterResultadoEmpate() {
 
 		String resultadoTipo = "Empate";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
-
+			 
 			Mono<Object> response = this.webClientEmpate.get().retrieve().bodyToMono(Object.class);
 
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
@@ -389,6 +392,7 @@ public class FutVirtualServiceEuroCup {
 		}
 
 	};
+
 	@Async
 	public void obterResultadoVisitante() {
 
@@ -399,7 +403,7 @@ public class FutVirtualServiceEuroCup {
 			Mono<Object> response = this.webClientVisitante.get().retrieve().bodyToMono(Object.class);
 
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
-
+			 
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
@@ -414,8 +418,7 @@ public class FutVirtualServiceEuroCup {
 
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
-			logger_
-					.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoVisitante");
+			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoVisitante");
 			logger_.setDataInclusao(LocalTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
@@ -424,13 +427,14 @@ public class FutVirtualServiceEuroCup {
 		}
 
 	};
+
 	@Async
 	public void obterResultadoAmbasMarcam() {
 
 		String resultadoTipo = "AmbasMarcam";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
-
+			 
 			Mono<Object> response = this.webClientAmbasMarcam.get().retrieve().bodyToMono(Object.class);
 
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
@@ -449,8 +453,7 @@ public class FutVirtualServiceEuroCup {
 
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
-			logger_.setError(
-					"Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoAmbasMarcam");
+			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoAmbasMarcam");
 			logger_.setDataInclusao(LocalTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
