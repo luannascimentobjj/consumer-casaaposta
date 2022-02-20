@@ -133,7 +133,7 @@ public class FutVirtualServiceEuroCup {
 					}
 				}
 			});
-			this.webClientResultadoFT.wait(1800000);
+			this.webClientResultadoFT.wait(7200000);
 		} catch (Exception e) {
 
 			logger_.setStackTrace(e.getMessage());
