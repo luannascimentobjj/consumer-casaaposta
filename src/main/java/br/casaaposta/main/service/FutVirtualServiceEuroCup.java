@@ -162,7 +162,7 @@ public class FutVirtualServiceEuroCup {
 			Flux<Object> response = this.webClientResultadoHT.get().retrieve().bodyToFlux(Object.class);
 
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
-
+			System.out.println("Retornou do Serviço resultado HT");
 			List<Resultado> r = futBusiness.bindResultado(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
@@ -174,6 +174,7 @@ public class FutVirtualServiceEuroCup {
 			//	}
 			//	}
 			});
+			System.out.println("Início do Save banco: Total da Execução -" + LocalTime.now());
 			resultadoRepository.saveAll(r);
 			System.out.println("Salvou Resultado no Banco, resultado HT");
 			System.out.println("Tempo total da Execução -" + LocalTime.now());
