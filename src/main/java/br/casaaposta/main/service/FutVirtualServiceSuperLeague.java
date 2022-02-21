@@ -98,9 +98,9 @@ public class FutVirtualServiceSuperLeague {
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			 
-			Mono<Object> response = this.webClientResultadoFT.get().retrieve().bodyToMono(Object.class);
+			Flux<Object> response = this.webClientResultadoFT.get().retrieve().bodyToFlux(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
 
 			List<Resultado> r = futBusiness.bindResultado(objects, resultadoTipo);
 			r.forEach(result -> {
@@ -133,9 +133,9 @@ public class FutVirtualServiceSuperLeague {
 
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			 
-			Mono<Object> response = this.webClientResultadoHT.get().retrieve().bodyToMono(Object.class);
+			Flux<Object> response = this.webClientResultadoHT.get().retrieve().bodyToFlux(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
 
 			List<Resultado> r = futBusiness.bindResultado(objects, resultadoTipo);
 			r.forEach(result -> {
@@ -168,9 +168,9 @@ public class FutVirtualServiceSuperLeague {
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			 
-			Mono<Object> response = this.webClientUnder05.get().retrieve().bodyToMono(Object.class);
+			Flux<Object> response = this.webClientUnder05.get().retrieve().bodyToFlux(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
 
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
@@ -202,9 +202,9 @@ public class FutVirtualServiceSuperLeague {
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			 
-			Mono<Object> response = this.webClientUnder15.get().retrieve().bodyToMono(Object.class);
+			Flux<Object> response = this.webClientUnder15.get().retrieve().bodyToFlux(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
 
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
@@ -236,9 +236,9 @@ public class FutVirtualServiceSuperLeague {
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			 
-			Mono<Object> response = this.webClientOver25.get().retrieve().bodyToMono(Object.class);
+			Flux<Object> response = this.webClientOver25.get().retrieve().bodyToFlux(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
 
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
@@ -269,9 +269,9 @@ public class FutVirtualServiceSuperLeague {
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			 
-			Mono<Object> response = this.webClientOver35.get().retrieve().bodyToMono(Object.class);
+			Flux<Object> response = this.webClientOver35.get().retrieve().bodyToFlux(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
 
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
@@ -303,9 +303,9 @@ public class FutVirtualServiceSuperLeague {
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			 
-			Mono<Object> response = this.webClientCasa.get().retrieve().bodyToMono(Object.class);
+			Flux<Object> response = this.webClientCasa.get().retrieve().bodyToFlux(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
 
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
@@ -337,9 +337,9 @@ public class FutVirtualServiceSuperLeague {
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			 
-			Mono<Object> response = this.webClientEmpate.get().retrieve().bodyToMono(Object.class);
+			Flux<Object> response = this.webClientEmpate.get().retrieve().bodyToFlux(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
 
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
@@ -371,9 +371,9 @@ public class FutVirtualServiceSuperLeague {
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			 
-			Mono<Object> response = this.webClientVisitante.get().retrieve().bodyToMono(Object.class);
+			Flux<Object> response = this.webClientVisitante.get().retrieve().bodyToFlux(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
 
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
@@ -406,9 +406,9 @@ public class FutVirtualServiceSuperLeague {
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			 
-			Mono<Object> response = this.webClientAmbasMarcam.get().retrieve().bodyToMono(Object.class);
+			Flux<Object> response = this.webClientAmbasMarcam.get().retrieve().bodyToFlux(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
 
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {

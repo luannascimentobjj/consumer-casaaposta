@@ -18,7 +18,7 @@ import br.casaaposta.main.repository.LogRepository;
 import br.casaaposta.main.repository.OddsRepository;
 import br.casaaposta.main.repository.ResultadoRepository;
 import br.casaaposta.main.util.UrlUtils;
-
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -87,9 +87,9 @@ public class FutVirtualServiceWorldCup {
 		String resultadoTipo = "FT";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
-			Mono<Object> response = this.webClientResultadoFT.get().retrieve().bodyToMono(Object.class);
+			Flux<Object> response = this.webClientResultadoFT.get().retrieve().bodyToFlux(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
 
 			List<Resultado> r = futBusiness.bindResultado(objects, resultadoTipo);
 			r.forEach(result -> {
@@ -121,9 +121,9 @@ public class FutVirtualServiceWorldCup {
 		try {
 
 			FutServiceBinder futBusiness = new FutServiceBinder();
-			Mono<Object> response = this.webClientResultadoHT.get().retrieve().bodyToMono(Object.class);
+			Flux<Object> response = this.webClientResultadoHT.get().retrieve().bodyToFlux(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
 
 			List<Resultado> r = futBusiness.bindResultado(objects, resultadoTipo);
 			r.forEach(result -> {
@@ -155,9 +155,9 @@ public class FutVirtualServiceWorldCup {
 		String resultadoTipo = "Under05";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
-			Mono<Object> response = this.webClientUnder05.get().retrieve().bodyToMono(Object.class);
+			Flux<Object> response = this.webClientUnder05.get().retrieve().bodyToFlux(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
 
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
@@ -188,9 +188,9 @@ public class FutVirtualServiceWorldCup {
 		String resultadoTipo = "Under15";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
-			Mono<Object> response = this.webClientUnder15.get().retrieve().bodyToMono(Object.class);
+			Flux<Object> response = this.webClientUnder15.get().retrieve().bodyToFlux(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
 
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
@@ -221,9 +221,9 @@ public class FutVirtualServiceWorldCup {
 		String resultadoTipo = "Over25";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
-			Mono<Object> response = this.webClientOver25.get().retrieve().bodyToMono(Object.class);
+			Flux<Object> response = this.webClientOver25.get().retrieve().bodyToFlux(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
 
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
@@ -253,9 +253,9 @@ public class FutVirtualServiceWorldCup {
 		String resultadoTipo = "Over35";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
-			Mono<Object> response = this.webClientOver35.get().retrieve().bodyToMono(Object.class);
+			Flux<Object> response = this.webClientOver35.get().retrieve().bodyToFlux(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
 
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
@@ -286,9 +286,9 @@ public class FutVirtualServiceWorldCup {
 		String resultadoTipo = "Casa";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
-			Mono<Object> response = this.webClientCasa.get().retrieve().bodyToMono(Object.class);
+			Flux<Object> response = this.webClientCasa.get().retrieve().bodyToFlux(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
 
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
@@ -320,9 +320,9 @@ public class FutVirtualServiceWorldCup {
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			
-			Mono<Object> response = this.webClientEmpate.get().retrieve().bodyToMono(Object.class);
+			Flux<Object> response = this.webClientEmpate.get().retrieve().bodyToFlux(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
 
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
@@ -354,9 +354,9 @@ public class FutVirtualServiceWorldCup {
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
 
-			Mono<Object> response = this.webClientVisitante.get().retrieve().bodyToMono(Object.class);
+			Flux<Object> response = this.webClientVisitante.get().retrieve().bodyToFlux(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
 
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
@@ -387,9 +387,9 @@ public class FutVirtualServiceWorldCup {
 		String resultadoTipo = "AmbasMarcam";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
-			Mono<Object> response = this.webClientAmbasMarcam.get().retrieve().bodyToMono(Object.class);
+			Flux<Object> response = this.webClientAmbasMarcam.get().retrieve().bodyToFlux(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
 
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
