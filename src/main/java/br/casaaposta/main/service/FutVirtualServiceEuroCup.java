@@ -166,15 +166,17 @@ public class FutVirtualServiceEuroCup {
 			List<Resultado> r = futBusiness.bindResultado(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-				if (result.getTollTip() != null) {
-					Resultado r1 = resultadoRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(
-							result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
-					if (r1 == null) {
-						resultadoRepository.save(result);
-					}
-				}
+				//if (result.getTollTip() != null) {
+				//	Resultado r1 = resultadoRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(
+					//		result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
+				//	if (r1 == null) {
+					//	resultadoRepository.save(result);
+			//	}
+			//	}
 			});
-
+			resultadoRepository.saveAll(r);
+			System.out.println("Salvou Resultado no Banco, resultado HT");
+			System.out.println("Tempo total da Execução -" + LocalTime.now());
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoHT");
