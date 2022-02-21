@@ -128,13 +128,17 @@ public class FutVirtualServiceEuroCup {
 				// resultadoRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(
 				// result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
 				// if (r1 == null) {
-				resultadoRepository.save(result);
-				System.out.println("Salvou Resultado no Banco, resultado FT");
+				
 				// }
 				// }
 			});
-			this.webClientResultadoFT.wait(10800000);
+			resultadoRepository.saveAll(r);
+			System.out.println("Salvou Resultado no Banco, resultado FT");
 			System.out.println("Tempo total da Execução -" + System.currentTimeMillis());
+			//System.out.println("Tempo da Execução do Save -" + System.currentTimeMillis());
+			//this.webClientResultadoFT.wait();
+			//this.webClientResultadoFT.wait(18000000);
+			
 		} catch (Exception e) {
 
 			logger_.setStackTrace(e.getMessage());
