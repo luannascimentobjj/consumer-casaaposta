@@ -32,7 +32,8 @@ public class TasksSchedule {
 		worldCupService.setLiga();
 		superCupService.setLiga();
 		
-		euroCupService.obterResultadoFT();
+		//euroCupService.obterResultadoFT();
+		euroCupService.obterResultadoHT();
 		/**
 		euroCupService.obterResultadoHT();
 		euroCupService.obterResultadoOver25();
