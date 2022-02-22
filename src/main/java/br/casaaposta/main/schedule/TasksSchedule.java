@@ -28,14 +28,14 @@ public class TasksSchedule {
 	
 		System.out.println("USANDO SCHEDULE");
 		euroCupService.setLiga();
-		premierCupService.setLiga();
-		worldCupService.setLiga();
-		superCupService.setLiga();
+//		premierCupService.setLiga();
+//		worldCupService.setLiga();
+		//superCupService.setLiga();
 		
-		//euroCupService.obterResultadoFT();
+		euroCupService.obterResultadoFT();
 		euroCupService.obterResultadoHT();
-		/**
-		euroCupService.obterResultadoHT();
+		
+		
 		euroCupService.obterResultadoOver25();
 		euroCupService.obterResultadoOver35();
 		euroCupService.obterResultadoUnder05();
@@ -45,6 +45,7 @@ public class TasksSchedule {
 		euroCupService.obterResultadoVisitante();
 		euroCupService.obterResultadoAmbasMarcam();
 
+		/**
 		premierCupService.obterResultadoFT();
 		premierCupService.obterResultadoHT();
 		premierCupService.obterResultadoOver25();

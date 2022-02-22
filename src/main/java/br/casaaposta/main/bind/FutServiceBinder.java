@@ -46,8 +46,12 @@ public class FutServiceBinder {
 											String[] sub2 = (sub[0]).split(" ");
 											r.setTimeVisitante(sub[1]);
 											String timeCasa = "";
-											if (sub2.length == 5) {
-												r.setTimeCasa(sub2[3] + " " + sub2[4]);
+											if (sub2.length >= 5) {
+												if(sub2.length == 5) {
+													r.setTimeCasa(sub2[3] + " " + sub2[4]);													
+												}else {
+													r.setTimeCasa(sub2[3] + " " + sub2[4] + "" + sub2[5]);	
+												}
 											} else {
 												if (sub2[2].length() == 4) {
 													r.setTimeCasa(sub2[4]);
@@ -58,7 +62,7 @@ public class FutServiceBinder {
 											r.setData(sub2[0]);
 											r.setAno("2021");
 											String mesAux = sub2[0].split("/")[1];
-											if (mesAux == "01" || mesAux == "02") {
+											if (mesAux.equalsIgnoreCase("01") || mesAux.equalsIgnoreCase("02")) {
 												r.setAno("2022");
 											}
 
@@ -124,13 +128,31 @@ public class FutServiceBinder {
 									if (result.getKey().equals("Minute")) {
 										r.setMinuto((int) result.getValue());
 									} else if (result.getKey().equals("Tooltip")) {
-										r.setTollTip((String) result.getValue());
 										if (result.getValue() != null) {
 											String[] sub = ((String) result.getValue()).split(" vs ");
 											String[] sub2 = (sub[0]).split(" ");
 											r.setTimeVisitante(sub[1]);
-											r.setTimeCasa(sub2[3]);
+											String timeCasa = "";
+											if (sub2.length >= 5) {
+												if(sub2.length == 5) {
+													r.setTimeCasa(sub2[3] + " " + sub2[4]);													
+												}else {
+													r.setTimeCasa(sub2[3] + " " + sub2[4] + "" + sub2[5]);	
+												}
+											} else {
+												if (sub2[2].length() == 4) {
+													r.setTimeCasa(sub2[4]);
+												} else {
+													r.setTimeCasa(sub2[3]);
+												}
+											}
 											r.setData(sub2[0]);
+											r.setAno("2021");
+											String mesAux = sub2[0].split("/")[1];
+											if (mesAux.equalsIgnoreCase("01") || mesAux.equalsIgnoreCase("02")) {
+												r.setAno("2022");
+											}
+
 											r.setTollTip((String) result.getValue());
 										}
 									} else if (result.getKey().equals("Result")) {
