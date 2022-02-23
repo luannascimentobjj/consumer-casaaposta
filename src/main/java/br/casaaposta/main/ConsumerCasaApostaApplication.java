@@ -21,12 +21,12 @@ public class ConsumerCasaApostaApplication {
 		SpringApplication.run(ConsumerCasaApostaApplication.class, args);
 	}
 
-	@Bean  
+	@Bean(name = "taskExecutor")
 	public Executor asyncExecutor() {
         final ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
         taskExecutor.setCorePoolSize(1);
-        taskExecutor.setMaxPoolSize(4);
-        taskExecutor.setThreadNamePrefix("taskExecutor");
+        taskExecutor.setMaxPoolSize(5);
+        taskExecutor.setThreadNamePrefix("taskExecutor-");
         taskExecutor.initialize();
         return taskExecutor;
     }

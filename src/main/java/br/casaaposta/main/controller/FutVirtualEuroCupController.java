@@ -3,6 +3,7 @@ package br.casaaposta.main.controller;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -31,7 +32,7 @@ public class FutVirtualEuroCupController {
 	
 
 	@Async
-	public void obterResultadoUnder05() {
+	public CompletableFuture<String> obterResultadoUnder05() {
 		
 		try {
 			List<Odds> listaUnder05 =  futService_.callServiceUnder05();
@@ -42,11 +43,11 @@ public class FutVirtualEuroCupController {
 			logger_.setDataInclusao(LocalTime.now());
 			logRepository_.save(logger_);
 		}
+		return null;
 
-		
 	}
 	@Async
-	public void obterResultadoHT() {
+	public CompletableFuture<String> obterResultadoHT() {
 		
 		try {
 			List<Resultado> listaResultadoHT =  futService_.callServiceResultadoHT();
@@ -57,11 +58,12 @@ public class FutVirtualEuroCupController {
 			logger_.setDataInclusao(LocalTime.now());
 			logRepository_.save(logger_);
 		}
-
 		
+		return null;
 	}
+	
 	@Async
-	public void obterResultadoFT() {
+	public CompletableFuture<String> obterResultadoFT() {
 		
 		try {
 			List<Resultado> listaResultadoFT =  futService_.callServiceResultadoFT();
@@ -72,11 +74,12 @@ public class FutVirtualEuroCupController {
 			logger_.setDataInclusao(LocalTime.now());
 			logRepository_.save(logger_);
 		}
+		return null;
 
 		
 	}
 	@Async
-	public void obterResultadoUnder15() {
+	public CompletableFuture<String>  obterResultadoUnder15() {
 		
 		try {
 			List<Odds> listaUnder15 =  futService_.callServiceUnder15();
@@ -87,11 +90,12 @@ public class FutVirtualEuroCupController {
 			logger_.setDataInclusao(LocalTime.now());
 			logRepository_.save(logger_);
 		}
+		return null;
 
 		
 	}
 	@Async
-	public void obterResultadoOver25() {
+	public CompletableFuture<String>  obterResultadoOver25() {
 		
 		try {
 			List<Odds> listaOver25 =  futService_.callServiceOver25();
@@ -102,11 +106,12 @@ public class FutVirtualEuroCupController {
 			logger_.setDataInclusao(LocalTime.now());
 			logRepository_.save(logger_);
 		}
+		return null;
 
 		
 	}
 	@Async
-	public void obterResultadoOver35() {
+	public CompletableFuture<String>  obterResultadoOver35() {
 		
 		try {
 			List<Odds> listaOver35 =  futService_.callServiceOver35();
@@ -117,11 +122,12 @@ public class FutVirtualEuroCupController {
 			logger_.setDataInclusao(LocalTime.now());
 			logRepository_.save(logger_);
 		}
+		return null;
 
 		
 	}
 	@Async
-	public void obterResultadoCasa() {
+	public CompletableFuture<String>  obterResultadoCasa() {
 		
 		try {
 			List<Odds> listaCasa =  futService_.callServiceCasa();
@@ -132,11 +138,12 @@ public class FutVirtualEuroCupController {
 			logger_.setDataInclusao(LocalTime.now());
 			logRepository_.save(logger_);
 		}
+		return null;
 
 		
 	}
 	@Async
-	public void obterResultadoEmpate() {
+	public CompletableFuture<String>  obterResultadoEmpate() {
 		
 		try {
 			List<Odds> listaEmpate =  futService_.callServiceEmpate();
@@ -147,11 +154,12 @@ public class FutVirtualEuroCupController {
 			logger_.setDataInclusao(LocalTime.now());
 			logRepository_.save(logger_);
 		}
+		return null;
 
 		
 	}
 	@Async
-	public void obterResultadoVisitante() {
+	public CompletableFuture<String>  obterResultadoVisitante() {
 		
 		try {
 			List<Odds> listaVisitante =  futService_.callServiceVisitante();
@@ -162,12 +170,13 @@ public class FutVirtualEuroCupController {
 			logger_.setDataInclusao(LocalTime.now());
 			logRepository_.save(logger_);
 		}
+		return null;
 
 		
 	}
 	
 	@Async
-	public void obterResultadoAmbasMarcam() {
+	public CompletableFuture<String>  obterResultadoAmbasMarcam() {
 		
 		try {
 			List<Odds> listaAmbasMarcam =  futService_.callServiceAmbasMarcam();
@@ -178,6 +187,7 @@ public class FutVirtualEuroCupController {
 			logger_.setDataInclusao(LocalTime.now());
 			logRepository_.save(logger_);
 		}
+		return null;
 
 		
 	}
