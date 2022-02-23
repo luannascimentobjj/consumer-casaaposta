@@ -5,6 +5,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import br.casaaposta.main.controller.FutVirtualEuroCupController;
 import br.casaaposta.main.service.FutVirtualServiceEuroCup;
 import br.casaaposta.main.service.FutVirtualServicePremier;
 import br.casaaposta.main.service.FutVirtualServiceSuperLeague;
@@ -21,6 +22,8 @@ public class TasksSchedule {
 	private FutVirtualServiceWorldCup worldCupService;
 	@Autowired
 	private FutVirtualServiceSuperLeague superCupService;
+	@Autowired
+	private FutVirtualEuroCupController euroCupController;
 	
 	@Scheduled(fixedDelay = 86400000)
 	@Async
@@ -38,7 +41,7 @@ public class TasksSchedule {
 		
 		//euroCupService.obterResultadoOver25();
 		//euroCupService.obterResultadoOver35();
-		euroCupService.obterResultadoUnder05();
+		euroCupController.obterResultadoUnder05();
 		//euroCupService.obterResultadoUnder15();
 		//euroCupService.obterResultadoCasa();
 		//euroCupService.obterResultadoEmpate();

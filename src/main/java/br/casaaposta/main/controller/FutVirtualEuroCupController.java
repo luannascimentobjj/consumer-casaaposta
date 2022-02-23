@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Controller;
 
 import br.casaaposta.main.entity.Log;
 import br.casaaposta.main.entity.Odds;
@@ -14,6 +16,7 @@ import br.casaaposta.main.repository.OddsRepository;
 import br.casaaposta.main.repository.ResultadoRepository;
 import br.casaaposta.main.service.FutVirtualServiceEuroCup;
 
+@Controller
 public class FutVirtualEuroCupController {
 	
 	@Autowired
@@ -27,6 +30,7 @@ public class FutVirtualEuroCupController {
 	Log logger_ = new Log();
 	
 
+	@Async
 	public void obterResultadoUnder05() {
 		
 		try {
