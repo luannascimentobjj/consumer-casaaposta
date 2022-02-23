@@ -1,37 +1,31 @@
 package br.casaaposta.main.service;
-
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Calendar;
+
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.ClientResponse;
+
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClient.RequestBodySpec;
-import org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec;
-import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
-import org.springframework.web.reactive.function.client.WebClient.UriSpec;
+
 
 import br.casaaposta.main.bind.FutServiceBinder;
 import br.casaaposta.main.entity.Liga;
 import br.casaaposta.main.entity.Log;
 import br.casaaposta.main.entity.Odds;
 import br.casaaposta.main.entity.Resultado;
-import br.casaaposta.main.model.ResultadoModel;
+
 import br.casaaposta.main.repository.LigaRepository;
 import br.casaaposta.main.repository.LogRepository;
 import br.casaaposta.main.repository.OddsRepository;
 import br.casaaposta.main.repository.ResultadoRepository;
 import br.casaaposta.main.util.UrlUtils;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
 
 @Service
 public class FutVirtualServiceEuroCup {
@@ -114,34 +108,24 @@ public class FutVirtualServiceEuroCup {
 	};
 
 	@Async
-	public void obterResultadoFT() {
+	public List<Resultado> callServiceResultadoFT() {
 		String resultadoTipo = "FT";
 		try {
 
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			
-			Flux<Object> response = this.webClientResultadoFT.get().retrieve().bodyToFlux(Object.class);
+			Mono<Object> response = this.webClientResultadoFT.get().retrieve().bodyToMono(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			System.out.println("Retornou do Serviço resultado FT");
 			List<Resultado> r = futBusiness.bindResultado(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-				//if (result.getTollTip() != null) {
-				//	Resultado r1 = resultadoRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(
-					//		result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
-				//	if (r1 == null) {
-					//	resultadoRepository.save(result);
-			//	}
-			//	}
+
 			});
-			Date d = new Date();
-			Long time = d.getTime();
-			System.out.println("Início do Save banco: Total da Execução - FT " + LocalTime.now());
-			resultadoRepository.saveAll(r);
-			time = d.getTime() - time;
-			System.out.println("Salvou Resultado no Banco, resultado FT - Tempo em ms : " + String.valueOf(time) );
-			System.out.println("Tempo total da Execução -" + LocalTime.now());
+			
+			return r;
+
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoFT");
@@ -149,40 +133,31 @@ public class FutVirtualServiceEuroCup {
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
-			return;
+			
 		}
+		return null;
 
 	};
 
 	@Async
-	public void obterResultadoHT() {
+	public List<Resultado> callServiceResultadoHT() {
 		String resultadoTipo = "HT";
 		try {
 
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			
-			Flux<Object> response = this.webClientResultadoHT.get().retrieve().bodyToFlux(Object.class);
+			Mono<Object> response = this.webClientResultadoHT.get().retrieve().bodyToMono(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			System.out.println("Retornou do Serviço resultado HT");
 			List<Resultado> r = futBusiness.bindResultado(objects, resultadoTipo);
 			System.out.println(r.size());
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-				//if (result.getTollTip() != null) {
-				//	Resultado r1 = resultadoRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(
-					//		result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
-				//	if (r1 == null) {
-					//	resultadoRepository.save(result);
-			//	}
-			//	}
 			});
-			Date d = new Date();
-			Long time = d.getTime();
-			System.out.println("Início do Save banco: Total da Execução " + LocalTime.now());
-			resultadoRepository.saveAll(r);
-			System.out.println("Salvou Resultado no Banco, resultado HT - Tempo em ms : " + String.valueOf(time) );
-			System.out.println("Tempo total da Execução -" + LocalTime.now());
+			
+			return r;
+
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoHT");
@@ -190,75 +165,65 @@ public class FutVirtualServiceEuroCup {
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
-			return;
+			
 		}
+		return null;
 
 	};
 
-	@Async
-	public void obterResultadoUnder05() {
+
+
+	public List<Odds> callServiceUnder05() {
 
 		String resultadoTipo = "Under05";
 		try {
 
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			
-			Flux<Object> response = this.webClientUnder05.get().retrieve().bodyToFlux(Object.class);
+			Mono<Object> response = this.webClientUnder05.get().retrieve().bodyToMono(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			System.out.println("Retornou do Serviço resultado Under05");
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-				//if (result.getTollTip() != null) {
-				//	Resultado r1 = resultadoRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(
-					//		result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
-				//	if (r1 == null) {
-					//	resultadoRepository.save(result);
-			//	}
-			//	}
 			});
-			Date d = new Date();
-			Long time = d.getTime();
-			System.out.println("Início do Save banco: Total da Execução - Under05 " + LocalTime.now());
-			oddsRepository.saveAll(r);
-			time = d.getTime() - time;
-			System.out.println("Salvou Resultado no Banco, resultado Under05 - Tempo em ms : " + String.valueOf(time) );
-			System.out.println("Tempo total da Execução -" + LocalTime.now());
+			
+			return r;
+
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
-			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoUnder05");
+			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.callServiceUnder05");
 			logger_.setDataInclusao(LocalTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
-			return;
+			
 		}
+		return null;
 
 	};
+	
+	
+
+	
 
 	@Async
-	public void obterResultadoUnder15() {
+	public void callServiceUnder15() {
 
 		String resultadoTipo = "Under15";
 		try {
 
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			
-			Flux<Object> response = this.webClientUnder15.get().retrieve().bodyToFlux(Object.class);
+			Mono<Object> response = this.webClientUnder15.get().retrieve().bodyToMono(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			System.out.println("Retornou do Serviço resultado Under15");
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-				//if (result.getTollTip() != null) {
-				//	Resultado r1 = resultadoRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(
-					//		result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
-				//	if (r1 == null) {
-					//	resultadoRepository.save(result);
-			//	}
-			//	}
+
 			});
 			Date d = new Date();
 			Long time = d.getTime();
@@ -280,16 +245,16 @@ public class FutVirtualServiceEuroCup {
 	};
 
 	@Async
-	public void obterResultadoOver25() {
+	public void callServiceOver25() {
 
 		String resultadoTipo = "Over25";
 		try {
 
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			
-			Flux<Object> response = this.webClientOver25.get().retrieve().bodyToFlux(Object.class);
+			Mono<Object> response = this.webClientOver25.get().retrieve().bodyToMono(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			System.out.println("Retornou do Serviço resultado Over25");
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
@@ -322,15 +287,15 @@ public class FutVirtualServiceEuroCup {
 	};
 
 	@Async
-	public void obterResultadoOver35() {
+	public void callServiceOver35() {
 		String resultadoTipo = "Over35";
 		try {
 
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			
-			Flux<Object> response = this.webClientOver35.get().retrieve().bodyToFlux(Object.class);
+			Mono<Object> response = this.webClientOver35.get().retrieve().bodyToMono(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			System.out.println("Retornou do Serviço resultado Over35");
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
@@ -363,16 +328,16 @@ public class FutVirtualServiceEuroCup {
 	};
 
 	@Async
-	public void obterResultadoCasa() {
+	public void callServiceCasa() {
 
 		String resultadoTipo = "Casa";
 		try {
 
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			
-			Flux<Object> response = this.webClientCasa.get().retrieve().bodyToFlux(Object.class);
+			Mono<Object> response = this.webClientCasa.get().retrieve().bodyToMono(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			System.out.println("Retornou do Serviço resultado Casa");
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
@@ -405,16 +370,16 @@ public class FutVirtualServiceEuroCup {
 	};
 
 	@Async
-	public void obterResultadoEmpate() {
+	public void callServiceEmpate() {
 
 		String resultadoTipo = "Empate";
 		try {
 
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			
-			Flux<Object> response = this.webClientEmpate.get().retrieve().bodyToFlux(Object.class);
+			Mono<Object> response = this.webClientEmpate.get().retrieve().bodyToMono(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			System.out.println("Retornou do Serviço resultado empate");
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
@@ -446,16 +411,16 @@ public class FutVirtualServiceEuroCup {
 
 	};
 	@Async
-	public void obterResultadoVisitante() {
+	public void callServiceVisitante() {
 
 		String resultadoTipo = "Visitante";
 		try {
 
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			
-			Flux<Object> response = this.webClientVisitante.get().retrieve().bodyToFlux(Object.class);
+			Mono<Object> response = this.webClientVisitante.get().retrieve().bodyToMono(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			System.out.println("Retornou do Serviço resultado Visitante");
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
@@ -488,16 +453,16 @@ public class FutVirtualServiceEuroCup {
 	};
 
 	@Async
-	public void obterResultadoAmbasMarcam() {
+	public void callServiceAmbasMarcam() {
 
 		String resultadoTipo = "AmbasMarcam";
 		try {
 
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			
-			Flux<Object> response = this.webClientAmbasMarcam.get().retrieve().bodyToFlux(Object.class);
+			Mono<Object> response = this.webClientAmbasMarcam.get().retrieve().bodyToMono(Object.class);
 
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			System.out.println("Retornou do Serviço resultado AmbasMarcam");
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {

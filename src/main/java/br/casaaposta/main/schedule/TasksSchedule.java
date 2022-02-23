@@ -32,18 +32,18 @@ public class TasksSchedule {
 //		worldCupService.setLiga();
 		//superCupService.setLiga();
 		
-		euroCupService.obterResultadoFT();
-		euroCupService.obterResultadoHT();
+		//euroCupService.obterResultadoFT();
+		//euroCupService.obterResultadoHT();
 		
 		
-		euroCupService.obterResultadoOver25();
-		euroCupService.obterResultadoOver35();
+		//euroCupService.obterResultadoOver25();
+		//euroCupService.obterResultadoOver35();
 		euroCupService.obterResultadoUnder05();
-		euroCupService.obterResultadoUnder15();
-		euroCupService.obterResultadoCasa();
-		euroCupService.obterResultadoEmpate();
-		euroCupService.obterResultadoVisitante();
-		euroCupService.obterResultadoAmbasMarcam();
+		//euroCupService.obterResultadoUnder15();
+		//euroCupService.obterResultadoCasa();
+		//euroCupService.obterResultadoEmpate();
+		//euroCupService.obterResultadoVisitante();
+		//euroCupService.obterResultadoAmbasMarcam();
 
 		/**
 		premierCupService.obterResultadoFT();
