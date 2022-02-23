@@ -107,7 +107,7 @@ public class FutVirtualServiceEuroCup {
 
 	};
 
-	@Async
+
 	public List<Resultado> callServiceResultadoFT() {
 		String resultadoTipo = "FT";
 		try {
@@ -139,7 +139,6 @@ public class FutVirtualServiceEuroCup {
 
 	};
 
-	@Async
 	public List<Resultado> callServiceResultadoHT() {
 		String resultadoTipo = "HT";
 		try {
@@ -205,11 +204,7 @@ public class FutVirtualServiceEuroCup {
 	};
 	
 	
-
-	
-
-	@Async
-	public void callServiceUnder15() {
+	public List<Odds> callServiceUnder15() {
 
 		String resultadoTipo = "Under15";
 		try {
@@ -225,13 +220,9 @@ public class FutVirtualServiceEuroCup {
 				result.setCodLiga(this.liga);
 
 			});
-			Date d = new Date();
-			Long time = d.getTime();
-			System.out.println("Início do Save banco: Total da Execução - Under15 " + LocalTime.now());
-			oddsRepository.saveAll(r);
-			time = d.getTime() - time;
-			System.out.println("Salvou Resultado no Banco, resultado Under15 - Tempo em ms : " + String.valueOf(time) );
-			System.out.println("Tempo total da Execução -" + LocalTime.now());
+			
+			return r;
+			
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoUnder15");
@@ -239,13 +230,13 @@ public class FutVirtualServiceEuroCup {
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
-			return;
+			
 		}
-
+		return null;
 	};
 
-	@Async
-	public void callServiceOver25() {
+
+	public List<Odds> callServiceOver25() {
 
 		String resultadoTipo = "Over25";
 		try {
@@ -259,21 +250,9 @@ public class FutVirtualServiceEuroCup {
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-				//if (result.getTollTip() != null) {
-				//	Resultado r1 = resultadoRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(
-					//		result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
-				//	if (r1 == null) {
-					//	resultadoRepository.save(result);
-			//	}
-			//	}
 			});
-			Date d = new Date();
-			Long time = d.getTime();
-			System.out.println("Início do Save banco: Total da Execução - Over25 " + LocalTime.now());
-			oddsRepository.saveAll(r);
-			time = d.getTime() - time;
-			System.out.println("Salvou Resultado no Banco, resultado Over25 - Tempo em ms : " + String.valueOf(time) );
-			System.out.println("Tempo total da Execução -" + LocalTime.now());
+
+			return r;
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoOver25");
@@ -281,13 +260,13 @@ public class FutVirtualServiceEuroCup {
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
-			return;
+			
 		}
-
+		return null;
 	};
 
-	@Async
-	public void callServiceOver35() {
+
+	public List<Odds> callServiceOver35() {
 		String resultadoTipo = "Over35";
 		try {
 
@@ -300,21 +279,10 @@ public class FutVirtualServiceEuroCup {
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-				//if (result.getTollTip() != null) {
-				//	Resultado r1 = resultadoRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(
-					//		result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
-				//	if (r1 == null) {
-					//	resultadoRepository.save(result);
-			//	}
-			//	}
+
 			});
-			Date d = new Date();
-			Long time = d.getTime();
-			System.out.println("Início do Save banco: Total da Execução - Over35 " + LocalTime.now());
-			oddsRepository.saveAll(r);
-			time = d.getTime() - time;
-			System.out.println("Salvou Resultado no Banco, resultado Over35 - Tempo em ms : " + String.valueOf(time) );
-			System.out.println("Tempo total da Execução -" + LocalTime.now());
+
+			return r;
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoOver35");
@@ -322,13 +290,13 @@ public class FutVirtualServiceEuroCup {
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
-			return;
+			
 		}
-
+		return null;
 	};
 
-	@Async
-	public void callServiceCasa() {
+
+	public List<Odds> callServiceCasa() {
 
 		String resultadoTipo = "Casa";
 		try {
@@ -342,21 +310,9 @@ public class FutVirtualServiceEuroCup {
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-				//if (result.getTollTip() != null) {
-				//	Resultado r1 = resultadoRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(
-					//		result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
-				//	if (r1 == null) {
-					//	resultadoRepository.save(result);
-			//	}
-			//	}
+
 			});
-			Date d = new Date();
-			Long time = d.getTime();
-			System.out.println("Início do Save banco: Total da Execução - Casa " + LocalTime.now());
-			oddsRepository.saveAll(r);
-			time = d.getTime() - time;
-			System.out.println("Salvou Resultado no Banco, resultado Casa - Tempo em ms : " + String.valueOf(time) );
-			System.out.println("Tempo total da Execução -" + LocalTime.now());
+			return r;
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoCasa");
@@ -364,13 +320,13 @@ public class FutVirtualServiceEuroCup {
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
-			return;
+			return null;
 		}
 
 	};
 
-	@Async
-	public void callServiceEmpate() {
+	
+	public List<Odds> callServiceEmpate() {
 
 		String resultadoTipo = "Empate";
 		try {
@@ -384,21 +340,10 @@ public class FutVirtualServiceEuroCup {
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-				//if (result.getTollTip() != null) {
-				//	Resultado r1 = resultadoRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(
-					//		result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
-				//	if (r1 == null) {
-					//	resultadoRepository.save(result);
-			//	}
-			//	}
+
 			});
-			Date d = new Date();
-			Long time = d.getTime();
-			System.out.println("Início do Save banco: Total da Execução - Empate " + LocalTime.now());
-			oddsRepository.saveAll(r);
-			time = d.getTime() - time;
-			System.out.println("Salvou Resultado no Banco, resultado Empate - Tempo em ms : " + String.valueOf(time) );
-			System.out.println("Tempo total da Execução -" + LocalTime.now());
+			return r;
+
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoEmpate");
@@ -406,12 +351,12 @@ public class FutVirtualServiceEuroCup {
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
-			return;
+			
 		}
-
+		return null;
 	};
-	@Async
-	public void callServiceVisitante() {
+	
+	public List<Odds> callServiceVisitante() {
 
 		String resultadoTipo = "Visitante";
 		try {
@@ -425,21 +370,10 @@ public class FutVirtualServiceEuroCup {
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-				//if (result.getTollTip() != null) {
-				//	Resultado r1 = resultadoRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(
-					//		result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
-				//	if (r1 == null) {
-					//	resultadoRepository.save(result);
-			//	}
-			//	}
+				
 			});
-			Date d = new Date();
-			Long time = d.getTime();
-			System.out.println("Início do Save banco: Total da Execução - Visitante " + LocalTime.now());
-			oddsRepository.saveAll(r);
-			time = d.getTime() - time;
-			System.out.println("Salvou Resultado no Banco, resultado Visitante - Tempo em ms : " + String.valueOf(time) );
-			System.out.println("Tempo total da Execução -" + LocalTime.now());
+			return r;
+
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoVisitante");
@@ -447,13 +381,13 @@ public class FutVirtualServiceEuroCup {
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
-			return;
+			
 		}
-
+		return null;
 	};
 
 	@Async
-	public void callServiceAmbasMarcam() {
+	public List<Odds> callServiceAmbasMarcam() {
 
 		String resultadoTipo = "AmbasMarcam";
 		try {
@@ -467,21 +401,10 @@ public class FutVirtualServiceEuroCup {
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-				//if (result.getTollTip() != null) {
-				//	Resultado r1 = resultadoRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(
-					//		result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
-				//	if (r1 == null) {
-					//	resultadoRepository.save(result);
-			//	}
-			//	}
+
 			});
-			Date d = new Date();
-			Long time = d.getTime();
-			System.out.println("Início do Save banco: Total da Execução - AmbasMarcam " + LocalTime.now());
-			oddsRepository.saveAll(r);
-			time = d.getTime() - time;
-			System.out.println("Salvou Resultado no Banco, resultado AmbasMarcam - Tempo em ms : " + String.valueOf(time) );
-			System.out.println("Tempo total da Execução -" + LocalTime.now());
+			return r;
+
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoAmbasMarcam");
@@ -489,9 +412,9 @@ public class FutVirtualServiceEuroCup {
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
-			return;
+			
 		}
-
+		return null;
 	};
 
 	public void setLiga() {
