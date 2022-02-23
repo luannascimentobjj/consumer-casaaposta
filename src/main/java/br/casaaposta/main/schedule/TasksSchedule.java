@@ -37,16 +37,16 @@ public class TasksSchedule {
 		
 		//euroCupService.obterResultadoFT();
 		//euroCupService.obterResultadoHT();
-		
-		
-		//euroCupService.obterResultadoOver25();
-		//euroCupService.obterResultadoOver35();
-		euroCupController.obterResultadoUnder05();
-		//euroCupService.obterResultadoUnder15();
-		//euroCupService.obterResultadoCasa();
-		//euroCupService.obterResultadoEmpate();
-		//euroCupService.obterResultadoVisitante();
+		//euroCupController.obterResultadoUnder05();
 		//euroCupService.obterResultadoAmbasMarcam();
+		
+		
+		euroCupController.obterResultadoOver25();
+		euroCupController.obterResultadoOver35();
+		euroCupController.obterResultadoUnder15();
+		euroCupController.obterResultadoCasa();
+		euroCupController.obterResultadoEmpate();
+		euroCupController.obterResultadoVisitante();
 
 		/**
 		premierCupService.obterResultadoFT();

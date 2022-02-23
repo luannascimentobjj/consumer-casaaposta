@@ -113,19 +113,14 @@ public class FutVirtualServiceEuroCup {
 		try {
 
 			FutServiceBinder futBusiness = new FutServiceBinder();
-			
 			Mono<Object> response = this.webClientResultadoFT.get().retrieve().bodyToMono(Object.class);
-
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			System.out.println("Retornou do Serviço resultado FT");
 			List<Resultado> r = futBusiness.bindResultado(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-
 			});
-			
 			return r;
-
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoFT");
@@ -142,11 +137,8 @@ public class FutVirtualServiceEuroCup {
 	public List<Resultado> callServiceResultadoHT() {
 		String resultadoTipo = "HT";
 		try {
-
 			FutServiceBinder futBusiness = new FutServiceBinder();
-			
 			Mono<Object> response = this.webClientResultadoHT.get().retrieve().bodyToMono(Object.class);
-
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			System.out.println("Retornou do Serviço resultado HT");
 			List<Resultado> r = futBusiness.bindResultado(objects, resultadoTipo);
@@ -154,9 +146,7 @@ public class FutVirtualServiceEuroCup {
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
 			});
-			
 			return r;
-
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoHT");
@@ -176,20 +166,15 @@ public class FutVirtualServiceEuroCup {
 
 		String resultadoTipo = "Under05";
 		try {
-
 			FutServiceBinder futBusiness = new FutServiceBinder();
-			
 			Mono<Object> response = this.webClientUnder05.get().retrieve().bodyToMono(Object.class);
-
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			System.out.println("Retornou do Serviço resultado Under05");
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
 			});
-			
 			return r;
-
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.callServiceUnder05");
@@ -205,24 +190,17 @@ public class FutVirtualServiceEuroCup {
 	
 	
 	public List<Odds> callServiceUnder15() {
-
 		String resultadoTipo = "Under15";
 		try {
-
 			FutServiceBinder futBusiness = new FutServiceBinder();
-			
 			Mono<Object> response = this.webClientUnder15.get().retrieve().bodyToMono(Object.class);
-
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			System.out.println("Retornou do Serviço resultado Under15");
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-
 			});
-			
 			return r;
-			
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoUnder15");
@@ -237,21 +215,16 @@ public class FutVirtualServiceEuroCup {
 
 
 	public List<Odds> callServiceOver25() {
-
 		String resultadoTipo = "Over25";
 		try {
-
 			FutServiceBinder futBusiness = new FutServiceBinder();
-			
 			Mono<Object> response = this.webClientOver25.get().retrieve().bodyToMono(Object.class);
-
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			System.out.println("Retornou do Serviço resultado Over25");
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
 			});
-
 			return r;
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
@@ -269,19 +242,14 @@ public class FutVirtualServiceEuroCup {
 	public List<Odds> callServiceOver35() {
 		String resultadoTipo = "Over35";
 		try {
-
 			FutServiceBinder futBusiness = new FutServiceBinder();
-			
 			Mono<Object> response = this.webClientOver35.get().retrieve().bodyToMono(Object.class);
-
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			System.out.println("Retornou do Serviço resultado Over35");
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-
 			});
-
 			return r;
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
@@ -300,17 +268,13 @@ public class FutVirtualServiceEuroCup {
 
 		String resultadoTipo = "Casa";
 		try {
-
 			FutServiceBinder futBusiness = new FutServiceBinder();
-			
 			Mono<Object> response = this.webClientCasa.get().retrieve().bodyToMono(Object.class);
-
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			System.out.println("Retornou do Serviço resultado Casa");
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-
 			});
 			return r;
 		} catch (Exception e) {
@@ -327,23 +291,17 @@ public class FutVirtualServiceEuroCup {
 
 	
 	public List<Odds> callServiceEmpate() {
-
 		String resultadoTipo = "Empate";
 		try {
-
 			FutServiceBinder futBusiness = new FutServiceBinder();
-			
 			Mono<Object> response = this.webClientEmpate.get().retrieve().bodyToMono(Object.class);
-
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			System.out.println("Retornou do Serviço resultado empate");
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-
 			});
 			return r;
-
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoEmpate");
@@ -357,23 +315,17 @@ public class FutVirtualServiceEuroCup {
 	};
 	
 	public List<Odds> callServiceVisitante() {
-
 		String resultadoTipo = "Visitante";
 		try {
-
 			FutServiceBinder futBusiness = new FutServiceBinder();
-			
 			Mono<Object> response = this.webClientVisitante.get().retrieve().bodyToMono(Object.class);
-
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			System.out.println("Retornou do Serviço resultado Visitante");
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-				
 			});
 			return r;
-
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoVisitante");
@@ -388,23 +340,17 @@ public class FutVirtualServiceEuroCup {
 
 	@Async
 	public List<Odds> callServiceAmbasMarcam() {
-
 		String resultadoTipo = "AmbasMarcam";
 		try {
-
 			FutServiceBinder futBusiness = new FutServiceBinder();
-			
 			Mono<Object> response = this.webClientAmbasMarcam.get().retrieve().bodyToMono(Object.class);
-
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			System.out.println("Retornou do Serviço resultado AmbasMarcam");
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-
 			});
 			return r;
-
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoAmbasMarcam");

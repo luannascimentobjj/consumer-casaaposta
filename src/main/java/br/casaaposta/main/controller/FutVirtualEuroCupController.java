@@ -34,10 +34,8 @@ public class FutVirtualEuroCupController {
 	public void obterResultadoUnder05() {
 		
 		try {
-			
 			List<Odds> listaUnder05 =  futService_.callServiceUnder05();
 			salvarResultadoUnder05(listaUnder05);
-			
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao executar o método, FutVirtualServiceEuroCup.obterResultadoUnder05");
@@ -47,14 +45,12 @@ public class FutVirtualEuroCupController {
 
 		
 	}
-	
+	@Async
 	public void obterResultadoHT() {
 		
 		try {
-			
 			List<Resultado> listaResultadoHT =  futService_.callServiceResultadoHT();
 			salvarResultadoHT(listaResultadoHT);
-			
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao executar o método, FutVirtualServiceEuroCup.obterResultadoHT");
@@ -64,14 +60,12 @@ public class FutVirtualEuroCupController {
 
 		
 	}
-	
+	@Async
 	public void obterResultadoFT() {
 		
 		try {
-			
-			List<Resultado> listaResultadoHT =  futService_.callServiceResultadoFT();
-			salvarResultadoHT(listaResultadoHT);
-			
+			List<Resultado> listaResultadoFT =  futService_.callServiceResultadoFT();
+			salvarResultadoFT(listaResultadoFT);
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao executar o método, FutVirtualServiceEuroCup.obterResultadoFT");
@@ -81,11 +75,118 @@ public class FutVirtualEuroCupController {
 
 		
 	}
+	@Async
+	public void obterResultadoUnder15() {
+		
+		try {
+			List<Odds> listaUnder15 =  futService_.callServiceUnder15();
+			salvarResultadoUnder15(listaUnder15);
+		} catch (Exception e) {
+			logger_.setStackTrace(e.getMessage());
+			logger_.setError("Erro ao executar o método, FutVirtualServiceEuroCup.obterResultadoUnder15");
+			logger_.setDataInclusao(LocalTime.now());
+			logRepository_.save(logger_);
+		}
+
+		
+	}
+	@Async
+	public void obterResultadoOver25() {
+		
+		try {
+			List<Odds> listaOver25 =  futService_.callServiceOver25();
+			salvarResultadoOver25(listaOver25);
+		} catch (Exception e) {
+			logger_.setStackTrace(e.getMessage());
+			logger_.setError("Erro ao executar o método, FutVirtualServiceEuroCup.obterResultadoOver25");
+			logger_.setDataInclusao(LocalTime.now());
+			logRepository_.save(logger_);
+		}
+
+		
+	}
+	@Async
+	public void obterResultadoOver35() {
+		
+		try {
+			List<Odds> listaOver35 =  futService_.callServiceOver35();
+			salvarResultadoOver35(listaOver35);
+		} catch (Exception e) {
+			logger_.setStackTrace(e.getMessage());
+			logger_.setError("Erro ao executar o método, FutVirtualServiceEuroCup.obterResultadoOver35");
+			logger_.setDataInclusao(LocalTime.now());
+			logRepository_.save(logger_);
+		}
+
+		
+	}
+	@Async
+	public void obterResultadoCasa() {
+		
+		try {
+			List<Odds> listaCasa =  futService_.callServiceCasa();
+			salvarResultadoCasa(listaCasa);
+		} catch (Exception e) {
+			logger_.setStackTrace(e.getMessage());
+			logger_.setError("Erro ao executar o método, FutVirtualServiceEuroCup.obterResultadoCasa");
+			logger_.setDataInclusao(LocalTime.now());
+			logRepository_.save(logger_);
+		}
+
+		
+	}
+	@Async
+	public void obterResultadoEmpate() {
+		
+		try {
+			List<Odds> listaEmpate =  futService_.callServiceEmpate();
+			salvarResultadoEmpate(listaEmpate);
+		} catch (Exception e) {
+			logger_.setStackTrace(e.getMessage());
+			logger_.setError("Erro ao executar o método, FutVirtualServiceEuroCup.obterResultadoEmpate");
+			logger_.setDataInclusao(LocalTime.now());
+			logRepository_.save(logger_);
+		}
+
+		
+	}
+	@Async
+	public void obterResultadoVisitante() {
+		
+		try {
+			List<Odds> listaVisitante =  futService_.callServiceVisitante();
+			salvarResultadoVisitante(listaVisitante);
+		} catch (Exception e) {
+			logger_.setStackTrace(e.getMessage());
+			logger_.setError("Erro ao executar o método, FutVirtualServiceEuroCup.obterResultadoVisitante");
+			logger_.setDataInclusao(LocalTime.now());
+			logRepository_.save(logger_);
+		}
+
+		
+	}
+	
+	@Async
+	public void obterResultadoAmbasMarcam() {
+		
+		try {
+			List<Odds> listaAmbasMarcam =  futService_.callServiceAmbasMarcam();
+			salvarResultadoAmbasMarcam(listaAmbasMarcam);
+		} catch (Exception e) {
+			logger_.setStackTrace(e.getMessage());
+			logger_.setError("Erro ao executar o método, FutVirtualServiceEuroCup.obterResultadoAmbasMarcam");
+			logger_.setDataInclusao(LocalTime.now());
+			logRepository_.save(logger_);
+		}
+
+		
+	}
+	
+	
 	
 	
 	
 	public void salvarResultadoUnder05(List<Odds> listUnder05) {
-		
 		try {
 		
 	      //Verificar se existe duplicado.		
@@ -96,7 +197,6 @@ public class FutVirtualEuroCupController {
 				//	resultadoRepository.save(result);
 		//	}
 		//	}
-			
 		Date d = new Date();
 		Long time = d.getTime();
 		System.out.println("Início do Save banco: Total da Execução - Under05 " + LocalTime.now());
@@ -110,15 +210,186 @@ public class FutVirtualEuroCupController {
 			logger_.setDataInclusao(LocalTime.now());
 			logRepository_.save(logger_);
 		}
-		
 	}
 	
-	
-	
-	public void salvarResultadoHT(List<Resultado> listResultado) {
-		
+	public void salvarResultadoUnder15(List<Odds> listUnder15) {
 		try {
 		
+	      //Verificar se existe duplicado.		
+			//if (result.getTollTip() != null) {
+			//	Resultado r1 = resultadoRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(
+				//		result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
+			//	if (r1 == null) {
+				//	resultadoRepository.save(result);
+		//	}
+		//	}
+		Date d = new Date();
+		Long time = d.getTime();
+		System.out.println("Início do Save banco: Total da Execução - Under15 " + LocalTime.now());
+		oddsRepository_.saveAll(listUnder15);
+		time = d.getTime() - time;
+		System.out.println("Salvou Resultado no Banco, resultado Under15 - Tempo em ms : " + String.valueOf(time) );
+		System.out.println("Tempo total da Execução -" + LocalTime.now());
+		}catch  (Exception e){
+			logger_.setStackTrace(e.getMessage());
+			logger_.setError("Erro ao coletar salvar informações no banco, FutVirtualServiceEuroCup.obterResultadoUnder15");
+			logger_.setDataInclusao(LocalTime.now());
+			logRepository_.save(logger_);
+		}
+	}
+	
+	public void salvarResultadoOver25(List<Odds> listOver25) {
+		try {
+		
+	      //Verificar se existe duplicado.		
+			//if (result.getTollTip() != null) {
+			//	Resultado r1 = resultadoRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(
+				//		result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
+			//	if (r1 == null) {
+				//	resultadoRepository.save(result);
+		//	}
+		//	}
+		Date d = new Date();
+		Long time = d.getTime();
+		System.out.println("Início do Save banco: Total da Execução - Over 25" + LocalTime.now());
+		oddsRepository_.saveAll(listOver25);
+		time = d.getTime() - time;
+		System.out.println("Salvou Resultado no Banco, resultado Over25 - Tempo em ms : " + String.valueOf(time) );
+		System.out.println("Tempo total da Execução -" + LocalTime.now());
+		}catch  (Exception e){
+			logger_.setStackTrace(e.getMessage());
+			logger_.setError("Erro ao coletar salvar informações no banco, FutVirtualServiceEuroCup.obterResultadoOver25");
+			logger_.setDataInclusao(LocalTime.now());
+			logRepository_.save(logger_);
+		}
+	}
+	public void salvarResultadoOver35(List<Odds> listOver35) {
+		try {
+		
+	      //Verificar se existe duplicado.		
+			//if (result.getTollTip() != null) {
+			//	Resultado r1 = resultadoRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(
+				//		result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
+			//	if (r1 == null) {
+				//	resultadoRepository.save(result);
+		//	}
+		//	}
+		Date d = new Date();
+		Long time = d.getTime();
+		System.out.println("Início do Save banco: Total da Execução - Over35" + LocalTime.now());
+		oddsRepository_.saveAll(listOver35);
+		time = d.getTime() - time;
+		System.out.println("Salvou Resultado no Banco, resultado Over35 - Tempo em ms : " + String.valueOf(time) );
+		System.out.println("Tempo total da Execução -" + LocalTime.now());
+		}catch  (Exception e){
+			logger_.setStackTrace(e.getMessage());
+			logger_.setError("Erro ao coletar salvar informações no banco, FutVirtualServiceEuroCup.obterResultadoOver35");
+			logger_.setDataInclusao(LocalTime.now());
+			logRepository_.save(logger_);
+		}
+	}
+	public void salvarResultadoCasa(List<Odds> listCasa) {
+		try {
+		
+	      //Verificar se existe duplicado.		
+			//if (result.getTollTip() != null) {
+			//	Resultado r1 = resultadoRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(
+				//		result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
+			//	if (r1 == null) {
+				//	resultadoRepository.save(result);
+		//	}
+		//	}
+		Date d = new Date();
+		Long time = d.getTime();
+		System.out.println("Início do Save banco: Total da Execução - Casa" + LocalTime.now());
+		oddsRepository_.saveAll(listCasa);
+		time = d.getTime() - time;
+		System.out.println("Salvou Resultado no Banco, resultado Casa - Tempo em ms : " + String.valueOf(time) );
+		System.out.println("Tempo total da Execução -" + LocalTime.now());
+		}catch  (Exception e){
+			logger_.setStackTrace(e.getMessage());
+			logger_.setError("Erro ao coletar salvar informações no banco, FutVirtualServiceEuroCup.obterResultadoCasa");
+			logger_.setDataInclusao(LocalTime.now());
+			logRepository_.save(logger_);
+		}
+	}
+	public void salvarResultadoEmpate(List<Odds> listEmpate) {
+		try {
+		
+	      //Verificar se existe duplicado.		
+			//if (result.getTollTip() != null) {
+			//	Resultado r1 = resultadoRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(
+				//		result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
+			//	if (r1 == null) {
+				//	resultadoRepository.save(result);
+		//	}
+		//	}
+		Date d = new Date();
+		Long time = d.getTime();
+		System.out.println("Início do Save banco: Total da Execução - Empate" + LocalTime.now());
+		oddsRepository_.saveAll(listEmpate);
+		time = d.getTime() - time;
+		System.out.println("Salvou Resultado no Banco, resultado Empate - Tempo em ms : " + String.valueOf(time) );
+		System.out.println("Tempo total da Execução -" + LocalTime.now());
+		}catch  (Exception e){
+			logger_.setStackTrace(e.getMessage());
+			logger_.setError("Erro ao coletar salvar informações no banco, FutVirtualServiceEuroCup.obterResultadoEmpate");
+			logger_.setDataInclusao(LocalTime.now());
+			logRepository_.save(logger_);
+		}
+	}
+	public void salvarResultadoVisitante(List<Odds> listVisitante) {
+		try {
+		
+	      //Verificar se existe duplicado.		
+			//if (result.getTollTip() != null) {
+			//	Resultado r1 = resultadoRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(
+				//		result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
+			//	if (r1 == null) {
+				//	resultadoRepository.save(result);
+		//	}
+		//	}
+		Date d = new Date();
+		Long time = d.getTime();
+		System.out.println("Início do Save banco: Total da Execução - Visitante" + LocalTime.now());
+		oddsRepository_.saveAll(listVisitante);
+		time = d.getTime() - time;
+		System.out.println("Salvou Resultado no Banco, resultado Visitante - Tempo em ms : " + String.valueOf(time) );
+		System.out.println("Tempo total da Execução -" + LocalTime.now());
+		}catch  (Exception e){
+			logger_.setStackTrace(e.getMessage());
+			logger_.setError("Erro ao coletar salvar informações no banco, FutVirtualServiceEuroCup.obterResultadoVisitante");
+			logger_.setDataInclusao(LocalTime.now());
+			logRepository_.save(logger_);
+		}
+	}
+	public void salvarResultadoAmbasMarcam(List<Odds> listAmbasMarcam) {
+		try {
+		
+	      //Verificar se existe duplicado.		
+			//if (result.getTollTip() != null) {
+			//	Resultado r1 = resultadoRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(
+				//		result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
+			//	if (r1 == null) {
+				//	resultadoRepository.save(result);
+		//	}
+		//	}
+		Date d = new Date();
+		Long time = d.getTime();
+		System.out.println("Início do Save banco: Total da Execução - Ambas" + LocalTime.now());
+		oddsRepository_.saveAll(listAmbasMarcam);
+		time = d.getTime() - time;
+		System.out.println("Salvou Resultado no Banco, resultado Ambas - Tempo em ms : " + String.valueOf(time) );
+		System.out.println("Tempo total da Execução -" + LocalTime.now());
+		}catch  (Exception e){
+			logger_.setStackTrace(e.getMessage());
+			logger_.setError("Erro ao coletar salvar informações no banco, FutVirtualServiceEuroCup.obterResultadoAmbas");
+			logger_.setDataInclusao(LocalTime.now());
+			logRepository_.save(logger_);
+		}
+	}
+	public void salvarResultadoHT(List<Resultado> listResultado) {
+		try {
 		Date d = new Date();
 		Long time = d.getTime();
 		System.out.println("Início do Save banco: Total da Execução - HT " + LocalTime.now());
@@ -136,9 +407,7 @@ public class FutVirtualEuroCupController {
 	}
 	
 	public void salvarResultadoFT(List<Resultado> listResultado) {
-		
 		try {
-		
 		Date d = new Date();
 		Long time = d.getTime();
 		System.out.println("Início do Save banco: Total da Execução - FT " + LocalTime.now());
