@@ -92,28 +92,19 @@ public class FutVirtualServicePremier {
 
 	}
 
-	@Async
-	public void obterResultadoFT() {
+	
+	public List<Resultado> callServiceResultadoFT() {
 		String resultadoTipo = "FT";
 		try {
+			
 			FutServiceBinder futBusiness = new FutServiceBinder();
-			 
-			Flux<Object> response = this.webClientResultadoFT.get().retrieve().bodyToFlux(Object.class);
-
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
-
+ 			Mono<Object> response = this.webClientResultadoFT.get().retrieve().bodyToMono(Object.class);
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			List<Resultado> r = futBusiness.bindResultado(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-				if (result.getTollTip() != null) {
-					Resultado r1 = resultadoRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(
-							result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
-					if (r1 == null) {
-						resultadoRepository.save(result);
-					}
-				}
 			});
-
+			return r;
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServicePremier.obterResultadoAmbasMarcam");
@@ -121,33 +112,25 @@ public class FutVirtualServicePremier {
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
-			return;
+			
 		}
 
+		return null;
 	};
 
-	@Async
-	public void obterResultadoHT() {
+	
+	public List<Resultado>  callServiceResultadoHT() {
 		String resultadoTipo = "HT";
 		try {
 
 			FutServiceBinder futBusiness = new FutServiceBinder();
-			 
-			Flux<Object> response = this.webClientResultadoHT.get().retrieve().bodyToFlux(Object.class);
-
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
-
+			Mono<Object> response = this.webClientResultadoHT.get().retrieve().bodyToMono(Object.class);
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			List<Resultado> r = futBusiness.bindResultado(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-				if (result.getTollTip() != null) {
-					Resultado r1 = resultadoRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(
-							result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
-					if (r1 == null) {
-						resultadoRepository.save(result);
-					}
-				}
 			});
+			return r;
 
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
@@ -156,33 +139,24 @@ public class FutVirtualServicePremier {
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
-			return;
+			
 		}
-
+		return null;
 	};
 
-	@Async
-	public void obterResultadoUnder05() {
+	
+	public List<Odds> obterResultadoUnder05() {
 
 		String resultadoTipo = "Under05";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
-			 
 			Flux<Object> response = this.webClientUnder05.get().retrieve().bodyToFlux(Object.class);
-
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
-
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-				if (result.getTollTip() != null) {
-					Odds r1 = oddsRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(result.getTollTip(),
-							result.getMinuto(), result.getHora(), resultadoTipo);
-					if (r1 == null) {
-						oddsRepository.save(result);
-					}
-				}
 			});
+			return r;
 
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
@@ -191,9 +165,9 @@ public class FutVirtualServicePremier {
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
-			return;
+			
 		}
-
+		return null;
 	};
 
 	@Async
