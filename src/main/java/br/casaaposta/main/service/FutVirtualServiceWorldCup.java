@@ -5,7 +5,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import br.casaaposta.main.bind.FutServiceBinder;
@@ -15,10 +14,8 @@ import br.casaaposta.main.entity.Odds;
 import br.casaaposta.main.entity.Resultado;
 import br.casaaposta.main.repository.LigaRepository;
 import br.casaaposta.main.repository.LogRepository;
-import br.casaaposta.main.repository.OddsRepository;
 import br.casaaposta.main.repository.ResultadoRepository;
 import br.casaaposta.main.util.UrlUtils;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -40,8 +37,6 @@ public class FutVirtualServiceWorldCup {
 	private Liga liga;
 	@Autowired
 	private LigaRepository ligaRepository;
-	@Autowired
-	private OddsRepository oddsRepository;
 	@Autowired
 	ResultadoRepository resultadoRepository;
 	@Autowired
@@ -82,26 +77,19 @@ public class FutVirtualServiceWorldCup {
 
 	}
 
-	@Async
-	public void obterResultadoFT() {
+	
+	public List<Resultado> callServiceResultadoFT() {
 		String resultadoTipo = "FT";
 		try {
+
 			FutServiceBinder futBusiness = new FutServiceBinder();
-			Flux<Object> response = this.webClientResultadoFT.get().retrieve().bodyToFlux(Object.class);
-
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
-
+			Mono<Object> response = this.webClientResultadoFT.get().retrieve().bodyToMono(Object.class);
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			List<Resultado> r = futBusiness.bindResultado(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-				if (result.getTollTip() != null) {
-					Resultado r1 = resultadoRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(
-							result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
-					if (r1 == null) {
-						resultadoRepository.save(result);
-					}
-				}
 			});
+			return r;
 
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
@@ -110,32 +98,26 @@ public class FutVirtualServiceWorldCup {
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
-			return;
+			
 		}
 
+		return null;
+		
 	};
 
-	@Async
-	public void obterResultadoHT() {
+	
+	public List<Resultado> callServiceResultadoHT() {
 		String resultadoTipo = "HT";
 		try {
 
 			FutServiceBinder futBusiness = new FutServiceBinder();
-			Flux<Object> response = this.webClientResultadoHT.get().retrieve().bodyToFlux(Object.class);
-
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
-
+			Mono<Object> response = this.webClientResultadoHT.get().retrieve().bodyToMono(Object.class);
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			List<Resultado> r = futBusiness.bindResultado(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-				if (result.getTollTip() != null) {
-					Resultado r1 = resultadoRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(
-							result.getTollTip(), result.getMinuto(), result.getHora(), resultadoTipo);
-					if (r1 == null) {
-						resultadoRepository.save(result);
-					}
-				}
 			});
+			return r;
 
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
@@ -144,32 +126,26 @@ public class FutVirtualServiceWorldCup {
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
-			return;
+			
 		}
 
+		return null;
 	};
 
-	@Async
-	public void obterResultadoUnder05() {
+	
+	public List<Odds> callServiceResultadoUnder05() {
 
 		String resultadoTipo = "Under05";
 		try {
+
 			FutServiceBinder futBusiness = new FutServiceBinder();
-			Flux<Object> response = this.webClientUnder05.get().retrieve().bodyToFlux(Object.class);
-
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
-
+			Mono<Object> response = this.webClientUnder05.get().retrieve().bodyToMono(Object.class);
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-				if (result.getTollTip() != null) {
-					Odds r1 = oddsRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(result.getTollTip(),
-							result.getMinuto(), result.getHora(), resultadoTipo);
-					if (r1 == null) {
-						oddsRepository.save(result);
-					}
-				}
 			});
+			return r;
 
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
@@ -177,32 +153,26 @@ public class FutVirtualServiceWorldCup {
 			logger_.setDataInclusao(LocalTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
-			return;
+			
 		}
+		return null;
 
 	};
 
-	@Async
-	public void obterResultadoUnder15() {
+	
+	public List<Odds> callServiceResultadoUnder15() {
 
 		String resultadoTipo = "Under15";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
-			Flux<Object> response = this.webClientUnder15.get().retrieve().bodyToFlux(Object.class);
-
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
-
+			Mono<Object> response = this.webClientUnder15.get().retrieve().bodyToMono(Object.class);
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-				if (result.getTollTip() != null) {
-					Odds r1 = oddsRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(result.getTollTip(),
-							result.getMinuto(), result.getHora(), resultadoTipo);
-					if (r1 == null) {
-						oddsRepository.save(result);
-					}
-				}
 			});
+			return r;
+
 
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
@@ -210,32 +180,25 @@ public class FutVirtualServiceWorldCup {
 			logger_.setDataInclusao(LocalTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
-			return;
+			
 		}
+		return null;
 
 	};
 
-	@Async
-	public void obterResultadoOver25() {
+	
+	public List<Odds> callServiceResultadoOver25() {
 
 		String resultadoTipo = "Over25";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
-			Flux<Object> response = this.webClientOver25.get().retrieve().bodyToFlux(Object.class);
-
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
-
+			Mono<Object> response = this.webClientOver25.get().retrieve().bodyToMono(Object.class);
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-				if (result.getTollTip() != null) {
-					Odds r1 = oddsRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(result.getTollTip(),
-							result.getMinuto(), result.getHora(), resultadoTipo);
-					if (r1 == null) {
-						oddsRepository.save(result);
-					}
-				}
 			});
+			return r;
 
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
@@ -243,31 +206,25 @@ public class FutVirtualServiceWorldCup {
 			logger_.setDataInclusao(LocalTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
-			return;
+			
 		}
 
+		return null;
 	};
 
-	@Async
-	public void obterResultadoOver35() {
+
+	public List<Odds> callServiceResultadoOver35() {
 		String resultadoTipo = "Over35";
 		try {
+			
 			FutServiceBinder futBusiness = new FutServiceBinder();
-			Flux<Object> response = this.webClientOver35.get().retrieve().bodyToFlux(Object.class);
-
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
-
+			Mono<Object> response = this.webClientOver35.get().retrieve().bodyToMono(Object.class);
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-				if (result.getTollTip() != null) {
-					Odds r1 = oddsRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(result.getTollTip(),
-							result.getMinuto(), result.getHora(), resultadoTipo);
-					if (r1 == null) {
-						oddsRepository.save(result);
-					}
-				}
 			});
+			return r;
 
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
@@ -275,32 +232,26 @@ public class FutVirtualServiceWorldCup {
 			logger_.setDataInclusao(LocalTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
-			return;
+			
 		}
+		return null;
 
 	};
 
-	@Async
-	public void obterResultadoCasa() {
+	
+	public List<Odds> callServiceResultadoCasa() {
 
 		String resultadoTipo = "Casa";
 		try {
+			
 			FutServiceBinder futBusiness = new FutServiceBinder();
-			Flux<Object> response = this.webClientCasa.get().retrieve().bodyToFlux(Object.class);
-
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
-
+			Mono<Object> response = this.webClientCasa.get().retrieve().bodyToMono(Object.class);
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-				if (result.getTollTip() != null) {
-					Odds r1 = oddsRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(result.getTollTip(),
-							result.getMinuto(), result.getHora(), resultadoTipo);
-					if (r1 == null) {
-						oddsRepository.save(result);
-					}
-				}
 			});
+			return r;
 
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
@@ -308,33 +259,26 @@ public class FutVirtualServiceWorldCup {
 			logger_.setDataInclusao(LocalTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
-			return;
+			
 		}
 
+		return null;
 	};
 
-	@Async
-	public void obterResultadoEmpate() {
+	
+	public List<Odds> callServiceResultadoEmpate() {
 
 		String resultadoTipo = "Empate";
 		try {
+
 			FutServiceBinder futBusiness = new FutServiceBinder();
-			
-			Flux<Object> response = this.webClientEmpate.get().retrieve().bodyToFlux(Object.class);
-
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
-
+			Mono<Object> response = this.webClientEmpate.get().retrieve().bodyToMono(Object.class);
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-				if (result.getTollTip() != null) {
-					Odds r1 = oddsRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(result.getTollTip(),
-							result.getMinuto(), result.getHora(), resultadoTipo);
-					if (r1 == null) {
-						oddsRepository.save(result);
-					}
-				}
 			});
+			return r;
 
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
@@ -342,33 +286,26 @@ public class FutVirtualServiceWorldCup {
 			logger_.setDataInclusao(LocalTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
-			return;
+			
 		}
 
+		return null;
 	};
 
-	@Async
-	public void obterResultadoVisitante() {
+	
+	public List<Odds> callServiceResultadoVisitante() {
 
 		String resultadoTipo = "Visitante";
 		try {
+
 			FutServiceBinder futBusiness = new FutServiceBinder();
-
-			Flux<Object> response = this.webClientVisitante.get().retrieve().bodyToFlux(Object.class);
-
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
-
+			Mono<Object> response = this.webClientVisitante.get().retrieve().bodyToMono(Object.class);
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-				if (result.getTollTip() != null) {
-					Odds r1 = oddsRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(result.getTollTip(),
-							result.getMinuto(), result.getHora(), resultadoTipo);
-					if (r1 == null) {
-						oddsRepository.save(result);
-					}
-				}
 			});
+			return r;
 
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
@@ -376,32 +313,26 @@ public class FutVirtualServiceWorldCup {
 			logger_.setDataInclusao(LocalTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
-			return;
+			
 		}
+		return null;
 
 	};
 
-	@Async
-	public void obterResultadoAmbasMarcam() {
+	
+	public List<Odds> callServiceResultadoAmbasMarcam() {
 
 		String resultadoTipo = "AmbasMarcam";
 		try {
+
 			FutServiceBinder futBusiness = new FutServiceBinder();
-			Flux<Object> response = this.webClientAmbasMarcam.get().retrieve().bodyToFlux(Object.class);
-
-			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.blockFirst();
-
+			Mono<Object> response = this.webClientAmbasMarcam.get().retrieve().bodyToMono(Object.class);
+			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
-				if (result.getTollTip() != null) {
-					Odds r1 = oddsRepository.findByTollTipAndMinutoAndHoraAndResultadoTipo(result.getTollTip(),
-							result.getMinuto(), result.getHora(), resultadoTipo);
-					if (r1 == null) {
-						oddsRepository.save(result);
-					}
-				}
 			});
+			return r;
 
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
@@ -410,8 +341,10 @@ public class FutVirtualServiceWorldCup {
 			logger_.setDataInclusao(LocalTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
-			return;
+			
 		}
+		
+		return null;
 
 	};
 
