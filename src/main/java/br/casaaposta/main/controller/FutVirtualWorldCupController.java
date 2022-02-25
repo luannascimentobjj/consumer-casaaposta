@@ -10,7 +10,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 
 import br.casaaposta.main.entity.Log;
-import br.casaaposta.main.entity.Odds;
+import br.casaaposta.main.entity.OddsWorldCup;
 import br.casaaposta.main.entity.Resultado;
 import br.casaaposta.main.repository.LogRepository;
 import br.casaaposta.main.repository.OddsWorldCupRepository;
@@ -35,7 +35,7 @@ public class FutVirtualWorldCupController {
 	public CompletableFuture<String> obterResultadoUnder05() {
 		
 		try {
-			List<Odds> listaUnder05 =  futService_.callServiceResultadoUnder05();
+			List<OddsWorldCup> listaUnder05 =  futService_.callServiceResultadoUnder05();
 			salvarResultadoUnder05(listaUnder05);
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
@@ -84,7 +84,7 @@ public class FutVirtualWorldCupController {
 		
 		try {
 			System.out.println("obterResultadoUnder15");
-			List<Odds> listaUnder15 =  futService_.callServiceResultadoUnder15();
+			List<OddsWorldCup> listaUnder15 =  futService_.callServiceResultadoUnder15();
 			salvarResultadoUnder15(listaUnder15);
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
@@ -101,7 +101,7 @@ public class FutVirtualWorldCupController {
 		
 		try {
 			System.out.println("obterResultadoOver25");
-			List<Odds> listaOver25 =  futService_.callServiceResultadoOver25();
+			List<OddsWorldCup> listaOver25 =  futService_.callServiceResultadoOver25();
 			salvarResultadoOver25(listaOver25);
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
@@ -118,7 +118,7 @@ public class FutVirtualWorldCupController {
 		
 		try {
 			System.out.println("obterResultadoOver35");
-			List<Odds> listaOver35 =  futService_.callServiceResultadoOver35();
+			List<OddsWorldCup> listaOver35 =  futService_.callServiceResultadoOver35();
 			salvarResultadoOver35(listaOver35);
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
@@ -135,7 +135,7 @@ public class FutVirtualWorldCupController {
 		
 		try {
 			System.out.println("obterResultadoCasa");
-			List<Odds> listaCasa =  futService_.callServiceResultadoCasa();
+			List<OddsWorldCup> listaCasa =  futService_.callServiceResultadoCasa();
 			salvarResultadoCasa(listaCasa);
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
@@ -152,7 +152,7 @@ public class FutVirtualWorldCupController {
 		
 		try {
 			System.out.println("obterResultadoEmpate");
-			List<Odds> listaEmpate =  futService_.callServiceResultadoEmpate();
+			List<OddsWorldCup> listaEmpate =  futService_.callServiceResultadoEmpate();
 			salvarResultadoEmpate(listaEmpate);
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
@@ -169,7 +169,7 @@ public class FutVirtualWorldCupController {
 		
 		try {
 			System.out.println("obterResultadoVisitante");
-			List<Odds> listaVisitante =  futService_.callServiceResultadoVisitante();
+			List<OddsWorldCup> listaVisitante =  futService_.callServiceResultadoVisitante();
 			salvarResultadoVisitante(listaVisitante);
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
@@ -187,7 +187,7 @@ public class FutVirtualWorldCupController {
 		
 		try {
 			System.out.println("obterResultadoAmbasMarcam");
-			List<Odds> listaAmbasMarcam =  futService_.callServiceResultadoAmbasMarcam();
+			List<OddsWorldCup> listaAmbasMarcam =  futService_.callServiceResultadoAmbasMarcam();
 			salvarResultadoAmbasMarcam(listaAmbasMarcam);
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
@@ -204,7 +204,7 @@ public class FutVirtualWorldCupController {
 	
 	
 	
-	public void salvarResultadoUnder05(List<Odds> listUnder05) {
+	public void salvarResultadoUnder05(List<OddsWorldCup> listUnder05) {
 		try {
 		
 	      //Verificar se existe duplicado.		
@@ -230,7 +230,7 @@ public class FutVirtualWorldCupController {
 		}
 	}
 	
-	public void salvarResultadoUnder15(List<Odds> listUnder15) {
+	public void salvarResultadoUnder15(List<OddsWorldCup> listUnder15) {
 		try {
 		
 	      //Verificar se existe duplicado.		
@@ -256,7 +256,7 @@ public class FutVirtualWorldCupController {
 		}
 	}
 	
-	public void salvarResultadoOver25(List<Odds> listOver25) {
+	public void salvarResultadoOver25(List<OddsWorldCup> listOver25) {
 		try {
 		
 	      //Verificar se existe duplicado.		
@@ -281,7 +281,7 @@ public class FutVirtualWorldCupController {
 			logRepository_.save(logger_);
 		}
 	}
-	public void salvarResultadoOver35(List<Odds> listOver35) {
+	public void salvarResultadoOver35(List<OddsWorldCup> listOver35) {
 		try {
 		
 	      //Verificar se existe duplicado.		
@@ -306,7 +306,7 @@ public class FutVirtualWorldCupController {
 			logRepository_.save(logger_);
 		}
 	}
-	public void salvarResultadoCasa(List<Odds> listCasa) {
+	public void salvarResultadoCasa(List<OddsWorldCup> listCasa) {
 		try {
 		
 	      //Verificar se existe duplicado.		
@@ -331,7 +331,7 @@ public class FutVirtualWorldCupController {
 			logRepository_.save(logger_);
 		}
 	}
-	public void salvarResultadoEmpate(List<Odds> listEmpate) {
+	public void salvarResultadoEmpate(List<OddsWorldCup> listEmpate) {
 		try {
 		
 	      //Verificar se existe duplicado.		
@@ -356,7 +356,7 @@ public class FutVirtualWorldCupController {
 			logRepository_.save(logger_);
 		}
 	}
-	public void salvarResultadoVisitante(List<Odds> listVisitante) {
+	public void salvarResultadoVisitante(List<OddsWorldCup> listVisitante) {
 		try {
 		
 	      //Verificar se existe duplicado.		
@@ -381,7 +381,7 @@ public class FutVirtualWorldCupController {
 			logRepository_.save(logger_);
 		}
 	}
-	public void salvarResultadoAmbasMarcam(List<Odds> listAmbasMarcam) {
+	public void salvarResultadoAmbasMarcam(List<OddsWorldCup> listAmbasMarcam) {
 		try {
 		
 	      //Verificar se existe duplicado.		

@@ -3,6 +3,8 @@ import java.io.Serializable;
 import java.time.LocalTime;
 
 import javax.persistence.*;
+
+import br.casaaposta.main.model.OddsModel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Table(name="OddsEurocup")
 @NoArgsConstructor
 @Data
-public class Odds implements Serializable{
+public class Odds extends OddsModel implements Serializable{
 	
 	private static final long serialVersionUID = 8511686573089879079L;
 

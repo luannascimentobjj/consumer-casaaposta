@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 import br.casaaposta.main.entity.Odds;
 import br.casaaposta.main.entity.Resultado;
+import br.casaaposta.main.model.OddsModel;
 import lombok.Data;
 
 @Data
@@ -99,9 +100,9 @@ public class FutServiceBinder {
 
 	}
 
-	public List<Class<?>> bindOdds(LinkedHashMap<Object, Object> resultaForBinding, String tipoResultado) {
+	public List<OddsModel> bindOdds(LinkedHashMap<Object, Object> resultaForBinding, String tipoResultado) {
 
-		List<Class<?>> list = new ArrayList();
+		List<OddsModel> list = new ArrayList();
 		resultaForBinding.entrySet().forEach(entry -> {
 
 			entry.getKey();
@@ -111,7 +112,7 @@ public class FutServiceBinder {
 						.getValue();
 				linesArrayOfHash.forEach(line -> {
 					line.entrySet().forEach(subline -> {
-						Odds resultadoRetorno = new Odds();
+						OddsModel resultadoRetorno = new OddsModel();
 						if (subline.getKey().equals("Hora")) {
 							this.hora = (int) subline.getValue();
 						}
@@ -124,7 +125,7 @@ public class FutServiceBinder {
 							ArrayList<LinkedHashMap<Object, Object>> cellsArrayOfHash = (ArrayList<LinkedHashMap<Object, Object>>) subline
 									.getValue();
 							cellsArrayOfHash.forEach(results -> {
-								Odds r = new Odds();
+								OddsModel r = new OddsModel();
 								results.entrySet().forEach(result -> {
 									if (result.getKey().equals("Minute")) {
 										r.setMinuto((int) result.getValue());
@@ -168,7 +169,7 @@ public class FutServiceBinder {
 								r.setHora(this.hora);
 								r.setPercentual(this.percent);
 								r.setResultadoTipo(tipoResultado);
-								list.addAll((Collection<? extends Class<?>>) r);
+								list.add(r);
 							});
 						}
 					});

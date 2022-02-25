@@ -1,6 +1,7 @@
 package br.casaaposta.main.service;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +12,11 @@ import br.casaaposta.main.bind.FutServiceBinder;
 import br.casaaposta.main.entity.Liga;
 import br.casaaposta.main.entity.Log;
 import br.casaaposta.main.entity.Odds;
+import br.casaaposta.main.entity.OddsPremierCup;
+import br.casaaposta.main.entity.OddsSuperCup;
+import br.casaaposta.main.entity.OddsWorldCup;
 import br.casaaposta.main.entity.Resultado;
+import br.casaaposta.main.model.OddsModel;
 import br.casaaposta.main.repository.LigaRepository;
 import br.casaaposta.main.repository.LogRepository;
 import br.casaaposta.main.repository.ResultadoRepository;
@@ -132,18 +137,17 @@ public class FutVirtualServiceSuperLeague {
 	};
 
 	
-	public List<Odds> callServiceResultadoUnder05() {
+	public List<OddsSuperCup> callServiceResultadoUnder05() {
 
 		String resultadoTipo = "Under05";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			Mono<Object> response = this.webClientUnder05.get().retrieve().bodyToMono(Object.class);
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
-			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
-			r.forEach(result -> {
-				result.setCodLiga(this.liga);
-			});
-			return r;
+			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
+			List <OddsSuperCup> listOddsToReturn = null;
+			listOddsToReturn = castList(r);
+			return listOddsToReturn;
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoUnder05");
@@ -158,18 +162,17 @@ public class FutVirtualServiceSuperLeague {
 	};
 
 	
-	public List<Odds> callServiceResultadoUnder15() {
+	public List<OddsSuperCup> callServiceResultadoUnder15() {
 
 		String resultadoTipo = "Under15";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			Mono<Object> response = this.webClientUnder15.get().retrieve().bodyToMono(Object.class);
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
-			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
-			r.forEach(result -> {
-				result.setCodLiga(this.liga);
-			});
-			return r;
+			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
+			List <OddsSuperCup> listOddsToReturn = null;
+			listOddsToReturn = castList(r);
+			return listOddsToReturn;
 
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
@@ -184,7 +187,7 @@ public class FutVirtualServiceSuperLeague {
 	};
 
 	
-	public List<Odds> callServiceResultadoOver25() {
+	public List<OddsSuperCup> callServiceResultadoOver25() {
 
 		String resultadoTipo = "Over25";
 		try {
@@ -192,11 +195,10 @@ public class FutVirtualServiceSuperLeague {
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			Mono<Object> response = this.webClientOver25.get().retrieve().bodyToMono(Object.class);
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
-			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
-			r.forEach(result -> {
-				result.setCodLiga(this.liga);
-			});
-			return r;
+			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
+			List <OddsSuperCup> listOddsToReturn = null;
+			listOddsToReturn = castList(r);
+			return listOddsToReturn;
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoOver25");
@@ -209,18 +211,17 @@ public class FutVirtualServiceSuperLeague {
 	};
 
 	
-	public List<Odds> callServiceResultadoOver35() {
+	public List<OddsSuperCup> callServiceResultadoOver35() {
 		String resultadoTipo = "Over35";
 		try {
 
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			Mono<Object> response = this.webClientOver35.get().retrieve().bodyToMono(Object.class);
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
-			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
-			r.forEach(result -> {
-				result.setCodLiga(this.liga);
-			});
-			return r;
+			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
+			List <OddsSuperCup> listOddsToReturn = null;
+			listOddsToReturn = castList(r);
+			return listOddsToReturn;
 
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
@@ -234,18 +235,17 @@ public class FutVirtualServiceSuperLeague {
 	};
 
 	
-	public List<Odds> callServiceResultadoCasa() {
+	public List<OddsSuperCup> callServiceResultadoCasa() {
 
 		String resultadoTipo = "Casa";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			Mono<Object> response = this.webClientCasa.get().retrieve().bodyToMono(Object.class);
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
-			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
-			r.forEach(result -> {
-				result.setCodLiga(this.liga);
-			});
-			return r;
+			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
+			List <OddsSuperCup> listOddsToReturn = null;
+			listOddsToReturn = castList(r);
+			return listOddsToReturn;
 
 		
 		} catch (Exception e) {
@@ -260,7 +260,7 @@ public class FutVirtualServiceSuperLeague {
 	};
 
 	
-	public List<Odds> callServiceResultadoEmpate() {
+	public List<OddsSuperCup> callServiceResultadoEmpate() {
 
 		String resultadoTipo = "Empate";
 		try {
@@ -268,11 +268,10 @@ public class FutVirtualServiceSuperLeague {
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			Mono<Object> response = this.webClientEmpate.get().retrieve().bodyToMono(Object.class);
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
-			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
-			r.forEach(result -> {
-				result.setCodLiga(this.liga);
-			});
-			return r;
+			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
+			List <OddsSuperCup> listOddsToReturn = null;
+			listOddsToReturn = castList(r);
+			return listOddsToReturn;
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoEmpate");
@@ -285,18 +284,17 @@ public class FutVirtualServiceSuperLeague {
 	};
 
 	
-	public List<Odds> callServiceResultadoVisitante() {
+	public List<OddsSuperCup> callServiceResultadoVisitante() {
 
 		String resultadoTipo = "Visitante";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			Mono<Object> response = this.webClientVisitante.get().retrieve().bodyToMono(Object.class);
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
-			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
-			r.forEach(result -> {
-				result.setCodLiga(this.liga);
-			});
-			return r;
+			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
+			List <OddsSuperCup> listOddsToReturn = null;
+			listOddsToReturn = castList(r);
+			return listOddsToReturn;
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError(
@@ -310,18 +308,17 @@ public class FutVirtualServiceSuperLeague {
 		return null;
 	};
 
-	public List<Odds>  callServiceResultadoAmbasMarcam() {
+	public List<OddsSuperCup>  callServiceResultadoAmbasMarcam() {
 
 		String resultadoTipo = "AmbasMarcam";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			Mono<Object> response = this.webClientAmbasMarcam.get().retrieve().bodyToMono(Object.class);
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
-			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
-			r.forEach(result -> {
-				result.setCodLiga(this.liga);
-			});
-			return r;
+			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
+			List <OddsSuperCup> listOddsToReturn = null;
+			listOddsToReturn = castList(r);
+			return listOddsToReturn;
 
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
@@ -335,6 +332,32 @@ public class FutVirtualServiceSuperLeague {
 
 		return null;
 	};
+	
+	public List<OddsSuperCup> castList(List<OddsModel> l){
+		List<OddsSuperCup> lista = new ArrayList();
+		
+		for (OddsModel odds : l) {
+			OddsSuperCup o = new OddsSuperCup();
+			o.setAno(odds.getAno());
+			o.setCodLiga(this.liga);
+			o.setContable(odds.isContable());
+			o.setData(odds.getData());
+			o.setHora(odds.getHora());
+			o.setId(odds.getId());
+			o.setJogo(odds.getJogo());
+			o.setMinuto(odds.getMinuto());
+			o.setPercentual(odds.getPercentual());
+			o.setResultado(odds.getResultado());
+			o.setResultadoTipo(odds.getResultadoTipo());
+			o.setSumScore(odds.getSumScore());
+			o.setTimeCasa(odds.getTimeCasa());
+			o.setTimeVisitante(odds.getTimeVisitante());
+			o.setTollTip(odds.getTollTip());
+			lista.add(o);
+		}
+		return lista;
+	}
+
 
 	public void setLiga() {
 		Optional<Liga> liga = ligaRepository.findByCodLiga(idCompetition);
