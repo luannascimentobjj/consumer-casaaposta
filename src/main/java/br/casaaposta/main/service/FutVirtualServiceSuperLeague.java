@@ -310,7 +310,7 @@ public class FutVirtualServiceSuperLeague {
 		return null;
 	};
 
-	public List<Odds>  obterResultadoAmbasMarcam() {
+	public List<Odds>  callServiceResultadoAmbasMarcam() {
 
 		String resultadoTipo = "AmbasMarcam";
 		try {

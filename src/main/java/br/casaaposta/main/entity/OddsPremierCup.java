@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 
 
 @Entity
-@Table(name="OddsEurocup")
+@Table(name="OddsPremiercup")
 @NoArgsConstructor
 @Data
-public class Odds implements Serializable{
+public class OddsPremierCup implements Serializable{
 	
 	private static final long serialVersionUID = 8511686573089879079L;
 
