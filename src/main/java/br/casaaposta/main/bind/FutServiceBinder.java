@@ -1,5 +1,6 @@
 package br.casaaposta.main.bind;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import org.springframework.stereotype.Component;
@@ -98,9 +99,9 @@ public class FutServiceBinder {
 
 	}
 
-	public List<Odds> bindOdds(LinkedHashMap<Object, Object> resultaForBinding, String tipoResultado) {
+	public List<Class<?>> bindOdds(LinkedHashMap<Object, Object> resultaForBinding, String tipoResultado) {
 
-		List<Odds> list = new ArrayList();
+		List<Class<?>> list = new ArrayList();
 		resultaForBinding.entrySet().forEach(entry -> {
 
 			entry.getKey();
@@ -167,7 +168,7 @@ public class FutServiceBinder {
 								r.setHora(this.hora);
 								r.setPercentual(this.percent);
 								r.setResultadoTipo(tipoResultado);
-								list.add(r);
+								list.addAll((Collection<? extends Class<?>>) r);
 							});
 						}
 					});

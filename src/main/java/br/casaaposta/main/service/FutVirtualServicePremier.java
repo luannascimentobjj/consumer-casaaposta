@@ -1,5 +1,6 @@
 package br.casaaposta.main.service;
 import java.time.LocalTime;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
@@ -10,9 +11,11 @@ import br.casaaposta.main.bind.FutServiceBinder;
 import br.casaaposta.main.entity.Liga;
 import br.casaaposta.main.entity.Log;
 import br.casaaposta.main.entity.Odds;
+import br.casaaposta.main.entity.OddsPremierCup;
 import br.casaaposta.main.entity.Resultado;
 import br.casaaposta.main.repository.LigaRepository;
 import br.casaaposta.main.repository.LogRepository;
+import br.casaaposta.main.repository.OddsPremierCupRepository;
 import br.casaaposta.main.repository.ResultadoRepository;
 import br.casaaposta.main.util.UrlUtils;
 import reactor.core.publisher.Mono;
@@ -129,7 +132,7 @@ public class FutVirtualServicePremier {
 	};
 
 	
-	public List<Odds> callServiceResultadoUnder05() {
+	public List<OddsPremierCup> callServiceResultadoUnder05() {
 
 		String resultadoTipo = "Under05";
 		try {
@@ -137,10 +140,12 @@ public class FutVirtualServicePremier {
 			Mono<Object> response = this.webClientUnder05.get().retrieve().bodyToMono(Object.class);
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			List<Odds> r = futBusiness.bindOdds(objects, resultadoTipo);
+			List <OddsPremierCup> listOddsToReturn = null;
 			r.forEach(result -> {
 				result.setCodLiga(this.liga);
+				listOddsToReturn.add(result);
 			});
-			return r;
+			return listOddsToReturn;
 
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());

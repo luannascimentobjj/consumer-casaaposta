@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 
 import br.casaaposta.main.entity.Log;
 import br.casaaposta.main.entity.Odds;
+import br.casaaposta.main.entity.OddsPremierCup;
 import br.casaaposta.main.entity.Resultado;
 import br.casaaposta.main.repository.LogRepository;
 import br.casaaposta.main.repository.OddsPremierCupRepository;
@@ -35,7 +36,7 @@ public class FutVirtualPremierCupController {
 	public CompletableFuture<String> obterResultadoUnder05() {
 		
 		try {
-			List<Odds> listaUnder05 =  futService_.callServiceResultadoUnder05();
+			List<OddsPremierCup> listaUnder05 =  futService_.callServiceResultadoUnder05();
 			salvarResultadoUnder05(listaUnder05);
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
@@ -204,7 +205,7 @@ public class FutVirtualPremierCupController {
 	
 	
 	
-	public void salvarResultadoUnder05(List<Odds> listUnder05) {
+	public void salvarResultadoUnder05(List<OddsPremierCupRepository> listUnder05) {
 		try {
 		
 	      //Verificar se existe duplicado.		
@@ -230,7 +231,7 @@ public class FutVirtualPremierCupController {
 		}
 	}
 	
-	public void salvarResultadoUnder15(List<Odds> listUnder15) {
+	public void salvarResultadoUnder15(List<OddsPremierCupRepository> listUnder15) {
 		try {
 		
 	      //Verificar se existe duplicado.		
