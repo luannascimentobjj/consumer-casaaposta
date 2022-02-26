@@ -6,6 +6,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import br.casaaposta.main.controller.FutVirtualEuroCupController;
+import br.casaaposta.main.controller.FutVirtualPremierCupController;
+import br.casaaposta.main.controller.FutVirtualSuperCupController;
+import br.casaaposta.main.controller.FutVirtualWorldCupController;
 import br.casaaposta.main.service.FutVirtualServiceEuroCup;
 import br.casaaposta.main.service.FutVirtualServicePremier;
 import br.casaaposta.main.service.FutVirtualServiceSuperLeague;
@@ -15,83 +18,94 @@ import br.casaaposta.main.service.FutVirtualServiceWorldCup;
 public class TasksSchedule {
 
 	@Autowired
-	private FutVirtualServiceEuroCup euroCupService;
+	private FutVirtualSuperCupController superCupController;
 	@Autowired
-	private FutVirtualServicePremier premierCupService;
-	@Autowired
-	private FutVirtualServiceWorldCup worldCupService;
-	@Autowired
-	private FutVirtualServiceSuperLeague superCupService;
+	private FutVirtualWorldCupController worldCupController;
 	@Autowired
 	private FutVirtualEuroCupController euroCupController;
+	@Autowired 
+	FutVirtualPremierCupController premierCupController;
+	@Autowired
+	FutVirtualServiceEuroCup  euroCupService;
+	@Autowired 
+	FutVirtualServicePremier permierCupService;
+	@Autowired 
+	FutVirtualServiceSuperLeague superLeagueService;
+	@Autowired 
+	FutVirtualServiceWorldCup worldCupService;
 	
 	@Scheduled(fixedDelay = 86400000)
-	@Async
-	public void ObterResultadoFTEuroCopa() {
+	public void scheduleEuroCup() {
 	
-		System.out.println("USANDO SCHEDULE");
-		euroCupService.setLiga();
-//		premierCupService.setLiga();
-//		worldCupService.setLiga();
-		//superCupService.setLiga();
-		
+		System.out.println("Iniciou Schedule EuroCopa");
 		//euroCupService.obterResultadoFT();
 		//euroCupService.obterResultadoHT();
 		//euroCupController.obterResultadoUnder05();
-		//euroCupService.obterResultadoAmbasMarcam();
+		euroCupController.obterResultadoAmbasMarcam();
 		//euroCupController.obterResultadoOver25();
-		
-		
 		//euroCupController.obterResultadoOver35();
 		//euroCupController.obterResultadoUnder15();
 		//euroCupController.obterResultadoCasa();
 		//euroCupController.obterResultadoEmpate();
-		euroCupController.obterResultadoVisitante();
-
-		/**
-		premierCupService.obterResultadoFT();
-		premierCupService.obterResultadoHT();
-		premierCupService.obterResultadoOver25();
-		premierCupService.obterResultadoOver35();
-		premierCupService.obterResultadoUnder05();
-		premierCupService.obterResultadoUnder15();
-		premierCupService.obterResultadoCasa();
-		premierCupService.obterResultadoEmpate();
-		premierCupService.obterResultadoVisitante();
-		premierCupService.obterResultadoAmbasMarcam();
-		
-		worldCupService.obterResultadoFT();
-		worldCupService.obterResultadoHT();
-		worldCupService.obterResultadoOver25();
-		worldCupService.obterResultadoOver35();
-		worldCupService.obterResultadoUnder05();
-		worldCupService.obterResultadoUnder15();
-		worldCupService.obterResultadoCasa();
-		worldCupService.obterResultadoEmpate();
-		worldCupService.obterResultadoVisitante();
-		worldCupService.obterResultadoAmbasMarcam();
-		
-		superCupService.obterResultadoFT();
-		superCupService.obterResultadoHT();
-		superCupService.obterResultadoOver25();
-		superCupService.obterResultadoOver35();
-		superCupService.obterResultadoUnder05();
-		superCupService.obterResultadoUnder15();
-		superCupService.obterResultadoCasa();
-		superCupService.obterResultadoEmpate();
-		superCupService.obterResultadoVisitante();
-		superCupService.obterResultadoAmbasMarcam();
-		
-		**/
+		//euroCupController.obterResultadoVisitante();
+	
 	}
 	
+	/**@Scheduled(fixedDelay = 86400000)
+	public void schedulePremierCup() {
+		System.out.println("Iniciou Schedule Premier Copa");
+		permierCupService.setLiga();
+		premierCupController.obterResultadoFT();
+		premierCupController.obterResultadoHT();
+		premierCupController.obterResultadoOver25();
+		premierCupController.obterResultadoOver35();
+		premierCupController.obterResultadoUnder05();
+		premierCupController.obterResultadoUnder15();
+		premierCupController.obterResultadoCasa();
+		premierCupController.obterResultadoEmpate();
+		premierCupController.obterResultadoVisitante();
+		premierCupController.obterResultadoAmbasMarcam();
+	}
+	
+	@Scheduled(fixedDelay = 86400000)
+	public void scheduleWorldCup() {
+		System.out.println("Iniciou Schedule World Copa");
+		worldCupService.setLiga();
+		premierCupController.obterResultadoFT();
+		premierCupController.obterResultadoHT();
+		premierCupController.obterResultadoOver25();
+		premierCupController.obterResultadoOver35();
+		premierCupController.obterResultadoUnder05();
+		premierCupController.obterResultadoUnder15();
+		premierCupController.obterResultadoCasa();
+		premierCupController.obterResultadoEmpate();
+		premierCupController.obterResultadoVisitante();
+		premierCupController.obterResultadoAmbasMarcam();
+	}
+	
+	
+	@Scheduled(fixedDelay = 86400000)
+	public void scheduleSuperCup() {
+		System.out.println("Iniciou Schedule Super Copa");
+		superLeagueService.setLiga();
+		superCupController.obterResultadoFT();
+		superCupController.obterResultadoHT();
+		superCupController.obterResultadoOver25();
+		superCupController.obterResultadoOver35();
+		superCupController.obterResultadoUnder05();
+		superCupController.obterResultadoUnder15();
+		superCupController.obterResultadoCasa();
+		superCupController.obterResultadoEmpate();
+		superCupController.obterResultadoVisitante();
+		superCupController.obterResultadoAmbasMarcam();
+	}
+	**/
 	
 	@Scheduled(fixedDelay = 120000)
 	@Async
 	public void ObterCookieReset() {
 	
 		System.out.println("Reset Cookie");
-		euroCupService.setLiga();
 		euroCupService.obterResetCookie();
 
 	}

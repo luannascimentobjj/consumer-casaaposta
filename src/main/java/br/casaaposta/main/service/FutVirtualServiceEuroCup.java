@@ -47,8 +47,6 @@ public class FutVirtualServiceEuroCup {
 	@Autowired
 	private LigaRepository ligaRepository;
 	@Autowired
-	private OddsRepository oddsRepository;
-	@Autowired
 	ResultadoRepository resultadoRepository;
 	@Autowired
 	LogRepository logRepository;
@@ -354,11 +352,11 @@ public class FutVirtualServiceEuroCup {
 		return null;
 	};
 
-	@Async
+	
 	public List<Odds> callServiceAmbasMarcam() {
 		String resultadoTipo = "AmbasMarcam";
 		try {
-			FutServiceBinder futBusiness = new FutServiceBinder();
+ 			FutServiceBinder futBusiness = new FutServiceBinder();
 			Mono<Object> response = this.webClientAmbasMarcam.get().retrieve().bodyToMono(Object.class);
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			System.out.println("Retornou do Serviço resultado AmbasMarcam");

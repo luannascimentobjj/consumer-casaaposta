@@ -3,19 +3,23 @@ package br.casaaposta.main.controller;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 
+import br.casaaposta.main.entity.Liga;
 import br.casaaposta.main.entity.Log;
 import br.casaaposta.main.entity.Odds;
 import br.casaaposta.main.entity.Resultado;
+import br.casaaposta.main.repository.LigaRepository;
 import br.casaaposta.main.repository.LogRepository;
 import br.casaaposta.main.repository.OddsRepository;
 import br.casaaposta.main.repository.ResultadoRepository;
 import br.casaaposta.main.service.FutVirtualServiceEuroCup;
+import br.casaaposta.main.util.UrlUtils;
 
 @Controller
 public class FutVirtualEuroCupController {
@@ -28,8 +32,11 @@ public class FutVirtualEuroCupController {
 	LogRepository logRepository_;
 	@Autowired 
 	ResultadoRepository resultadoRepository_;
+	private Liga liga;
+	@Autowired
+	private LigaRepository ligaRepository;
 	Log logger_ = new Log();
-	
+	private final String idCompetition = UrlUtils.idEuroCup;
 
 	@Async
 	public CompletableFuture<String> obterResultadoUnder05() {
@@ -441,5 +448,18 @@ public class FutVirtualEuroCupController {
 		}
 		
 	}
+	
+	public void setLiga() {
+		Optional<Liga> liga = ligaRepository.findByCodLiga(idCompetition);
+		if (!liga.isPresent()) {
+			Liga l1 = new Liga();
+			l1.setNomeLiga("Euro Copa");
+			l1.setCodLiga(idCompetition);
+			this.liga = ligaRepository.save(l1);
+		} else {
+			this.liga = liga.get();
+		}
+
+	};
 	
 }
