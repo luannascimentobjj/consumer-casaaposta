@@ -1,12 +1,8 @@
 package br.casaaposta.main.interfaces;
-
 import java.util.List;
-
-import org.springframework.stereotype.Component;
-
 import br.casaaposta.main.entity.OddsWorldCup;
 import br.casaaposta.main.entity.Resultado;
-@Component
+
 public interface FutVirtualWorldCupDataInterface {
 
 	void salvarResultadoUnder05(List<OddsWorldCup> listUnder05);
