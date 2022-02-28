@@ -2,9 +2,11 @@ package br.casaaposta.main.interfaces;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import br.casaaposta.main.entity.OddsEuroCup;
 import br.casaaposta.main.entity.Resultado;
-
+@Component
 public interface FutVirtualEuroCupDataInterface {
 
 	void salvarResultadoUnder05(List<OddsEuroCup> listUnder05);

@@ -2,9 +2,11 @@ package br.casaaposta.main.interfaces;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import br.casaaposta.main.entity.OddsPremierCup;
 import br.casaaposta.main.entity.Resultado;
-
+@Component
 public interface FutVirtualPremierCupDataInterface {
 
 	void salvarResultadoUnder05(List<OddsPremierCup> listUnder05);

@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import br.casaaposta.main.entity.Log;
 import br.casaaposta.main.entity.OddsSuperCup;
 import br.casaaposta.main.entity.Resultado;
@@ -12,7 +14,7 @@ import br.casaaposta.main.repository.LogRepository;
 import br.casaaposta.main.repository.OddsSuperCupRepository;
 import br.casaaposta.main.repository.ResultadoRepository;
 import br.casaaposta.main.util.ConstantsUtils;
-
+@Component
 public class FutVirtualSuperCupData implements FutVirtualSuperCupDataInterface{
 	
 	@Autowired

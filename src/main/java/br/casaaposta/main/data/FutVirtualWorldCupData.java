@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import br.casaaposta.main.entity.Log;
 import br.casaaposta.main.entity.OddsWorldCup;
@@ -15,6 +16,7 @@ import br.casaaposta.main.repository.OddsWorldCupRepository;
 import br.casaaposta.main.repository.ResultadoRepository;
 import br.casaaposta.main.util.ConstantsUtils;
 
+@Component
 public class FutVirtualWorldCupData implements FutVirtualWorldCupDataInterface{
 
 	@Autowired
