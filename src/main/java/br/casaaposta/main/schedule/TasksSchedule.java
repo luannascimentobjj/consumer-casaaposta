@@ -10,9 +10,7 @@ import br.casaaposta.main.controller.FutVirtualPremierCupController;
 import br.casaaposta.main.controller.FutVirtualSuperCupController;
 import br.casaaposta.main.controller.FutVirtualWorldCupController;
 import br.casaaposta.main.service.FutVirtualServiceEuroCup;
-import br.casaaposta.main.service.FutVirtualServicePremier;
-import br.casaaposta.main.service.FutVirtualServiceSuperCup;
-import br.casaaposta.main.service.FutVirtualServiceWorldCup;
+
 
 @Component
 public class TasksSchedule {
@@ -27,12 +25,6 @@ public class TasksSchedule {
 	FutVirtualPremierCupController premierCupController;
 	@Autowired
 	FutVirtualServiceEuroCup  euroCupService;
-	@Autowired 
-	FutVirtualServicePremier permierCupService;
-	@Autowired 
-	FutVirtualServiceSuperCup superLeagueService;
-	@Autowired 
-	FutVirtualServiceWorldCup worldCupService;
 	
 	
 	@Scheduled(fixedDelay = 600000)
@@ -94,7 +86,7 @@ public class TasksSchedule {
 	@Scheduled(fixedDelay = 600000)
 	public void scheduleSuperCup() {
 		System.out.println("Iniciou Schedule Super Copa");
-		superLeagueService.setLiga();
+		superCupController.setLiga();
 		superCupController.obterResultadoFT();
 		superCupController.obterResultadoHT();
 		superCupController.obterResultadoOver25();
@@ -113,7 +105,7 @@ public class TasksSchedule {
 	public void ObterCookieReset() {
 	
 		System.out.println("Reset Cookie");
-		euroCupService.obterResetCookie();
+		euroCupController.resetarCookie();
 
 	}
 	

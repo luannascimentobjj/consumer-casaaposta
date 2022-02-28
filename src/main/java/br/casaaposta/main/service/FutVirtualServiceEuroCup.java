@@ -15,7 +15,7 @@ import br.casaaposta.main.entity.Resultado;
 import br.casaaposta.main.model.OddsModel;
 import br.casaaposta.main.repository.LogRepository;
 import br.casaaposta.main.repository.ResultadoRepository;
-import br.casaaposta.main.util.UrlUtils;
+import br.casaaposta.main.util.ConstantsUtils;
 import reactor.core.publisher.Mono;
 
 
@@ -32,8 +32,7 @@ public class FutVirtualServiceEuroCup {
 	private final WebClient webClientEmpate;
 	private final WebClient webClientVisitante;
 	private final WebClient webClientAmbasMarcam;
-	private final String idCompetition = UrlUtils.idEuroCup;
-	UrlUtils urls;
+
 
 	@Autowired
 	ResultadoRepository resultadoRepository;
@@ -45,7 +44,7 @@ public class FutVirtualServiceEuroCup {
 
 	public FutVirtualServiceEuroCup(WebClient.Builder webClientBuilder) {
 		webClientBuilder.defaultHeaders(httpHeaders -> {
-			httpHeaders.set("Cookie", UrlUtils.Auth);
+			httpHeaders.set("Cookie", ConstantsUtils.Auth);
 			httpHeaders.set("User-agent",
 					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36");
 			httpHeaders.set("Accept-Language", "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7,pl;q=0.6,it;q=0.5,fr;q=0.4");
@@ -55,33 +54,33 @@ public class FutVirtualServiceEuroCup {
 		});
 
 		this.webClientUnder15 = webClientBuilder
-				.baseUrl(UrlUtils.baseUrl + idCompetition + UrlUtils.baseUnder15FinalUrl).build();
+				.baseUrl(ConstantsUtils.baseUrl + ConstantsUtils.idEuroCup + ConstantsUtils.baseUnder15FinalUrl).build();
 		this.webClientUnder05 = webClientBuilder
-				.baseUrl(UrlUtils.baseUrl + idCompetition + UrlUtils.baseUnder05FinalUrl).build();
-		this.webClientOver25 = webClientBuilder.baseUrl(UrlUtils.baseUrl + idCompetition + UrlUtils.baseOver25FinalUrl)
+				.baseUrl(ConstantsUtils.baseUrl + ConstantsUtils.idEuroCup + ConstantsUtils.baseUnder05FinalUrl).build();
+		this.webClientOver25 = webClientBuilder.baseUrl(ConstantsUtils.baseUrl + ConstantsUtils.idEuroCup + ConstantsUtils.baseOver25FinalUrl)
 				.build();
-		this.webClientOver35 = webClientBuilder.baseUrl(UrlUtils.baseUrl + idCompetition + UrlUtils.baseOver35FinalUrl)
+		this.webClientOver35 = webClientBuilder.baseUrl(ConstantsUtils.baseUrl + ConstantsUtils.idEuroCup + ConstantsUtils.baseOver35FinalUrl)
 				.build();
-		this.webClientResultadoFT = webClientBuilder.baseUrl(UrlUtils.baseUrl + idCompetition + UrlUtils.baseFtFinalUrl)
+		this.webClientResultadoFT = webClientBuilder.baseUrl(ConstantsUtils.baseUrl + ConstantsUtils.idEuroCup + ConstantsUtils.baseFtFinalUrl)
 				.build();
-		this.webClientResultadoHT = webClientBuilder.baseUrl(UrlUtils.baseUrl + idCompetition + UrlUtils.baseHtFinalUrl)
+		this.webClientResultadoHT = webClientBuilder.baseUrl(ConstantsUtils.baseUrl + ConstantsUtils.idEuroCup + ConstantsUtils.baseHtFinalUrl)
 				.build();
-		this.webClientCasa = webClientBuilder.baseUrl(UrlUtils.baseUrl + idCompetition + UrlUtils.baseCasaFinalUrl)
+		this.webClientCasa = webClientBuilder.baseUrl(ConstantsUtils.baseUrl + ConstantsUtils.idEuroCup + ConstantsUtils.baseCasaFinalUrl)
 				.build();
-		this.webClientEmpate = webClientBuilder.baseUrl(UrlUtils.baseUrl + idCompetition + UrlUtils.baseEmpateFinalUrl)
+		this.webClientEmpate = webClientBuilder.baseUrl(ConstantsUtils.baseUrl + ConstantsUtils.idEuroCup + ConstantsUtils.baseEmpateFinalUrl)
 				.build();
 		this.webClientVisitante = webClientBuilder
-				.baseUrl(UrlUtils.baseUrl + idCompetition + UrlUtils.baseVisitanteFinalUrl).build();
+				.baseUrl(ConstantsUtils.baseUrl + ConstantsUtils.idEuroCup + ConstantsUtils.baseVisitanteFinalUrl).build();
 		this.webClientAmbasMarcam = webClientBuilder
-				.baseUrl(UrlUtils.baseUrl + idCompetition + UrlUtils.baseAmbasMarcamFinalUrl).build();
+				.baseUrl(ConstantsUtils.baseUrl + ConstantsUtils.idEuroCup + ConstantsUtils.baseAmbasMarcamFinalUrl).build();
 
 	}
 
-	public void obterResetCookie() {
+	public void callResetCookie() {
 		try {
 			
 			Mono<Object> response = this.webClientResultadoFT.get()
-					.uri(urls.baseUrl + idCompetition + UrlUtils.baseResetCookieUrl).retrieve()
+					.uri(ConstantsUtils.idEuroCup + ConstantsUtils.idEuroCup + ConstantsUtils.baseResetCookieUrl).retrieve()
 					.bodyToMono(Object.class);
 
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();

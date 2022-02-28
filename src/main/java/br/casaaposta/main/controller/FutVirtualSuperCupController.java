@@ -19,7 +19,7 @@ import br.casaaposta.main.repository.LogRepository;
 import br.casaaposta.main.repository.OddsSuperCupRepository;
 import br.casaaposta.main.repository.ResultadoRepository;
 import br.casaaposta.main.service.FutVirtualServiceSuperCup;
-import br.casaaposta.main.util.UrlUtils;
+import br.casaaposta.main.util.ConstantsUtils;
 
 @Controller
 public class FutVirtualSuperCupController {
@@ -35,7 +35,7 @@ public class FutVirtualSuperCupController {
 	Log logger_ = new Log();
 	@Autowired
 	private LigaRepository ligaRepository_;
-	private final String idCompetition = UrlUtils.idSuperLeagueCup;
+	private final String idCompetition = ConstantsUtils.idSuperLeagueCup;
 	private Liga liga;
 	
 

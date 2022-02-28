@@ -1,6 +1,6 @@
 package br.casaaposta.main.entity;
 import java.io.Serializable;
-import java.time.LocalTime;
+
 
 import javax.persistence.*;
 
