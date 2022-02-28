@@ -28,7 +28,8 @@ public class FutVirtualPremierCupController {
 	LogRepository logRepository_;
 	@Autowired
 	LigaRepository ligaRepository_;
-	@Autowired FutVirtualPremierCupDataInterface futPremierCupData_;
+	@Autowired 
+	FutVirtualPremierCupDataInterface futPremierCupData_;
 	Log logger_ = new Log();
 	private Liga liga;
 	
