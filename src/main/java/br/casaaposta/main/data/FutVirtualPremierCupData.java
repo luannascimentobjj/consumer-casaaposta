@@ -3,53 +3,52 @@ package br.casaaposta.main.data;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import br.casaaposta.main.entity.Log;
-import br.casaaposta.main.entity.OddsEuroCup;
+import br.casaaposta.main.entity.OddsPremierCup;
 import br.casaaposta.main.entity.Resultado;
-import br.casaaposta.main.interfaces.FutVirtualEuroCupDataInterface;
+import br.casaaposta.main.interfaces.FutVirtualPremierCupDataInterface;
 import br.casaaposta.main.repository.LogRepository;
-import br.casaaposta.main.repository.OddsRepository;
+import br.casaaposta.main.repository.OddsPremierCupRepository;
 import br.casaaposta.main.repository.ResultadoRepository;
 import br.casaaposta.main.util.ConstantsUtils;
-import lombok.Data;
-@Data
 
-public class FutVirtualEuroCupData implements FutVirtualEuroCupDataInterface {
-
+public class FutVirtualPremierCupData implements FutVirtualPremierCupDataInterface{
 	
 	@Autowired 
 	ResultadoRepository resultadoRepository_;
 	@Autowired
-	OddsRepository oddsRepository_;
-	@Autowired
 	LogRepository logRepository_;
+	@Autowired
+	OddsPremierCupRepository oddsRepository_;
 	Log logger_ = new Log();
 	
-	public void salvarResultadoUnder05(List<OddsEuroCup> listUnder05) {
+	public void salvarResultadoUnder05(List<OddsPremierCup> listUnder05) {
 		try {
-		
-			List<OddsEuroCup> listToSave = new ArrayList<OddsEuroCup>();
+			
+			List<OddsPremierCup> listToSave = new ArrayList<OddsPremierCup>();
 			listUnder05.forEach(resultadoUnder05 ->{
 				Resultado r1 = resultadoRepository_.findByTollTipAndMinutoAndHoraAndResultadoTipo(resultadoUnder05.getTollTip(), resultadoUnder05.getMinuto(), resultadoUnder05.getHora(), ConstantsUtils.resultadoUnder05);
 				if (r1 == null) {
 					listToSave.add(resultadoUnder05);
 				}
 			});
+
 		oddsRepository_.saveAllAndFlush(listToSave);
-		
 		}catch  (Exception e){
 			logger_.setStackTrace(e.getMessage());
-			logger_.setError("Erro ao coletar salvar informações no banco, FutVirtualEuroCupController.obterResultadoUnder05");
+			logger_.setError("Erro ao coletar salvar informações no banco, FutVirtualServiceEuroCup.obterResultadoUnder05");
 			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository_.save(logger_);
 		}
 	}
 	
-	public void salvarResultadoUnder15(List<OddsEuroCup> listUnder15) {
+	public void salvarResultadoUnder15(List<OddsPremierCup> listUnder15) {
 		try {
 		
-			List<OddsEuroCup> listToSave = new ArrayList<OddsEuroCup>();
+			List<OddsPremierCup> listToSave = new ArrayList<OddsPremierCup>();
 			listUnder15.forEach(resultadoUnder15 ->{
 				Resultado r1 = resultadoRepository_.findByTollTipAndMinutoAndHoraAndResultadoTipo(resultadoUnder15.getTollTip(), resultadoUnder15.getMinuto(), resultadoUnder15.getHora(), ConstantsUtils.resultadoUnder15);
 				if (r1 == null) {
@@ -60,95 +59,92 @@ public class FutVirtualEuroCupData implements FutVirtualEuroCupDataInterface {
 
 		}catch  (Exception e){
 			logger_.setStackTrace(e.getMessage());
-			logger_.setError("Erro ao coletar salvar informações no banco, FutVirtualEuroCupController.obterResultadoUnder15");
+			logger_.setError("Erro ao coletar salvar informações no banco, FutVirtualServiceEuroCup.obterResultadoUnder15");
 			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository_.save(logger_);
 		}
 	}
 	
-	public void salvarResultadoOver25(List<OddsEuroCup> listOver25) {
+	public void salvarResultadoOver25(List<OddsPremierCup> listOver25) {
 		try {
 		
-			List<OddsEuroCup> listToSave = new ArrayList<OddsEuroCup>();
+			List<OddsPremierCup> listToSave = new ArrayList<OddsPremierCup>();
 			listOver25.forEach(resultadoOver25 ->{
 				Resultado r1 = resultadoRepository_.findByTollTipAndMinutoAndHoraAndResultadoTipo(resultadoOver25.getTollTip(), resultadoOver25.getMinuto(), resultadoOver25.getHora(), ConstantsUtils.resultadoOver25);
 				if (r1 == null) {
 					listToSave.add(resultadoOver25);
 				}
 			});
-		
 		oddsRepository_.saveAllAndFlush(listToSave);
-		
 		}catch  (Exception e){
 			logger_.setStackTrace(e.getMessage());
-			logger_.setError("Erro ao coletar salvar informações no banco, FutVirtualEuroCupController.obterResultadoOver25");
+			logger_.setError("Erro ao coletar salvar informações no banco, FutVirtualServiceEuroCup.obterResultadoOver25");
 			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository_.save(logger_);
 		}
 	}
-	public void salvarResultadoOver35(List<OddsEuroCup> listOver35) {
+	public void salvarResultadoOver35(List<OddsPremierCup> listOver35) {
 		try {
 		
-			
-			List<OddsEuroCup> listToSave = new ArrayList<OddsEuroCup>();
+			List<OddsPremierCup> listToSave = new ArrayList<OddsPremierCup>();
 			listOver35.forEach(resultadoOver35 ->{
 				Resultado r1 = resultadoRepository_.findByTollTipAndMinutoAndHoraAndResultadoTipo(resultadoOver35.getTollTip(), resultadoOver35.getMinuto(), resultadoOver35.getHora(), ConstantsUtils.resultadoOver35);
 				if (r1 == null) {
 					listToSave.add(resultadoOver35);
 				}
 			});
-	
-
 		oddsRepository_.saveAllAndFlush(listToSave);
 
 		}catch  (Exception e){
 			logger_.setStackTrace(e.getMessage());
-			logger_.setError("Erro ao coletar salvar informações no banco, FutVirtualEuroCupController.obterResultadoOver35");
+			logger_.setError("Erro ao coletar salvar informações no banco, FutVirtualServiceEuroCup.obterResultadoOver35");
 			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository_.save(logger_);
 		}
 	}
-	public void salvarResultadoCasa(List<OddsEuroCup> listCasa) {
+	public void salvarResultadoCasa(List<OddsPremierCup> listCasa) {
 		try {
 		
-			List<OddsEuroCup> listToSave = new ArrayList<OddsEuroCup>();
+			List<OddsPremierCup> listToSave = new ArrayList<OddsPremierCup>();
 			listCasa.forEach(resultadoCasa ->{
 				Resultado r1 = resultadoRepository_.findByTollTipAndMinutoAndHoraAndResultadoTipo(resultadoCasa.getTollTip(), resultadoCasa.getMinuto(), resultadoCasa.getHora(), ConstantsUtils.resultadoCasa);
 				if (r1 == null) {
 					listToSave.add(resultadoCasa);
 				}
 			});
-	
+
 		oddsRepository_.saveAllAndFlush(listToSave);
+
 		}catch  (Exception e){
 			logger_.setStackTrace(e.getMessage());
-			logger_.setError("Erro ao coletar salvar informações no banco, FutVirtualEuroCupController.obterResultadoCasa");
+			logger_.setError("Erro ao coletar salvar informações no banco, FutVirtualServiceEuroCup.obterResultadoCasa");
 			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository_.save(logger_);
 		}
 	}
-	public void salvarResultadoEmpate(List<OddsEuroCup> listEmpate) {
+	public void salvarResultadoEmpate(List<OddsPremierCup> listEmpate) {
 		try {
-			
-			List<OddsEuroCup> listToSave = new ArrayList<OddsEuroCup>();
+		
+			List<OddsPremierCup> listToSave = new ArrayList<OddsPremierCup>();
 			listEmpate.forEach(resultadoEmpate ->{
 				Resultado r1 = resultadoRepository_.findByTollTipAndMinutoAndHoraAndResultadoTipo(resultadoEmpate.getTollTip(), resultadoEmpate.getMinuto(), resultadoEmpate.getHora(), ConstantsUtils.resultadoEmpate);
 				if (r1 == null) {
 					listToSave.add(resultadoEmpate);
 				}
 			});
+
 		oddsRepository_.saveAllAndFlush(listToSave);
 		}catch  (Exception e){
 			logger_.setStackTrace(e.getMessage());
-			logger_.setError("Erro ao coletar salvar informações no banco, FutVirtualEuroCupController.obterResultadoEmpate");
+			logger_.setError("Erro ao coletar salvar informações no banco, FutVirtualServiceEuroCup.obterResultadoEmpate");
 			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository_.save(logger_);
 		}
 	}
-	public void salvarResultadoVisitante(List<OddsEuroCup> listVisitante) {
+	public void salvarResultadoVisitante(List<OddsPremierCup> listVisitante) {
 		try {
 		
-			List<OddsEuroCup> listToSave = new ArrayList<OddsEuroCup>();
+			List<OddsPremierCup> listToSave = new ArrayList<OddsPremierCup>();
 			listVisitante.forEach(resultadoVisitante ->{
 				Resultado r1 = resultadoRepository_.findByTollTipAndMinutoAndHoraAndResultadoTipo(resultadoVisitante.getTollTip(), resultadoVisitante.getMinuto(), resultadoVisitante.getHora(), ConstantsUtils.resultadoVisitante);
 				if (r1 == null) {
@@ -156,18 +152,17 @@ public class FutVirtualEuroCupData implements FutVirtualEuroCupDataInterface {
 				}
 			});
 		oddsRepository_.saveAllAndFlush(listToSave);
-
 		}catch  (Exception e){
 			logger_.setStackTrace(e.getMessage());
-			logger_.setError("Erro ao coletar salvar informações no banco, FutVirtualEuroCupController.obterResultadoVisitante");
+			logger_.setError("Erro ao coletar salvar informações no banco, FutVirtualServiceEuroCup.obterResultadoVisitante");
 			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository_.save(logger_);
 		}
 	}
-	public void salvarResultadoAmbasMarcam(List<OddsEuroCup> listAmbasMarcam) {
+	public void salvarResultadoAmbasMarcam(List<OddsPremierCup> listAmbasMarcam) {
 		try {
 		
-			List<OddsEuroCup> listToSave = new ArrayList<OddsEuroCup>();
+			List<OddsPremierCup> listToSave = new ArrayList<OddsPremierCup>();
 			listAmbasMarcam.forEach(resultadoAmbasMarcam ->{
 				Resultado r1 = resultadoRepository_.findByTollTipAndMinutoAndHoraAndResultadoTipo(resultadoAmbasMarcam.getTollTip(), resultadoAmbasMarcam.getMinuto(), resultadoAmbasMarcam.getHora(), ConstantsUtils.resultadoAmbasMarcam);
 				if (r1 == null) {
@@ -175,10 +170,9 @@ public class FutVirtualEuroCupData implements FutVirtualEuroCupDataInterface {
 				}
 			});
 		oddsRepository_.saveAllAndFlush(listToSave);
-
 		}catch  (Exception e){
 			logger_.setStackTrace(e.getMessage());
-			logger_.setError("Erro ao coletar salvar informações no banco, FutVirtualEuroCupController.obterResultadoAmbas");
+			logger_.setError("Erro ao coletar salvar informações no banco, FutVirtualServiceEuroCup.obterResultadoAmbas");
 			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository_.save(logger_);
 		}
@@ -192,13 +186,12 @@ public class FutVirtualEuroCupData implements FutVirtualEuroCupDataInterface {
 				if (r1 == null) {
 					listToSave.add(resultadoHT);
 				}
-			});	
-
+			});
 		resultadoRepository_.saveAllAndFlush(listToSave);
 
 		}catch  (Exception e){
 			logger_.setStackTrace(e.getMessage());
-			logger_.setError("Erro ao coletar salvar informações no banco, FutVirtualEuroCupController.salvarResultadoHT");
+			logger_.setError("Erro ao coletar salvar informações no banco, FutVirtualServiceEuroCup.salvarResultadoHT");
 			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository_.save(logger_);
 		}
@@ -213,7 +206,7 @@ public class FutVirtualEuroCupData implements FutVirtualEuroCupDataInterface {
 				if (r1 == null) {
 					listToSave.add(resultadoFT);
 				}
-			});	
+			});
 		resultadoRepository_.saveAllAndFlush(listToSave);
 
 		}catch  (Exception e){
@@ -224,8 +217,4 @@ public class FutVirtualEuroCupData implements FutVirtualEuroCupDataInterface {
 		}
 		
 	}
-	
-
-	
-	
 }
