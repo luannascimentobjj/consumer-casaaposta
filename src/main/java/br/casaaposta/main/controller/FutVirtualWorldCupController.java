@@ -4,12 +4,14 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 
+import br.casaaposta.main.entity.Liga;
 import br.casaaposta.main.entity.Log;
 import br.casaaposta.main.entity.OddsWorldCup;
 import br.casaaposta.main.entity.Resultado;
@@ -188,7 +190,7 @@ public class FutVirtualWorldCupController {
 		
 		try {
 			System.out.println("obterResultadoAmbasMarcam");
-			List<OddsWorldCup> listaAmbasMarcam =  futService_.callServiceResultadoAmbasMarcam();
+			List<OddsWorldCup> listaAmbasMarcam =  futService_.callServiceResultadoAmbasMarcam(liga);
 			salvarResultadoAmbasMarcam(listaAmbasMarcam);
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
@@ -442,5 +444,18 @@ public class FutVirtualWorldCupController {
 		}
 		
 	}
+	
+	public void setLiga() {
+		Optional<Liga> liga = ligaRepository_.findByCodLiga(idCompetition);
+		if (!liga.isPresent()) {
+			Liga l1 = new Liga();
+			l1.setNomeLiga("Copa Premier");
+			l1.setCodLiga(idCompetition);
+			this.liga = ligaRepository_.save(l1);
+		} else {
+			this.liga = liga.get();
+		}
+	
+	};
 	
 }

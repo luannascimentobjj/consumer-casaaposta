@@ -40,7 +40,7 @@ public class FutVirtualEuroCupController {
 	private final String idCompetition = UrlUtils.idEuroCup;
 
 	@Async
-	public CompletableFuture<String> obterResultadoUnder05(Liga liga) {
+	public CompletableFuture<String> obterResultadoUnder05() {
 		
 		try {
 			List<OddsEuroCup> listaUnder05 =  futService_.callServiceUnder05(liga);
@@ -55,7 +55,7 @@ public class FutVirtualEuroCupController {
 
 	}
 	@Async
-	public CompletableFuture<String> obterResultadoHT(Liga liga) {
+	public CompletableFuture<String> obterResultadoHT() {
 		
 		try {
 			List<Resultado> listaResultadoHT =  futService_.callServiceResultadoHT(liga);
@@ -71,7 +71,7 @@ public class FutVirtualEuroCupController {
 	}
 	
 	@Async
-	public CompletableFuture<String> obterResultadoFT(Liga liga) {
+	public CompletableFuture<String> obterResultadoFT() {
 		
 		try {
 			System.out.println("obterResultadoFT");
@@ -88,7 +88,7 @@ public class FutVirtualEuroCupController {
 		
 	}
 	@Async
-	public CompletableFuture<String>  obterResultadoUnder15(Liga liga) {
+	public CompletableFuture<String>  obterResultadoUnder15() {
 		
 		try {
 			System.out.println("obterResultadoUnder15");
@@ -105,7 +105,7 @@ public class FutVirtualEuroCupController {
 		
 	}
 	@Async
-	public CompletableFuture<String>  obterResultadoOver25(Liga liga) {
+	public CompletableFuture<String>  obterResultadoOver25() {
 		
 		try {
 			System.out.println("obterResultadoOver25");
@@ -122,7 +122,7 @@ public class FutVirtualEuroCupController {
 		
 	}
 	@Async
-	public CompletableFuture<String>  obterResultadoOver35(Liga liga) {
+	public CompletableFuture<String>  obterResultadoOver35() {
 		
 		try {
 			System.out.println("obterResultadoOver35");
@@ -139,7 +139,7 @@ public class FutVirtualEuroCupController {
 		
 	}
 	@Async
-	public CompletableFuture<String>  obterResultadoCasa(Liga liga) {
+	public CompletableFuture<String>  obterResultadoCasa() {
 		
 		try {
 			System.out.println("obterResultadoCasa");
@@ -156,7 +156,7 @@ public class FutVirtualEuroCupController {
 		
 	}
 	@Async
-	public CompletableFuture<String>  obterResultadoEmpate(Liga liga) {
+	public CompletableFuture<String>  obterResultadoEmpate() {
 		
 		try {
 			System.out.println("obterResultadoEmpate");
@@ -191,7 +191,7 @@ public class FutVirtualEuroCupController {
 	}
 	
 	@Async
-	public CompletableFuture<String>  obterResultadoAmbasMarcam(Liga liga) {
+	public CompletableFuture<String>  obterResultadoAmbasMarcam() {
 		
 		try {
 			System.out.println("obterResultadoAmbasMarcam");
