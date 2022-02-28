@@ -1,6 +1,5 @@
 package br.casaaposta.main.service;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.LinkedHashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

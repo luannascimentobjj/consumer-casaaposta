@@ -40,15 +40,13 @@ public class FutVirtualServiceWorldCup {
 	private final String idCompetition = UrlUtils.idWorldCup;
 	UrlUtils urls;
 
-	private Liga liga;
-	@Autowired
-	private LigaRepository ligaRepository;
 	@Autowired
 	ResultadoRepository resultadoRepository;
 	@Autowired
 	LogRepository logRepository;
 	private Log logger_ = new Log();
-	private FutServiceCast futServiceCast;
+	private FutServiceCast futServiceCast = new FutServiceCast();
+	private FutServiceBinder futServiceBinder = new FutServiceBinder();
 	
 	
 	public FutVirtualServiceWorldCup(WebClient.Builder webClientBuilder) {
@@ -86,16 +84,15 @@ public class FutVirtualServiceWorldCup {
 	}
 
 	
-	public List<Resultado> callServiceResultadoFT() {
+	public List<Resultado> callServiceResultadoFT(Liga liga) {
 		String resultadoTipo = "FT";
 		try {
 
-			FutServiceBinder futBusiness = new FutServiceBinder();
 			Mono<Object> response = this.webClientResultadoFT.get().retrieve().bodyToMono(Object.class);
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
-			List<Resultado> r = futBusiness.bindResultado(objects, resultadoTipo);
+			List<Resultado> r = futServiceBinder.bindResultado(objects, resultadoTipo);
 			r.forEach(result -> {
-				result.setCodLiga(this.liga);
+				result.setCodLiga(liga);
 			});
 			return r;
 
@@ -114,16 +111,16 @@ public class FutVirtualServiceWorldCup {
 	};
 
 	
-	public List<Resultado> callServiceResultadoHT() {
+	public List<Resultado> callServiceResultadoHT(Liga liga) {
 		String resultadoTipo = "HT";
 		try {
 
-			FutServiceBinder futBusiness = new FutServiceBinder();
+			
 			Mono<Object> response = this.webClientResultadoHT.get().retrieve().bodyToMono(Object.class);
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
-			List<Resultado> r = futBusiness.bindResultado(objects, resultadoTipo);
+			List<Resultado> r = futServiceBinder.bindResultado(objects, resultadoTipo);
 			r.forEach(result -> {
-				result.setCodLiga(this.liga);
+				result.setCodLiga(liga);
 			});
 			return r;
 
@@ -141,17 +138,17 @@ public class FutVirtualServiceWorldCup {
 	};
 
 	
-	public List<OddsWorldCup> callServiceResultadoUnder05() {
+	public List<OddsWorldCup> callServiceResultadoUnder05(Liga liga) {
 
 		String resultadoTipo = "Under05";
 		try {
 
-			FutServiceBinder futBusiness = new FutServiceBinder();
+			
 			Mono<Object> response = this.webClientUnder05.get().retrieve().bodyToMono(Object.class);
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
-			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
+			List<OddsModel> r = futServiceBinder.bindOdds(objects, resultadoTipo);
 			List <OddsWorldCup> listOddsToReturn = null;
-			listOddsToReturn = castList(r);
+			listOddsToReturn = futServiceCast.castListOddsWorldCup(r,liga);
 			return listOddsToReturn;
 
 
@@ -168,16 +165,16 @@ public class FutVirtualServiceWorldCup {
 	};
 
 	
-	public List<OddsWorldCup> callServiceResultadoUnder15() {
+	public List<OddsWorldCup> callServiceResultadoUnder15(Liga liga) {
 
 		String resultadoTipo = "Under15";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			Mono<Object> response = this.webClientUnder15.get().retrieve().bodyToMono(Object.class);
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
-			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
+			List<OddsModel> r = futServiceBinder.bindOdds(objects, resultadoTipo);
 			List <OddsWorldCup> listOddsToReturn = null;
-			listOddsToReturn = castList(r);
+			listOddsToReturn = futServiceCast.castListOddsWorldCup(r,liga);
 			return listOddsToReturn;
 
 
@@ -195,16 +192,16 @@ public class FutVirtualServiceWorldCup {
 	};
 
 	
-	public List<OddsWorldCup> callServiceResultadoOver25() {
+	public List<OddsWorldCup> callServiceResultadoOver25(Liga liga) {
 
 		String resultadoTipo = "Over25";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
 			Mono<Object> response = this.webClientOver25.get().retrieve().bodyToMono(Object.class);
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
-			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
+			List<OddsModel> r = futServiceBinder.bindOdds(objects, resultadoTipo);
 			List <OddsWorldCup> listOddsToReturn = null;
-			listOddsToReturn = castList(r);
+			listOddsToReturn = futServiceCast.castListOddsWorldCup(r,liga);
 			return listOddsToReturn;
 
 
@@ -221,16 +218,16 @@ public class FutVirtualServiceWorldCup {
 	};
 
 
-	public List<OddsWorldCup> callServiceResultadoOver35() {
+	public List<OddsWorldCup> callServiceResultadoOver35(Liga liga) {
 		String resultadoTipo = "Over35";
 		try {
 			
-			FutServiceBinder futBusiness = new FutServiceBinder();
+			
 			Mono<Object> response = this.webClientOver35.get().retrieve().bodyToMono(Object.class);
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
-			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
+			List<OddsModel> r = futServiceBinder.bindOdds(objects, resultadoTipo);
 			List <OddsWorldCup> listOddsToReturn = null;
-			listOddsToReturn = castList(r);
+			listOddsToReturn = futServiceCast.castListOddsWorldCup(r,liga);
 			return listOddsToReturn;
 
 
@@ -247,17 +244,17 @@ public class FutVirtualServiceWorldCup {
 	};
 
 	
-	public List<OddsWorldCup> callServiceResultadoCasa() {
+	public List<OddsWorldCup> callServiceResultadoCasa(Liga liga) {
 
 		String resultadoTipo = "Casa";
 		try {
 			
-			FutServiceBinder futBusiness = new FutServiceBinder();
+			
 			Mono<Object> response = this.webClientCasa.get().retrieve().bodyToMono(Object.class);
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
-			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
+			List<OddsModel> r = futServiceBinder.bindOdds(objects, resultadoTipo);
 			List <OddsWorldCup> listOddsToReturn = null;
-			listOddsToReturn = castList(r);
+			listOddsToReturn = futServiceCast.castListOddsWorldCup(r,liga);
 			return listOddsToReturn;
 
 
@@ -274,17 +271,17 @@ public class FutVirtualServiceWorldCup {
 	};
 
 	
-	public List<OddsWorldCup> callServiceResultadoEmpate() {
+	public List<OddsWorldCup> callServiceResultadoEmpate(Liga liga) {
 
 		String resultadoTipo = "Empate";
 		try {
 
-			FutServiceBinder futBusiness = new FutServiceBinder();
+			
 			Mono<Object> response = this.webClientEmpate.get().retrieve().bodyToMono(Object.class);
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
-			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
+			List<OddsModel> r = futServiceBinder.bindOdds(objects, resultadoTipo);
 			List <OddsWorldCup> listOddsToReturn = null;
-			listOddsToReturn = castList(r);
+			listOddsToReturn = futServiceCast.castListOddsWorldCup(r,liga);
 			return listOddsToReturn;
 
 		} catch (Exception e) {
@@ -300,17 +297,17 @@ public class FutVirtualServiceWorldCup {
 	};
 
 	
-	public List<OddsWorldCup> callServiceResultadoVisitante() {
+	public List<OddsWorldCup> callServiceResultadoVisitante(Liga liga) {
 
 		String resultadoTipo = "Visitante";
 		try {
 
-			FutServiceBinder futBusiness = new FutServiceBinder();
+			
 			Mono<Object> response = this.webClientVisitante.get().retrieve().bodyToMono(Object.class);
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
-			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
+			List<OddsModel> r = futServiceBinder.bindOdds(objects, resultadoTipo);
 			List <OddsWorldCup> listOddsToReturn = null;
-			listOddsToReturn = castList(r);
+			listOddsToReturn = futServiceCast.castListOddsWorldCup(r,liga);
 			return listOddsToReturn;
 
 
@@ -332,12 +329,12 @@ public class FutVirtualServiceWorldCup {
 		String resultadoTipo = "AmbasMarcam";
 		try {
 
-			FutServiceBinder futBusiness = new FutServiceBinder();
+			
 			Mono<Object> response = this.webClientAmbasMarcam.get().retrieve().bodyToMono(Object.class);
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
-			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
+			List<OddsModel> r = futServiceBinder.bindOdds(objects, resultadoTipo);
 			List <OddsWorldCup> listOddsToReturn = null;
-			listOddsToReturn = futServiceCast.castList(r, liga);
+			listOddsToReturn = futServiceCast.castListOddsWorldCup(r,liga);
 			return listOddsToReturn;
 
 		} catch (Exception e) {
@@ -353,20 +350,6 @@ public class FutVirtualServiceWorldCup {
 		return null;
 
 	};
-	
 
-
-	public void setLiga() {
-		Optional<Liga> liga = ligaRepository.findByCodLiga(idCompetition);
-		if (!liga.isPresent()) {
-			Liga l1 = new Liga();
-			l1.setNomeLiga("Copa do Mundo");
-			l1.setCodLiga(idCompetition);
-			this.liga = ligaRepository.save(l1);
-		} else {
-			this.liga = liga.get();
-		}
-
-	};
 
 }

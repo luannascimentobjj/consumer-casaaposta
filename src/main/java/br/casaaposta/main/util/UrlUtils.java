@@ -20,4 +20,16 @@ public class UrlUtils {
 	public static final String baseEmpateFinalUrl = "/GOLSPAR/PartidaVencedor_Empate/"+TEMPO+"/0/Invalid date";
 	public static final String baseVisitanteFinalUrl = "/GOLSPAR/PartidaVencedor_Visitante/"+TEMPO+"/0/Invalid date";
 	public static final String baseAmbasMarcamFinalUrl = "/AMBAS_MARCAM/Resultado FT/"+TEMPO+"/0/Invalid date";
+	public static final String resultadoFT = "FT";
+	public static final String resultadoHT = "HT";
+	public static final String resultadoUnder05 = "Under05";
+	public static final String resultadoUnder15 = "Under15";
+	public static final String resultadoOver25 = "Over25";
+	public static final String resultadoOver35 = "Over35";
+	public static final String resultadoCasa = "Casa";
+	public static final String resultadoEmpate = "Empate";
+	public static final String resultadoVisitante = "Visitante";
+	public static final String resultadoAmbasMarcam = "AmbasMarcam";
+	
+	
 }

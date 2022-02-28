@@ -11,7 +11,7 @@ import br.casaaposta.main.controller.FutVirtualSuperCupController;
 import br.casaaposta.main.controller.FutVirtualWorldCupController;
 import br.casaaposta.main.service.FutVirtualServiceEuroCup;
 import br.casaaposta.main.service.FutVirtualServicePremier;
-import br.casaaposta.main.service.FutVirtualServiceSuperLeague;
+import br.casaaposta.main.service.FutVirtualServiceSuperCup;
 import br.casaaposta.main.service.FutVirtualServiceWorldCup;
 
 @Component
@@ -30,7 +30,7 @@ public class TasksSchedule {
 	@Autowired 
 	FutVirtualServicePremier permierCupService;
 	@Autowired 
-	FutVirtualServiceSuperLeague superLeagueService;
+	FutVirtualServiceSuperCup superLeagueService;
 	@Autowired 
 	FutVirtualServiceWorldCup worldCupService;
 	
@@ -76,7 +76,7 @@ public class TasksSchedule {
 	@Scheduled(fixedDelay = 600000)
 	public void scheduleWorldCup() {
 		System.out.println("Iniciou Schedule World Copa");
-		worldCupService.setLiga();
+		worldCupController.setLiga();
 		worldCupController.obterResultadoFT();
 		worldCupController.obterResultadoHT();
 		worldCupController.obterResultadoOver25();

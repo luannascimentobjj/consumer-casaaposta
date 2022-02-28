@@ -253,12 +253,12 @@ public class FutVirtualServicePremier {
 	
 	public List<OddsPremierCup> callServiceResultadoEmpate(Liga liga) {
 
-		String resultadoTipo = "Empate";
+		
 		try {
 			
 			Mono<Object> response = this.webClientEmpate.get().retrieve().bodyToMono(Object.class);
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
-			List<OddsModel> r = futServiceBinder.bindOdds(objects, resultadoTipo);
+			List<OddsModel> r = futServiceBinder.bindOdds(objects, UrlUtils.resultadoEmpate);
 			List <OddsPremierCup> listOddsToReturn = null;
 			listOddsToReturn = futServiceCast.castListOddsPremierCup(r, liga);
 			return listOddsToReturn;
@@ -276,13 +276,13 @@ public class FutVirtualServicePremier {
 	
 	public List<OddsPremierCup> callServiceResultadoVisitante(Liga liga) {
 
-		String resultadoTipo = "Visitante";
+		
 		try {
 
 			
 			Mono<Object> response = this.webClientVisitante.get().retrieve().bodyToMono(Object.class);
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
-			List<OddsModel> r = futServiceBinder.bindOdds(objects, resultadoTipo);
+			List<OddsModel> r = futServiceBinder.bindOdds(objects, UrlUtils.resultadoVisitante);
 			List <OddsPremierCup> listOddsToReturn = null;
 			listOddsToReturn = futServiceCast.castListOddsPremierCup(r, liga);
 			return listOddsToReturn;
@@ -301,12 +301,12 @@ public class FutVirtualServicePremier {
 	
 	public List<OddsPremierCup> callServiceResultadoAmbasMarcam(Liga liga) {
 
-		String resultadoTipo = "AmbasMarcam";
+		
 		try {
 			
 			Mono<Object> response = this.webClientAmbasMarcam.get().retrieve().bodyToMono(Object.class);
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
-			List<OddsModel> r = futServiceBinder.bindOdds(objects, resultadoTipo);
+			List<OddsModel> r = futServiceBinder.bindOdds(objects, UrlUtils.resultadoAmbasMarcam);
 			List <OddsPremierCup> listOddsToReturn = null;
 			listOddsToReturn = futServiceCast.castListOddsPremierCup(r, liga);
 			return listOddsToReturn;
