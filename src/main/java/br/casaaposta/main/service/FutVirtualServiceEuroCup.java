@@ -1,27 +1,19 @@
 package br.casaaposta.main.service;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
 import org.springframework.web.reactive.function.client.WebClient;
-
-
 import br.casaaposta.main.bind.FutServiceBinder;
+import br.casaaposta.main.bind.FutServiceCast;
 import br.casaaposta.main.entity.Liga;
 import br.casaaposta.main.entity.Log;
-import br.casaaposta.main.entity.Odds;
-import br.casaaposta.main.entity.OddsSuperCup;
+import br.casaaposta.main.entity.OddsEuroCup;
 import br.casaaposta.main.entity.Resultado;
 import br.casaaposta.main.model.OddsModel;
-import br.casaaposta.main.repository.LigaRepository;
 import br.casaaposta.main.repository.LogRepository;
-import br.casaaposta.main.repository.OddsRepository;
 import br.casaaposta.main.repository.ResultadoRepository;
 import br.casaaposta.main.util.UrlUtils;
 import reactor.core.publisher.Mono;
@@ -43,13 +35,11 @@ public class FutVirtualServiceEuroCup {
 	private final String idCompetition = UrlUtils.idEuroCup;
 	UrlUtils urls;
 
-	private Liga liga;
-	@Autowired
-	private LigaRepository ligaRepository;
 	@Autowired
 	ResultadoRepository resultadoRepository;
 	@Autowired
 	LogRepository logRepository;
+	private FutServiceCast futServiceCast;
 
 	private Log logger_ = new Log();
 
@@ -106,7 +96,7 @@ public class FutVirtualServiceEuroCup {
 	};
 
 
-	public List<Resultado> callServiceResultadoFT() {
+	public List<Resultado> callServiceResultadoFT(Liga liga) {
 		String resultadoTipo = "FT";
 		try {
 
@@ -116,13 +106,13 @@ public class FutVirtualServiceEuroCup {
 			System.out.println("Retornou do Serviço resultado FT");
 			List<Resultado> r = futBusiness.bindResultado(objects, resultadoTipo);
 			r.forEach(result -> {
-				result.setCodLiga(this.liga);
+				result.setCodLiga(liga);
 			});
 			return r;
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoFT");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
@@ -132,7 +122,7 @@ public class FutVirtualServiceEuroCup {
 
 	};
 
-	public List<Resultado> callServiceResultadoHT() {
+	public List<Resultado> callServiceResultadoHT(Liga liga) {
 		String resultadoTipo = "HT";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
@@ -142,13 +132,13 @@ public class FutVirtualServiceEuroCup {
 			List<Resultado> r = futBusiness.bindResultado(objects, resultadoTipo);
 			System.out.println(r.size());
 			r.forEach(result -> {
-				result.setCodLiga(this.liga);
+				result.setCodLiga(liga);
 			});
 			return r;
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoHT");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
@@ -157,33 +147,10 @@ public class FutVirtualServiceEuroCup {
 		return null;
 
 	};
-	public List<Odds> castList(List<OddsModel> l){
-		List<Odds> lista = new ArrayList();
-		
-		for (OddsModel odds : l) {
-			Odds o = new Odds();
-			o.setAno(odds.getAno());
-			o.setCodLiga(this.liga);
-			o.setContable(odds.isContable());
-			o.setData(odds.getData());
-			o.setHora(odds.getHora());
-			o.setId(odds.getId());
-			o.setJogo(odds.getJogo());
-			o.setMinuto(odds.getMinuto());
-			o.setPercentual(odds.getPercentual());
-			o.setResultado(odds.getResultado());
-			o.setResultadoTipo(odds.getResultadoTipo());
-			o.setSumScore(odds.getSumScore());
-			o.setTimeCasa(odds.getTimeCasa());
-			o.setTimeVisitante(odds.getTimeVisitante());
-			o.setTollTip(odds.getTollTip());
-			lista.add(o);
-		}
-		return lista;
-	}
 
 
-	public List<Odds> callServiceUnder05() {
+
+	public List<OddsEuroCup> callServiceUnder05(Liga liga) {
 
 		String resultadoTipo = "Under05";
 		try {
@@ -192,13 +159,13 @@ public class FutVirtualServiceEuroCup {
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			System.out.println("Retornou do Serviço resultado Under05");
 			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
-			List <Odds> listOddsToReturn = null;
-			listOddsToReturn = castList(r);
+			List <OddsEuroCup> listOddsToReturn = null;
+			listOddsToReturn = futServiceCast.castListOddsEuroCup(r, liga);
 			return listOddsToReturn;
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.callServiceUnder05");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
@@ -209,7 +176,7 @@ public class FutVirtualServiceEuroCup {
 	};
 	
 	
-	public List<Odds> callServiceUnder15() {
+	public List<OddsEuroCup> callServiceUnder15(Liga liga) {
 		String resultadoTipo = "Under15";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
@@ -217,13 +184,13 @@ public class FutVirtualServiceEuroCup {
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			System.out.println("Retornou do Serviço resultado Under15");
 			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
-			List <Odds> listOddsToReturn = null;
-			listOddsToReturn = castList(r);
+			List <OddsEuroCup> listOddsToReturn = null;
+			listOddsToReturn = futServiceCast.castListOddsEuroCup(r, liga);
 			return listOddsToReturn;
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoUnder15");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
@@ -233,7 +200,7 @@ public class FutVirtualServiceEuroCup {
 	};
 
 
-	public List<Odds> callServiceOver25() {
+	public List<OddsEuroCup> callServiceOver25(Liga liga) {
 		String resultadoTipo = "Over25";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
@@ -241,13 +208,13 @@ public class FutVirtualServiceEuroCup {
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			System.out.println("Retornou do Serviço resultado Over25");
 			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
-			List <Odds> listOddsToReturn = null;
-			listOddsToReturn = castList(r);
+			List <OddsEuroCup> listOddsToReturn = null;
+			listOddsToReturn = futServiceCast.castListOddsEuroCup(r, liga);
 			return listOddsToReturn;
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoOver25");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
@@ -257,7 +224,7 @@ public class FutVirtualServiceEuroCup {
 	};
 
 
-	public List<Odds> callServiceOver35() {
+	public List<OddsEuroCup> callServiceOver35(Liga liga) {
 		String resultadoTipo = "Over35";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
@@ -265,13 +232,13 @@ public class FutVirtualServiceEuroCup {
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			System.out.println("Retornou do Serviço resultado Over35");
 			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
-			List <Odds> listOddsToReturn = null;
-			listOddsToReturn = castList(r);
+			List <OddsEuroCup> listOddsToReturn = null;
+			listOddsToReturn = futServiceCast.castListOddsEuroCup(r, liga);
 			return listOddsToReturn;
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoOver35");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
@@ -281,7 +248,7 @@ public class FutVirtualServiceEuroCup {
 	};
 
 
-	public List<Odds> callServiceCasa() {
+	public List<OddsEuroCup> callServiceCasa(Liga liga) {
 
 		String resultadoTipo = "Casa";
 		try {
@@ -290,13 +257,13 @@ public class FutVirtualServiceEuroCup {
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			System.out.println("Retornou do Serviço resultado Casa");
 			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
-			List <Odds> listOddsToReturn = null;
-			listOddsToReturn = castList(r);
+			List <OddsEuroCup> listOddsToReturn = null;
+			listOddsToReturn = futServiceCast.castListOddsEuroCup(r, liga);
 			return listOddsToReturn;
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoCasa");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
@@ -306,7 +273,7 @@ public class FutVirtualServiceEuroCup {
 	};
 
 	
-	public List<Odds> callServiceEmpate() {
+	public List<OddsEuroCup> callServiceEmpate(Liga liga) {
 		String resultadoTipo = "Empate";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
@@ -314,13 +281,13 @@ public class FutVirtualServiceEuroCup {
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			System.out.println("Retornou do Serviço resultado empate");
 			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
-			List <Odds> listOddsToReturn = null;
-			listOddsToReturn = castList(r);
+			List <OddsEuroCup> listOddsToReturn = null;
+			listOddsToReturn = futServiceCast.castListOddsEuroCup(r, liga);
 			return listOddsToReturn;
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoEmpate");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
@@ -329,7 +296,7 @@ public class FutVirtualServiceEuroCup {
 		return null;
 	};
 	
-	public List<Odds> callServiceVisitante() {
+	public List<OddsEuroCup> callServiceVisitante(Liga liga) {
 		String resultadoTipo = "Visitante";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
@@ -337,13 +304,13 @@ public class FutVirtualServiceEuroCup {
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			System.out.println("Retornou do Serviço resultado Visitante");
 			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
-			List <Odds> listOddsToReturn = null;
-			listOddsToReturn = castList(r);
+			List <OddsEuroCup> listOddsToReturn = null;
+			listOddsToReturn = futServiceCast.castListOddsEuroCup(r, liga);
 			return listOddsToReturn;
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoVisitante");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
@@ -353,7 +320,7 @@ public class FutVirtualServiceEuroCup {
 	};
 
 	
-	public List<Odds> callServiceAmbasMarcam() {
+	public List<OddsEuroCup> callServiceAmbasMarcam(Liga liga) {
 		String resultadoTipo = "AmbasMarcam";
 		try {
  			FutServiceBinder futBusiness = new FutServiceBinder();
@@ -361,32 +328,19 @@ public class FutVirtualServiceEuroCup {
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			System.out.println("Retornou do Serviço resultado AmbasMarcam");
 			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
-			List <Odds> listOddsToReturn = null;
-			listOddsToReturn = castList(r);
+			List <OddsEuroCup> listOddsToReturn = null;
+			listOddsToReturn = futServiceCast.castListOddsEuroCup(r, liga);
 			return listOddsToReturn;
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceEuroCup.obterResultadoAmbasMarcam");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
 			
 		}
 		return null;
-	};
-
-	public void setLiga() {
-		Optional<Liga> liga = ligaRepository.findByCodLiga(idCompetition);
-		if (!liga.isPresent()) {
-			Liga l1 = new Liga();
-			l1.setNomeLiga("Euro Copa");
-			l1.setCodLiga(idCompetition);
-			this.liga = ligaRepository.save(l1);
-		} else {
-			this.liga = liga.get();
-		}
-
 	};
 
 }

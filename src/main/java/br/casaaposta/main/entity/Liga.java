@@ -28,7 +28,7 @@ public class Liga implements Serializable {
 	private String nomeLiga;
 		
 	@OneToMany(mappedBy = "codLiga")
-	private List<Odds> odds;
+	private List<OddsEuroCup> oddsEuroCup;
 	
 	@OneToMany(mappedBy = "codLiga")
 	private List<Resultado> resultado;

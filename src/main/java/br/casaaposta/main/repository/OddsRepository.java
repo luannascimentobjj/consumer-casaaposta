@@ -1,11 +1,11 @@
 package br.casaaposta.main.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import br.casaaposta.main.entity.Odds;
+import br.casaaposta.main.entity.OddsEuroCup;
 
-public interface OddsRepository extends JpaRepository<Odds, Long> {
+public interface OddsRepository extends JpaRepository<OddsEuroCup, Long> {
 
-	Odds findByTollTipAndMinutoAndHoraAndResultadoTipo(String toolTip, int minuto, int hora, String resultadoTipo);
+	OddsEuroCup findByTollTipAndMinutoAndHoraAndResultadoTipo(String toolTip, int minuto, int hora, String resultadoTipo);
 		
 	}
 	

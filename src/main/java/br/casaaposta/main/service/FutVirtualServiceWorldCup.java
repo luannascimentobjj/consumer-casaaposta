@@ -1,5 +1,6 @@
 package br.casaaposta.main.service;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -9,9 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import br.casaaposta.main.bind.FutServiceBinder;
+import br.casaaposta.main.bind.FutServiceCast;
 import br.casaaposta.main.entity.Liga;
 import br.casaaposta.main.entity.Log;
-import br.casaaposta.main.entity.Odds;
+import br.casaaposta.main.entity.OddsEuroCup;
 import br.casaaposta.main.entity.OddsPremierCup;
 import br.casaaposta.main.entity.OddsWorldCup;
 import br.casaaposta.main.entity.Resultado;
@@ -46,7 +48,9 @@ public class FutVirtualServiceWorldCup {
 	@Autowired
 	LogRepository logRepository;
 	private Log logger_ = new Log();
-
+	private FutServiceCast futServiceCast;
+	
+	
 	public FutVirtualServiceWorldCup(WebClient.Builder webClientBuilder) {
 		webClientBuilder.defaultHeaders(httpHeaders -> {
 			httpHeaders.set("Cookie", UrlUtils.Auth);
@@ -98,7 +102,7 @@ public class FutVirtualServiceWorldCup {
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceWorldCup.obterResultadoFT");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
@@ -126,7 +130,7 @@ public class FutVirtualServiceWorldCup {
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceWorldCup.obterResultadoHT");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
@@ -154,7 +158,7 @@ public class FutVirtualServiceWorldCup {
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceWorldCup.obterResultadoUnder05");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			
@@ -181,7 +185,7 @@ public class FutVirtualServiceWorldCup {
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceWorldCup.obterResultadoUnder15");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			
@@ -207,7 +211,7 @@ public class FutVirtualServiceWorldCup {
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceWorldCup.obterResultadoOver25");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			
@@ -233,7 +237,7 @@ public class FutVirtualServiceWorldCup {
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceWorldCup.obterResultadoOver35");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			
@@ -260,7 +264,7 @@ public class FutVirtualServiceWorldCup {
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceWorldCup.obterResultadoCasa");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			
@@ -286,7 +290,7 @@ public class FutVirtualServiceWorldCup {
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceWorldCup.obterResultadoEmpate");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			
@@ -313,7 +317,7 @@ public class FutVirtualServiceWorldCup {
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceWorldCup.obterResultadoVisitante");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			
@@ -323,7 +327,7 @@ public class FutVirtualServiceWorldCup {
 	};
 
 	
-	public List<OddsWorldCup> callServiceResultadoAmbasMarcam() {
+	public List<OddsWorldCup> callServiceResultadoAmbasMarcam(Liga liga) {
 
 		String resultadoTipo = "AmbasMarcam";
 		try {
@@ -333,14 +337,14 @@ public class FutVirtualServiceWorldCup {
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
 			List <OddsWorldCup> listOddsToReturn = null;
-			listOddsToReturn = castList(r);
+			listOddsToReturn = futServiceCast.castList(r, liga);
 			return listOddsToReturn;
 
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError(
 					"Erro ao coletar informações no site, FutVirtualServiceWorldCup.obterResultadoAmbasMarcam");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			
@@ -350,30 +354,7 @@ public class FutVirtualServiceWorldCup {
 
 	};
 	
-	public List<OddsWorldCup> castList(List<OddsModel> l){
-		List<OddsWorldCup> lista = new ArrayList();
-		
-		for (OddsModel odds : l) {
-			OddsWorldCup o = new OddsWorldCup();
-			o.setAno(odds.getAno());
-			o.setCodLiga(this.liga);
-			o.setContable(odds.isContable());
-			o.setData(odds.getData());
-			o.setHora(odds.getHora());
-			o.setId(odds.getId());
-			o.setJogo(odds.getJogo());
-			o.setMinuto(odds.getMinuto());
-			o.setPercentual(odds.getPercentual());
-			o.setResultado(odds.getResultado());
-			o.setResultadoTipo(odds.getResultadoTipo());
-			o.setSumScore(odds.getSumScore());
-			o.setTimeCasa(odds.getTimeCasa());
-			o.setTimeVisitante(odds.getTimeVisitante());
-			o.setTollTip(odds.getTollTip());
-			lista.add(o);
-		}
-		return lista;
-	}
+
 
 	public void setLiga() {
 		Optional<Liga> liga = ligaRepository.findByCodLiga(idCompetition);

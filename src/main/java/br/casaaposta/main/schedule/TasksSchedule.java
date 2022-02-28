@@ -34,27 +34,30 @@ public class TasksSchedule {
 	@Autowired 
 	FutVirtualServiceWorldCup worldCupService;
 	
-	@Scheduled(fixedDelay = 86400000)
+	
+	@Scheduled(fixedDelay = 600000)
 	public void scheduleEuroCup() {
 	
 		System.out.println("Iniciou Schedule EuroCopa");
-		//euroCupService.obterResultadoFT();
-		//euroCupService.obterResultadoHT();
-		//euroCupController.obterResultadoUnder05();
+		euroCupController.setLiga();
+		euroCupController.obterResultadoFT();
+		euroCupController.obterResultadoHT();
+		euroCupController.obterResultadoUnder05();
 		euroCupController.obterResultadoAmbasMarcam();
-		//euroCupController.obterResultadoOver25();
-		//euroCupController.obterResultadoOver35();
-		//euroCupController.obterResultadoUnder15();
-		//euroCupController.obterResultadoCasa();
-		//euroCupController.obterResultadoEmpate();
-		//euroCupController.obterResultadoVisitante();
+		euroCupController.obterResultadoOver25();
+		euroCupController.obterResultadoOver35();
+		euroCupController.obterResultadoUnder15();
+		euroCupController.obterResultadoCasa();
+		euroCupController.obterResultadoEmpate();
+		euroCupController.obterResultadoVisitante();
 	
 	}
 	
-	/**@Scheduled(fixedDelay = 86400000)
+
+	@Scheduled(fixedDelay = 600000)
 	public void schedulePremierCup() {
 		System.out.println("Iniciou Schedule Premier Copa");
-		permierCupService.setLiga();
+		premierCupController.setLiga();
 		premierCupController.obterResultadoFT();
 		premierCupController.obterResultadoHT();
 		premierCupController.obterResultadoOver25();
@@ -67,24 +70,28 @@ public class TasksSchedule {
 		premierCupController.obterResultadoAmbasMarcam();
 	}
 	
-	@Scheduled(fixedDelay = 86400000)
+
+	
+	
+	@Scheduled(fixedDelay = 600000)
 	public void scheduleWorldCup() {
 		System.out.println("Iniciou Schedule World Copa");
 		worldCupService.setLiga();
-		premierCupController.obterResultadoFT();
-		premierCupController.obterResultadoHT();
-		premierCupController.obterResultadoOver25();
-		premierCupController.obterResultadoOver35();
-		premierCupController.obterResultadoUnder05();
-		premierCupController.obterResultadoUnder15();
-		premierCupController.obterResultadoCasa();
-		premierCupController.obterResultadoEmpate();
-		premierCupController.obterResultadoVisitante();
-		premierCupController.obterResultadoAmbasMarcam();
+		worldCupController.obterResultadoFT();
+		worldCupController.obterResultadoHT();
+		worldCupController.obterResultadoOver25();
+		worldCupController.obterResultadoOver35();
+		worldCupController.obterResultadoUnder05();
+		worldCupController.obterResultadoUnder15();
+		worldCupController.obterResultadoCasa();
+		worldCupController.obterResultadoEmpate();
+		worldCupController.obterResultadoVisitante();
+		worldCupController.obterResultadoAmbasMarcam();
+		System.out.println("Finalizou Schedule World Copa");
 	}
 	
 	
-	@Scheduled(fixedDelay = 86400000)
+	@Scheduled(fixedDelay = 600000)
 	public void scheduleSuperCup() {
 		System.out.println("Iniciou Schedule Super Copa");
 		superLeagueService.setLiga();
@@ -99,7 +106,7 @@ public class TasksSchedule {
 		superCupController.obterResultadoVisitante();
 		superCupController.obterResultadoAmbasMarcam();
 	}
-	**/
+	
 	
 	@Scheduled(fixedDelay = 120000)
 	@Async

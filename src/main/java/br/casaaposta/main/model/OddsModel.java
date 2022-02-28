@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import br.casaaposta.main.entity.Liga;
-import br.casaaposta.main.entity.Odds;
+import br.casaaposta.main.entity.OddsEuroCup;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;

@@ -1,7 +1,7 @@
 package br.casaaposta.main.entity;
 
 import java.io.Serializable;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import javax.persistence.*;
 import org.hibernate.annotations.Type;
 import lombok.Data;
@@ -22,7 +22,7 @@ public class Log implements Serializable{
 	private int Id;
 	
 	@Column(name = "dataInclusao")
-	private LocalTime dataInclusao;
+	private LocalDateTime dataInclusao;
 	
 	@Column(name = "StackTrace")
 	@Type(type="text")

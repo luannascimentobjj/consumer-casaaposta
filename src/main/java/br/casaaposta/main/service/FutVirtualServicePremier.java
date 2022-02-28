@@ -1,24 +1,20 @@
 package br.casaaposta.main.service;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import br.casaaposta.main.bind.FutServiceBinder;
+import br.casaaposta.main.bind.FutServiceCast;
 import br.casaaposta.main.entity.Liga;
 import br.casaaposta.main.entity.Log;
-import br.casaaposta.main.entity.Odds;
 import br.casaaposta.main.entity.OddsPremierCup;
-import br.casaaposta.main.entity.OddsWorldCup;
 import br.casaaposta.main.entity.Resultado;
 import br.casaaposta.main.model.OddsModel;
-import br.casaaposta.main.repository.LigaRepository;
 import br.casaaposta.main.repository.LogRepository;
-import br.casaaposta.main.repository.OddsPremierCupRepository;
 import br.casaaposta.main.repository.ResultadoRepository;
 import br.casaaposta.main.util.UrlUtils;
 import reactor.core.publisher.Mono;
@@ -39,14 +35,13 @@ public class FutVirtualServicePremier {
 	private final String idCompetition = UrlUtils.idPremierCup;
 	UrlUtils urls;
 
-	private Liga liga;
-	@Autowired
-	private LigaRepository ligaRepository;
+	
 	@Autowired
 	ResultadoRepository resultadoRepository;
 	@Autowired
 	LogRepository logRepository;
 	private Log logger_ = new Log();
+	private FutServiceCast futServiceCast;
 
 	public FutVirtualServicePremier(WebClient.Builder webClientBuilder) {
 		webClientBuilder.defaultHeaders(httpHeaders -> {
@@ -83,7 +78,7 @@ public class FutVirtualServicePremier {
 	}
 
 	
-	public List<Resultado> callServiceResultadoFT() {
+	public List<Resultado> callServiceResultadoFT(Liga liga) {
 		String resultadoTipo = "FT";
 		try {
 			
@@ -92,13 +87,13 @@ public class FutVirtualServicePremier {
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			List<Resultado> r = futBusiness.bindResultado(objects, resultadoTipo);
 			r.forEach(result -> {
-				result.setCodLiga(this.liga);
+				result.setCodLiga(liga);
 			});
 			return r;
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServicePremier.obterResultadoAmbasMarcam");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
@@ -109,7 +104,7 @@ public class FutVirtualServicePremier {
 	};
 
 	
-	public List<Resultado>  callServiceResultadoHT() {
+	public List<Resultado>  callServiceResultadoHT(Liga liga) {
 		String resultadoTipo = "HT";
 		try {
 
@@ -118,14 +113,14 @@ public class FutVirtualServicePremier {
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			List<Resultado> r = futBusiness.bindResultado(objects, resultadoTipo);
 			r.forEach(result -> {
-				result.setCodLiga(this.liga);
+				result.setCodLiga(liga);
 			});
 			return r;
 
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServicePremier.obterResultadoHT");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
@@ -135,7 +130,7 @@ public class FutVirtualServicePremier {
 	};
 
 	
-	public List<OddsPremierCup> callServiceResultadoUnder05() {
+	public List<OddsPremierCup> callServiceResultadoUnder05(Liga liga) {
 
 		String resultadoTipo = "Under05";
 		try {
@@ -144,13 +139,13 @@ public class FutVirtualServicePremier {
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
 			List <OddsPremierCup> listOddsToReturn = null;
-			listOddsToReturn = castList(r);
+			listOddsToReturn = castList(r, liga);
 			return listOddsToReturn;
 
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServicePremier.obterResultadoUnder05");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
@@ -160,7 +155,7 @@ public class FutVirtualServicePremier {
 	};
 
 	
-	public List<OddsPremierCup> callServiceResultadoUnder15() {
+	public List<OddsPremierCup> callServiceResultadoUnder15(Liga liga) {
 
 		String resultadoTipo = "Under15";
 		try {
@@ -169,13 +164,13 @@ public class FutVirtualServicePremier {
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
 			List <OddsPremierCup> listOddsToReturn = null;
-			listOddsToReturn = castList(r);
+			listOddsToReturn = castList(r, liga);
 			return listOddsToReturn;
 
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServicePremier.obterResultadoUnder15");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
@@ -187,7 +182,7 @@ public class FutVirtualServicePremier {
 	};
 
 	
-	public List<OddsPremierCup> callServiceResultadoOver25() {
+	public List<OddsPremierCup> callServiceResultadoOver25(Liga liga) {
 
 		String resultadoTipo = "Over25";
 		try {
@@ -197,12 +192,12 @@ public class FutVirtualServicePremier {
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
 			List <OddsPremierCup> listOddsToReturn = null;
-			listOddsToReturn = castList(r);
+			listOddsToReturn = castList(r, liga);
 			return listOddsToReturn;
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServicePremier.obterResultadoOver25");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
@@ -212,7 +207,7 @@ public class FutVirtualServicePremier {
 	};
 
 	
-	public List<OddsPremierCup> callServiceResultadoOver35() {
+	public List<OddsPremierCup> callServiceResultadoOver35(Liga liga) {
 		String resultadoTipo = "Over35";
 		try {
 			FutServiceBinder futBusiness = new FutServiceBinder();
@@ -220,12 +215,12 @@ public class FutVirtualServicePremier {
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
 			List <OddsPremierCup> listOddsToReturn = null;
-			listOddsToReturn = castList(r);
+			listOddsToReturn = castList(r, liga);
 			return listOddsToReturn;
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServicePremier.obterResultadoOver35");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
@@ -235,7 +230,7 @@ public class FutVirtualServicePremier {
 	};
 
 	
-	public List<OddsPremierCup> callServiceResultadoCasa() {
+	public List<OddsPremierCup> callServiceResultadoCasa(Liga liga) {
 
 		String resultadoTipo = "Casa";
 		try {
@@ -245,12 +240,12 @@ public class FutVirtualServicePremier {
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
 			List <OddsPremierCup> listOddsToReturn = null;
-			listOddsToReturn = castList(r);
+			listOddsToReturn = castList(r, liga);
 			return listOddsToReturn;
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServicePremier.obterResultadoCasa");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			
@@ -260,7 +255,7 @@ public class FutVirtualServicePremier {
 	};
 
 	
-	public List<OddsPremierCup> callServiceResultadoEmpate() {
+	public List<OddsPremierCup> callServiceResultadoEmpate(Liga liga) {
 
 		String resultadoTipo = "Empate";
 		try {
@@ -269,12 +264,12 @@ public class FutVirtualServicePremier {
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
 			List <OddsPremierCup> listOddsToReturn = null;
-			listOddsToReturn = castList(r);
+			listOddsToReturn = castList(r, liga);
 			return listOddsToReturn;
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServicePremier.obterResultadoEmpate");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			
@@ -283,7 +278,7 @@ public class FutVirtualServicePremier {
 	};
 
 	
-	public List<OddsPremierCup> callServiceResultadoVisitante() {
+	public List<OddsPremierCup> callServiceResultadoVisitante(Liga liga) {
 
 		String resultadoTipo = "Visitante";
 		try {
@@ -293,13 +288,13 @@ public class FutVirtualServicePremier {
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
 			List <OddsPremierCup> listOddsToReturn = null;
-			listOddsToReturn = castList(r);
+			listOddsToReturn = castList(r, liga);
 			return listOddsToReturn;
 
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServicePremier.obterResultadoVisitante");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			
@@ -308,7 +303,7 @@ public class FutVirtualServicePremier {
 	};
 
 	
-	public List<OddsPremierCup> callServiceResultadoAmbasMarcam() {
+	public List<OddsPremierCup> callServiceResultadoAmbasMarcam(Liga liga) {
 
 		String resultadoTipo = "AmbasMarcam";
 		try {
@@ -317,57 +312,19 @@ public class FutVirtualServicePremier {
 			LinkedHashMap<Object, Object> objects = (LinkedHashMap<Object, Object>) response.block();
 			List<OddsModel> r = futBusiness.bindOdds(objects, resultadoTipo);
 			List <OddsPremierCup> listOddsToReturn = null;
-			listOddsToReturn = castList(r);
+			listOddsToReturn = castList(r, liga);
 			return listOddsToReturn;
 
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServicePremier.obterResultadoAmbasMarcam");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			
 		}
 		return null;
 
-	};
-	
-	public List<OddsPremierCup> castList(List<OddsModel> l){
-		List<OddsPremierCup> lista = new ArrayList();
-		
-		for (OddsModel odds : l) {
-			OddsPremierCup o = new OddsPremierCup();
-			o.setAno(odds.getAno());
-			o.setCodLiga(this.liga);
-			o.setContable(odds.isContable());
-			o.setData(odds.getData());
-			o.setHora(odds.getHora());
-			o.setId(odds.getId());
-			o.setJogo(odds.getJogo());
-			o.setMinuto(odds.getMinuto());
-			o.setPercentual(odds.getPercentual());
-			o.setResultado(odds.getResultado());
-			o.setResultadoTipo(odds.getResultadoTipo());
-			o.setSumScore(odds.getSumScore());
-			o.setTimeCasa(odds.getTimeCasa());
-			o.setTimeVisitante(odds.getTimeVisitante());
-			o.setTollTip(odds.getTollTip());
-			lista.add(o);
-		}
-		return lista;
-	}
-
-	public void setLiga() {
-		Optional<Liga> liga = ligaRepository.findByCodLiga(idCompetition);
-		if (!liga.isPresent()) {
-			Liga l1 = new Liga();
-			l1.setNomeLiga("Copa Premier");
-			l1.setCodLiga(idCompetition);
-			this.liga = ligaRepository.save(l1);
-		} else {
-			this.liga = liga.get();
-		}
-	
 	};
 
 }

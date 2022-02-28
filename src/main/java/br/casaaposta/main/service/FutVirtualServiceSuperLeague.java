@@ -1,5 +1,6 @@
 package br.casaaposta.main.service;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -96,7 +97,7 @@ public class FutVirtualServiceSuperLeague {
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoFT");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
@@ -122,7 +123,7 @@ public class FutVirtualServiceSuperLeague {
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoHT");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			e.getMessage();
@@ -148,7 +149,7 @@ public class FutVirtualServiceSuperLeague {
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoUnder05");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			
@@ -174,7 +175,7 @@ public class FutVirtualServiceSuperLeague {
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoUnder15");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 		
@@ -199,7 +200,7 @@ public class FutVirtualServiceSuperLeague {
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoOver25");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			
@@ -223,7 +224,7 @@ public class FutVirtualServiceSuperLeague {
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoOver35");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			
@@ -248,7 +249,7 @@ public class FutVirtualServiceSuperLeague {
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoCasa");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			
@@ -272,7 +273,7 @@ public class FutVirtualServiceSuperLeague {
 		} catch (Exception e) {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError("Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoEmpate");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			
@@ -296,7 +297,7 @@ public class FutVirtualServiceSuperLeague {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError(
 					"Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoVisitante");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			
@@ -321,7 +322,7 @@ public class FutVirtualServiceSuperLeague {
 			logger_.setStackTrace(e.getMessage());
 			logger_.setError(
 					"Erro ao coletar informações no site, FutVirtualServiceSuperLeague.obterResultadoAmbasMarcam");
-			logger_.setDataInclusao(LocalTime.now());
+			logger_.setDataInclusao(LocalDateTime.now());
 			logRepository.save(logger_);
 			System.out.println("Erro ao coletar informações no site");
 			
@@ -330,30 +331,7 @@ public class FutVirtualServiceSuperLeague {
 		return null;
 	};
 	
-	public List<OddsSuperCup> castList(List<OddsModel> l){
-		List<OddsSuperCup> lista = new ArrayList();
-		
-		for (OddsModel odds : l) {
-			OddsSuperCup o = new OddsSuperCup();
-			o.setAno(odds.getAno());
-			o.setCodLiga(this.liga);
-			o.setContable(odds.isContable());
-			o.setData(odds.getData());
-			o.setHora(odds.getHora());
-			o.setId(odds.getId());
-			o.setJogo(odds.getJogo());
-			o.setMinuto(odds.getMinuto());
-			o.setPercentual(odds.getPercentual());
-			o.setResultado(odds.getResultado());
-			o.setResultadoTipo(odds.getResultadoTipo());
-			o.setSumScore(odds.getSumScore());
-			o.setTimeCasa(odds.getTimeCasa());
-			o.setTimeVisitante(odds.getTimeVisitante());
-			o.setTollTip(odds.getTollTip());
-			lista.add(o);
-		}
-		return lista;
-	}
+
 
 
 	public void setLiga() {
