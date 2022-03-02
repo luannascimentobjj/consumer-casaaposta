@@ -57,7 +57,7 @@ public class Resultado {
 	@Column(name="timeVisitante")
 	private String timeVisitante;
 	
-	@Column(name="br.casaaposta.main.data")
+	@Column(name="data")
 	private String data;
 	
 	@Column(name="ano")

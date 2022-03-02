@@ -56,7 +56,7 @@ public class OddsWorldCup extends OddsModel implements Serializable{
 	@Column(name="timeVisitante")
 	private String timeVisitante;
 	
-	@Column(name="br.casaaposta.main.data")
+	@Column(name="data")
 	private String data;
 	
 	@Column(name="ano")
