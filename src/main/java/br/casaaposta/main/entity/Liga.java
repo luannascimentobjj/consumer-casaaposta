@@ -21,10 +21,10 @@ public class Liga implements Serializable {
 
 	
 	@Id
-	@Column(name = "codLiga")
+	@Column(name = "cod_liga")
 	public String codLiga;
 	
-	@Column(name ="NomeLiga")
+	@Column(name ="nome_liga")
 	private String nomeLiga;
 		
 	@OneToMany(mappedBy = "codLiga")

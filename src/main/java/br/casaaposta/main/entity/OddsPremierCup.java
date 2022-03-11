@@ -1,8 +1,15 @@
 package br.casaaposta.main.entity;
 import java.io.Serializable;
 
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import br.casaaposta.main.model.OddsModel;
 import lombok.Data;
@@ -38,22 +45,22 @@ public class OddsPremierCup extends OddsModel implements Serializable{
 	@Column(name="Jogo")
 	private String jogo;
 	
-	@Column(name="TollTip")
+	@Column(name="toll_tip")
 	private String tollTip;
 	
-	@Column(name="ResultadoTipo")
+	@Column(name="resultado_tipo")
 	private String resultadoTipo;
 	
-	@Column(name="isContable")
+	@Column(name="is_contable")
 	private boolean isContable;
 	
-	@Column(name="sumScore")
+	@Column(name="sum_score")
 	private int sumScore;
 	
-	@Column(name="timeCasa")
+	@Column(name="time_casa")
 	private String timeCasa;
 	
-	@Column(name="timeVisitante")
+	@Column(name="time_visitante")
 	private String timeVisitante;
 	
 	@Column(name="data")
@@ -64,7 +71,7 @@ public class OddsPremierCup extends OddsModel implements Serializable{
 	
 	
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "codLiga", referencedColumnName = "codLiga")
+	@JoinColumn(name = "cod_liga", referencedColumnName = "cod_liga")
 	private Liga codLiga;
 
 }
