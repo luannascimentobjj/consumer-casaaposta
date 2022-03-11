@@ -3,6 +3,7 @@ package br.casaaposta.main.data;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +15,6 @@ import br.casaaposta.main.repository.LogRepository;
 import br.casaaposta.main.repository.OddsRepository;
 import br.casaaposta.main.repository.ResultadoRepository;
 import br.casaaposta.main.util.ConstantsUtils;
-import lombok.Data;
 @Component
 public class FutVirtualEuroCupData implements FutVirtualEuroCupDataInterface {
 
