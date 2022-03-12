@@ -8,6 +8,7 @@ import br.casaaposta.main.entity.OddsEuroCup;
 import br.casaaposta.main.entity.OddsPremierCup;
 import br.casaaposta.main.entity.OddsSuperCup;
 import br.casaaposta.main.entity.OddsWorldCup;
+import br.casaaposta.main.entity.TipoResultadosOdds;
 import br.casaaposta.main.model.OddsModel;
 
 public class FutServiceCast {
@@ -120,4 +121,22 @@ public class FutServiceCast {
 		return lista;
 
 	}
+	
+	
+	public List<TipoResultadosOdds> preencheListaResultadoOdds(){
+		
+		List<TipoResultadosOdds> listToInsert = new ArrayList<>();
+		listToInsert.add(new TipoResultadosOdds("Over25"));
+		listToInsert.add(new TipoResultadosOdds("Casa"));
+		listToInsert.add(new TipoResultadosOdds("Empate"));
+		listToInsert.add(new TipoResultadosOdds("Visitante"));
+		listToInsert.add(new TipoResultadosOdds("AmbasMarcam"));
+		listToInsert.add(new TipoResultadosOdds("Over35"));
+		listToInsert.add(new TipoResultadosOdds("Under15"));
+		listToInsert.add(new TipoResultadosOdds("Under05"));
+			
+		return listToInsert;
+		
+	}
+	
 }

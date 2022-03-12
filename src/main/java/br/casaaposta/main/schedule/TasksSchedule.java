@@ -109,4 +109,14 @@ public class TasksSchedule {
 	}
 	
 	
+	@Scheduled(fixedDelay = 120000)
+	@Async
+	public void checkListResultadosTiposOdds() {
+	
+		System.out.println("Preenche Lista Resultados Tipos");
+		euroCupController.setResultadoTipo();
+
+	}
+	
+	
 }

@@ -9,13 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 
+import br.casaaposta.main.bind.FutServiceCast;
 import br.casaaposta.main.entity.Liga;
 import br.casaaposta.main.entity.Log;
 import br.casaaposta.main.entity.OddsEuroCup;
 import br.casaaposta.main.entity.Resultado;
+import br.casaaposta.main.entity.TipoResultadosOdds;
 import br.casaaposta.main.interfaces.FutVirtualEuroCupDataInterface;
 import br.casaaposta.main.repository.LigaRepository;
 import br.casaaposta.main.repository.LogRepository;
+import br.casaaposta.main.repository.TipoResultadosOddsRepository;
 import br.casaaposta.main.service.FutVirtualServiceEuroCup;
 import br.casaaposta.main.util.ConstantsUtils;
 
@@ -31,7 +34,10 @@ public class FutVirtualEuroCupController {
 	private LigaRepository ligaRepository;
 	@Autowired
 	FutVirtualEuroCupDataInterface euroCupData_;
+	@Autowired
+	TipoResultadosOddsRepository tipoResultadosOddsRepository_;
 	Log logger_ = new Log();
+	private FutServiceCast futServiceCast_ = new FutServiceCast();
 	
 	@Async
 	public CompletableFuture<String> obterResultadoUnder05() {
@@ -232,6 +238,13 @@ public class FutVirtualEuroCupController {
 		}
 
 	};
+	
+	public void setResultadoTipo() {
+		List<TipoResultadosOdds> results = tipoResultadosOddsRepository_.findAll();
+		if(results.isEmpty()) {
+			tipoResultadosOddsRepository_.saveAllAndFlush(futServiceCast_.preencheListaResultadoOdds());			
+		}
+	}
 	
 
 	
