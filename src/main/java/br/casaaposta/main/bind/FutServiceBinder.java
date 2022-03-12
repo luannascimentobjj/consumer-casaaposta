@@ -43,7 +43,7 @@ public class FutServiceBinder {
 									if (result.getKey().equals("Minute")) {
 										r.setMinuto((int) result.getValue());
 									} else if (result.getKey().equals("Tooltip")) {
-										if (result.getValue() != null) {
+										if (result.getValue() != null && result.getValue() != "") {
 											String[] sub = ((String) result.getValue()).split(" vs ");
 											String[] sub2 = (sub[0]).split(" ");
 											r.setTimeVisitante(sub[1]);
@@ -130,7 +130,7 @@ public class FutServiceBinder {
 									if (result.getKey().equals("Minute")) {
 										r.setMinuto((int) result.getValue());
 									} else if (result.getKey().equals("Tooltip")) {
-										if (result.getValue() != null) {
+										if (result.getValue() != null && result.getValue() != "") {
 											String[] sub = ((String) result.getValue()).split(" vs ");
 											String[] sub2 = (sub[0]).split(" ");
 											r.setTimeVisitante(sub[1]);

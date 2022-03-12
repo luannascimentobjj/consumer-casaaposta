@@ -99,7 +99,6 @@ public class TasksSchedule {
 		superCupController.obterResultadoAmbasMarcam();
 	}
 	
-	
 	@Scheduled(fixedDelay = 120000)
 	@Async
 	public void ObterCookieReset() {

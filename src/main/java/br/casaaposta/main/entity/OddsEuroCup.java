@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import br.casaaposta.main.model.OddsModel;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
@@ -19,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name="OddsEurocup")
 @NoArgsConstructor
-
+@Data
 public class OddsEuroCup extends OddsModel implements Serializable{
 	
 	private static final long serialVersionUID = 8511686573089879079L;
