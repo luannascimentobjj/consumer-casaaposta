@@ -8,7 +8,7 @@ import br.casaaposta.main.entity.OddsEuroCup;
 import br.casaaposta.main.entity.OddsPremierCup;
 import br.casaaposta.main.entity.OddsSuperCup;
 import br.casaaposta.main.entity.OddsWorldCup;
-import br.casaaposta.main.entity.TipoResultados;
+import br.casaaposta.main.entity.TipoResultado;
 import br.casaaposta.main.model.OddsModel;
 import br.casaaposta.main.util.ConstantsUtils;
 
@@ -124,19 +124,19 @@ public class FutServiceCast {
 	}
 	
 	
-	public List<TipoResultados> preencheListaResultado(){
+	public List<TipoResultado> preencheListaResultado(){
 		
-		List<TipoResultados> listToInsert = new ArrayList<>();
-		listToInsert.add(new TipoResultados(ConstantsUtils.resultadoOver25, true));
-		listToInsert.add(new TipoResultados(ConstantsUtils.resultadoCasa, true));
-		listToInsert.add(new TipoResultados(ConstantsUtils.resultadoEmpate, true));
-		listToInsert.add(new TipoResultados(ConstantsUtils.resultadoVisitante, true));
-		listToInsert.add(new TipoResultados(ConstantsUtils.resultadoAmbasMarcam, true));
-		listToInsert.add(new TipoResultados(ConstantsUtils.resultadoOver35, true));
-		listToInsert.add(new TipoResultados(ConstantsUtils.resultadoUnder15, true));
-		listToInsert.add(new TipoResultados(ConstantsUtils.resultadoUnder05, true));
-		listToInsert.add(new TipoResultados(ConstantsUtils.resultadoFT, false));
-		listToInsert.add(new TipoResultados(ConstantsUtils.resultadoHT, false));
+		List<TipoResultado> listToInsert = new ArrayList<>();
+		listToInsert.add(new TipoResultado(ConstantsUtils.resultadoOver25, true));
+		listToInsert.add(new TipoResultado(ConstantsUtils.resultadoCasa, true));
+		listToInsert.add(new TipoResultado(ConstantsUtils.resultadoEmpate, true));
+		listToInsert.add(new TipoResultado(ConstantsUtils.resultadoVisitante, true));
+		listToInsert.add(new TipoResultado(ConstantsUtils.resultadoAmbasMarcam, true));
+		listToInsert.add(new TipoResultado(ConstantsUtils.resultadoOver35, true));
+		listToInsert.add(new TipoResultado(ConstantsUtils.resultadoUnder15, true));
+		listToInsert.add(new TipoResultado(ConstantsUtils.resultadoUnder05, true));
+		listToInsert.add(new TipoResultado(ConstantsUtils.resultadoFT, false));
+		listToInsert.add(new TipoResultado(ConstantsUtils.resultadoHT, false));
 			
 		return listToInsert;
 		

@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "tipo_resultado")
 @NoArgsConstructor
 @Data
-public class TipoResultados {
+public class TipoResultado {
 	
-	public TipoResultados(String resultadoTipo, boolean isOdds) {
+	public TipoResultado(String resultadoTipo, boolean isOdds) {
 		this.resultadoTipo = resultadoTipo;
 		this.isOdds = isOdds;
 	}

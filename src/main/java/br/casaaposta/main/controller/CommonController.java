@@ -10,9 +10,9 @@ import org.springframework.stereotype.Controller;
 
 import br.casaaposta.main.bind.FutServiceCast;
 import br.casaaposta.main.entity.Log;
-import br.casaaposta.main.entity.TipoResultados;
+import br.casaaposta.main.entity.TipoResultado;
 import br.casaaposta.main.repository.LogRepository;
-import br.casaaposta.main.repository.TipoResultadosOddsRepository;
+import br.casaaposta.main.repository.TipoResultadoRepository;
 import br.casaaposta.main.service.FutVirtualServiceEuroCup;
 
 @Controller
@@ -23,7 +23,7 @@ public class CommonController {
 	@Autowired
 	LogRepository logRepository_;
 	@Autowired
-	TipoResultadosOddsRepository tipoResultadosOddsRepository_;
+	TipoResultadoRepository tipoResultadosOddsRepository_;
 	Log logger_ = new Log();
 	private FutServiceCast futServiceCast_ = new FutServiceCast();
 
@@ -32,7 +32,7 @@ public class CommonController {
 	public void setResultadoTipo() {
 		
 		try {
-			List<TipoResultados> results = tipoResultadosOddsRepository_.findAll();
+			List<TipoResultado> results = tipoResultadosOddsRepository_.findAll();
 			if(results.isEmpty()) {
 				tipoResultadosOddsRepository_.saveAllAndFlush(futServiceCast_.preencheListaResultado());			
 			}
