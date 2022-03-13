@@ -8,14 +8,14 @@ import br.casaaposta.main.entity.OddsEuroCup;
 import br.casaaposta.main.entity.OddsPremierCup;
 import br.casaaposta.main.entity.OddsSuperCup;
 import br.casaaposta.main.entity.OddsWorldCup;
-import br.casaaposta.main.entity.TipoResultadosOdds;
+import br.casaaposta.main.entity.TipoResultados;
 import br.casaaposta.main.model.OddsModel;
 import br.casaaposta.main.util.ConstantsUtils;
 
 public class FutServiceCast {
 
 	public List<OddsPremierCup> castListOddsPremierCup(List<OddsModel> l, Liga liga) {
-		List<OddsPremierCup> lista = new ArrayList();
+		List<OddsPremierCup> lista = new ArrayList<OddsPremierCup>();
 
 		for (OddsModel odds : l) {
 			if (odds.getTollTip() != null) {
@@ -42,7 +42,7 @@ public class FutServiceCast {
 	}
 
 	public List<OddsEuroCup> castListOddsEuroCup(List<OddsModel> l, Liga liga) {
-		List<OddsEuroCup> lista = new ArrayList();
+		List<OddsEuroCup> lista = new ArrayList<OddsEuroCup>();
 
 		for (OddsModel odds : l) {
 			if (odds.getTollTip() != null) {
@@ -69,7 +69,7 @@ public class FutServiceCast {
 	}
 
 	public List<OddsSuperCup> castListOddsSuperCup(List<OddsModel> l, Liga liga) {
-		List<OddsSuperCup> lista = new ArrayList();
+		List<OddsSuperCup> lista = new ArrayList<OddsSuperCup>();
 
 		for (OddsModel odds : l) {
 			if (odds.getTollTip() != null) {
@@ -96,7 +96,7 @@ public class FutServiceCast {
 	}
 
 	public List<OddsWorldCup> castListOddsWorldCup(List<OddsModel> l, Liga liga) {
-		List<OddsWorldCup> lista = new ArrayList();
+		List<OddsWorldCup> lista = new ArrayList<OddsWorldCup>();
 
 		for (OddsModel odds : l) {
 			if (odds.getTollTip() != null) {
@@ -124,17 +124,19 @@ public class FutServiceCast {
 	}
 	
 	
-	public List<TipoResultadosOdds> preencheListaResultadoOdds(){
+	public List<TipoResultados> preencheListaResultado(){
 		
-		List<TipoResultadosOdds> listToInsert = new ArrayList<>();
-		listToInsert.add(new TipoResultadosOdds(ConstantsUtils.resultadoOver25));
-		listToInsert.add(new TipoResultadosOdds(ConstantsUtils.resultadoCasa));
-		listToInsert.add(new TipoResultadosOdds(ConstantsUtils.resultadoEmpate));
-		listToInsert.add(new TipoResultadosOdds(ConstantsUtils.resultadoVisitante));
-		listToInsert.add(new TipoResultadosOdds(ConstantsUtils.resultadoAmbasMarcam));
-		listToInsert.add(new TipoResultadosOdds(ConstantsUtils.resultadoOver35));
-		listToInsert.add(new TipoResultadosOdds(ConstantsUtils.resultadoUnder15));
-		listToInsert.add(new TipoResultadosOdds(ConstantsUtils.resultadoUnder05));
+		List<TipoResultados> listToInsert = new ArrayList<>();
+		listToInsert.add(new TipoResultados(ConstantsUtils.resultadoOver25, true));
+		listToInsert.add(new TipoResultados(ConstantsUtils.resultadoCasa, true));
+		listToInsert.add(new TipoResultados(ConstantsUtils.resultadoEmpate, true));
+		listToInsert.add(new TipoResultados(ConstantsUtils.resultadoVisitante, true));
+		listToInsert.add(new TipoResultados(ConstantsUtils.resultadoAmbasMarcam, true));
+		listToInsert.add(new TipoResultados(ConstantsUtils.resultadoOver35, true));
+		listToInsert.add(new TipoResultados(ConstantsUtils.resultadoUnder15, true));
+		listToInsert.add(new TipoResultados(ConstantsUtils.resultadoUnder05, true));
+		listToInsert.add(new TipoResultados(ConstantsUtils.resultadoFT, false));
+		listToInsert.add(new TipoResultados(ConstantsUtils.resultadoHT, false));
 			
 		return listToInsert;
 		

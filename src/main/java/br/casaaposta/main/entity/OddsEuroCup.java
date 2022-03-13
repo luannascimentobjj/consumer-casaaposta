@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 
 
 @Entity
-@Table(name="OddsEurocup")
+@Table(name="odds_eurocup")
 @NoArgsConstructor
 @Data
 public class OddsEuroCup extends OddsModel implements Serializable{

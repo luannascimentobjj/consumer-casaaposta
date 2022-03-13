@@ -5,11 +5,11 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import br.casaaposta.main.controller.CommonController;
 import br.casaaposta.main.controller.FutVirtualEuroCupController;
 import br.casaaposta.main.controller.FutVirtualPremierCupController;
 import br.casaaposta.main.controller.FutVirtualSuperCupController;
 import br.casaaposta.main.controller.FutVirtualWorldCupController;
-import br.casaaposta.main.service.FutVirtualServiceEuroCup;
 
 
 @Component
@@ -24,8 +24,7 @@ public class TasksSchedule {
 	@Autowired 
 	FutVirtualPremierCupController premierCupController;
 	@Autowired
-	FutVirtualServiceEuroCup  euroCupService;
-	
+	CommonController commonController;
 	
 	@Scheduled(fixedDelay = 600000)
 	public void scheduleEuroCup() {
@@ -104,17 +103,17 @@ public class TasksSchedule {
 	public void ObterCookieReset() {
 	
 		System.out.println("Reset Cookie");
-		euroCupController.resetarCookie();
+		commonController.resetarCookie();
 
 	}
 	
 	
-	@Scheduled(fixedDelay = 120000)
+	@Scheduled(fixedDelay = 600000)
 	@Async
-	public void checkListResultadosTiposOdds() {
+	public void checkListResultadosTipo() {
 	
 		System.out.println("Preenche Lista Resultados Tipos");
-		euroCupController.setResultadoTipo();
+		commonController.setResultadoTipo();
 
 	}
 	

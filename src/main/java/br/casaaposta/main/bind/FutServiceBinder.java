@@ -18,7 +18,7 @@ public class FutServiceBinder {
 
 	public List<Resultado> bindResultado(LinkedHashMap<Object, Object> resultaForBinding, String tipoResultado) {
 
-		List<Resultado> list = new ArrayList();
+		List<Resultado> list = new ArrayList<Resultado>();
 		resultaForBinding.entrySet().forEach(entry -> {
 			entry.getKey();
 			entry.getValue();
@@ -102,7 +102,7 @@ public class FutServiceBinder {
 
 	public List<OddsModel> bindOdds(LinkedHashMap<Object, Object> resultaForBinding, String tipoResultado) {
 
-		List<OddsModel> list = new ArrayList();
+		List<OddsModel> list = new ArrayList<OddsModel>();
 		resultaForBinding.entrySet().forEach(entry -> {
 
 			entry.getKey();

@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import br.casaaposta.main.entity.TipoResultadosOdds;
+import br.casaaposta.main.entity.TipoResultados;
 
-public interface TipoResultadosOddsRepository extends JpaRepository<TipoResultadosOdds, Long>{
+public interface TipoResultadosOddsRepository extends JpaRepository<TipoResultados, Long>{
 	
-	List<TipoResultadosOdds> findAll();
+	List<TipoResultados> findAll();
 
 }
