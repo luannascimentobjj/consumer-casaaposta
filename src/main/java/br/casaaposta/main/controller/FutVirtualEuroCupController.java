@@ -16,7 +16,6 @@ import br.casaaposta.main.entity.Resultado;
 import br.casaaposta.main.interfaces.FutVirtualEuroCupDataInterface;
 import br.casaaposta.main.repository.LigaRepository;
 import br.casaaposta.main.repository.LogRepository;
-import br.casaaposta.main.repository.TipoResultadoRepository;
 import br.casaaposta.main.service.FutVirtualServiceEuroCup;
 import br.casaaposta.main.util.ConstantsUtils;
 
